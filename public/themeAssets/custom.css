@@ -1,0 +1,15 @@
+.validation-div{ color: #ba2020; }
+.swal2-popup{font-size: 15px!important;}
+.swal2-content{font-size: 15px!important;}
+
+/* Profile */
+.profile-bio-other .theme-title{align-items: baseline;}
+
+@media only screen and (max-width: 768px) {
+	
+}
+
+@media (max-width: 1599px){
+	#banner-section form {margin: 0 auto 10px;}
+
+}

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="57" height="69.667" viewBox="0 0 57 69.667">
+  <g id="Group_80" data-name="Group 80" transform="translate(-937 -478.333)">
+    <path id="Icon_material-security" data-name="Icon material-security" d="M33,1.5,4.5,14.167v19c0,17.575,12.16,34.01,28.5,38,16.34-3.99,28.5-20.425,28.5-38v-19Zm0,34.8H55.167C53.488,49.348,44.78,60.97,33,64.612V36.333H10.833V18.283L33,8.435Z" transform="translate(932.5 476.833)" fill="#707070"/>
+    <path id="Icon_ionic-md-checkmark-circle" data-name="Icon ionic-md-checkmark-circle" d="M18,3.375A14.625,14.625,0,1,0,32.625,18,14.668,14.668,0,0,0,18,3.375ZM15,25.8,7.5,18.3l2.1-2.1L15,21.6,26.4,10.2l2.1,2.1Z" transform="translate(947.625 495.375)" fill="#a11a2e"/>
+  </g>
+</svg>

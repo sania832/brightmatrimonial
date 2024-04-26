@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'religion'					=> 'Religion',
+    'community'					=> 'Community',
+    'mother_tongue'				=> 'Mother Tongue',
+    'city'						=> 'City',
+    'live_with_family'			=> 'Live With Family',
+    'marital_status'			=> 'Marital Status',
+    'diet'						=> 'Diet',
+    'height'					=> 'Height',
+    'position'					=> 'Position',
+    'cast'						=> 'Cast',
+    'sub_cast'					=> 'Sub Cast',
+    'family_type'				=> 'Family Type',
+    'father_occupation'			=> 'Father Occupation',
+    'brother'					=> 'Brother',
+    'sister'					=> 'Sister',
+    'family_living_in'			=> 'Family Living In',
+    'family_bio'				=> 'Family Bio',
+    'family_address'			=> 'Family Address',
+    'family_contact_no'			=> 'Family Contact No',
+    'about'						=> 'About',
+    'document_type'				=> 'Document Type',
+    'document_number'			=> 'Document Number',
+    'document'					=> 'Document',
+];

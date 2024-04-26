@@ -1,0 +1,72 @@
+#features {
+  width: 100%;
+  height: auto;
+  padding: 0;
+  margin: 0;
+  display: block;
+  background: rgba(222, 156, 77, 0.1) url("../images/bg-pattern-01.png") repeat
+    center center / cover;
+
+  .fratures-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: column;
+
+    .fra__img-box {
+      width: 250px;
+      height: 250px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background-color: var(--color-primary);
+      margin-bottom: 50px;
+      @media (max-width: 767px) {
+        margin-bottom: 20px;
+      }
+      img {
+        max-width: 100%;
+      }
+      @media (max-width: 991px) {
+        width: 180px;
+        height: 180px;
+        img {
+          max-width: 60%;
+        }
+      }
+    }
+    .fra__title {
+      h4 {
+        font-size: 28px;
+        color: var(--color-primary);
+        margin-bottom: 30px;
+        font-weight: 600 !important;
+        @media (max-width: 1199px) {
+          font-size: 24px;
+          margin-bottom: 28px;
+        }
+        @media (max-width: 991px) {
+          margin-bottom: 15px;
+          font-size: 20px;
+          margin-bottom: 26px;
+        }
+      }
+    }
+    .fra__des {
+      p {
+        color: #828282;
+        font-size: 18px;
+        line-height: 26px;
+        margin-bottom: 0;
+        text-align: center;
+        @media (max-width: 1199px) {
+          font-size: 16px;
+        }
+        @media (max-width: 767px) {
+          margin-bottom: 20px;
+        }
+      }
+    }
+  }
+}

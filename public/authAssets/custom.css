@@ -1,0 +1,33 @@
+.validation-div{ color: #ba2020; }
+.swal2-popup{font-size: 15px!important;}
+.swal2-content{font-size: 15px!important;}
+
+#sign-section .sign-box form .form-group input{height: 40px;}
+#sign-section .sign-box form select{height: 40px;}
+#sign-section .sign-box form label{margin: 2px 0;}
+#sign-section .sign-box form .btn-sign{min-height: 45px;}
+
+
+@media (max-width: 2159px){
+	#sign-section .sign-box img{width: 40%;}
+	#sign-section .sign-box form label{font-size: 13px; line-height: 19px;}
+	#sign-section .sign-box form .form-group input{font-size: 13px;}
+	#sign-section .sign-box form .forgot-password{font-size: 13px;}
+	#sign-section .sign-box form .btn-sign{font-size: 13px;}
+	#sign-section .sign-box form .sign-up-text{font-size: 15px;}
+	#sign-section .sign-box form select{font-size: 13px; background: #fff url(images/form-dropdown-arrow.svg) right 0.75rem center/13px 9px no-repeat;}
+}
+
+@media (max-width: 1920px){
+	#sign-section .sign-box img{width: 40%;}
+	#sign-section .sign-box form label{font-size: 13px; line-height: 19px;}
+	#sign-section .sign-box form .form-group input{font-size: 13px;}
+	#sign-section .sign-box form .forgot-password{font-size: 13px;}
+	#sign-section .sign-box form .btn-sign{font-size: 13px;}
+	#sign-section .sign-box form .sign-up-text{font-size: 15px;}
+	#sign-section .sign-box form select{font-size: 13px; background: #fff url(images/form-dropdown-arrow.svg) right 0.75rem center/13px 9px no-repeat;}
+}
+
+@media screen and (max-width: 768px){
+	.hidden-xs{display:none;}
+}

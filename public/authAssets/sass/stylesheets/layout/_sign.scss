@@ -1,0 +1,165 @@
+#sign-section {
+  width: 100%;
+  min-height: 100vh;
+  padding: 40px 0;
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 1) url("../images/sign-pattern.png") repeat
+    center center / cover;
+  .row {
+    align-items: center;
+    justify-content: center;
+  }
+  .sign-img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img {
+      width: 75%;
+    }
+  }
+  .sign-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    img {
+      margin-bottom: 70px;
+      @media (max-width: 1399px) {
+        margin-bottom: 35px;
+        width: 70%;
+      }
+    }
+    form {
+      width: 80%;
+      label {
+        font-family: var(--font-primary);
+        color: var(--color-primary);
+        font-size: 26px;
+        line-height: 39px;
+        font-weight: 600;
+        margin: 18px 0;
+        @media (max-width: 1399px) {
+          font-size: 20px;
+          line-height: 32px;
+          margin: 10px 0;
+        }
+      }
+      .form-group {
+        margin-bottom: 0;
+        input {
+          border: 2px solid var(--color-gray);
+          color: var(--color-gray-dark);
+          height: 56px;
+          font-family: var(--font-primary);
+          font-size: 20px;
+          line-height: 30px;
+          font-weight: 600;
+          width: 100%;
+          margin-bottom: 0;
+          @media (max-width: 1399px) {
+            font-size: 17px;
+            line-height: 24px;
+            height: 50px;
+          }
+          &:focus {
+            outline: none;
+            box-shadow: none;
+          }
+        }
+      }
+      .forgot-password {
+        font-family: var(--font-primary);
+        color: var(--color-primary);
+        font-size: 26px;
+        line-height: 39px;
+        font-weight: 600;
+        margin: 20px 0;
+        width: 100%;
+        text-align: right;
+        display: block;
+        @media (max-width: 1399px) {
+          font-size: 20px;
+          line-height: 32px;
+          margin: 15px 0;
+        }
+        &:hover {
+          text-decoration: underline !important;
+        }
+      }
+      select {
+        border: 2px solid var(--color-gray);
+        color: var(--color-gray-dark);
+        height: 56px;
+        font-family: var(--font-primary);
+        font-size: 20px;
+        line-height: 30px;
+        font-weight: 600;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        appearance: none;
+        margin-bottom: 0;
+        background: #fff url("../images/form-dropdown-arrow.svg") right 0.75rem
+          center/23px 13px no-repeat;
+        &:focus {
+          outline: none;
+          box-shadow: none;
+        }
+        // background-image: ;
+        @media (max-width: 1399px) {
+          font-size: 18px;
+          line-height: 28px;
+        }
+      }
+      .btn-sign {
+        border: 1px solid var(--color-primary);
+        background: var(--color-primary);
+        color: var(--color-black-light);
+        border-radius: 15px;
+        width: 271px;
+        min-height: 60px;
+        transition: all 0.4s;
+        display: block;
+        text-align: center;
+        margin: 20px auto 40px;
+        font-size: 30px;
+        line-height: 46px;
+        font-weight: 600;
+        opacity: 1;
+        @media (max-width: 1399px) {
+          font-size: 22px;
+          line-height: 32px;
+          margin: 15px auto 30px;
+        }
+        &:hover {
+          background: transparent;
+        color: var(--color-primary);
+        }
+      }
+      .sign-up-text {
+        font-family: var(--font-primary);
+        color: var(--form-text);
+        font-size: 30px;
+        line-height: 42px;
+        font-weight: 600;
+        margin: 0;
+        width: 100%;
+        text-align: center;
+        display: block;
+        a {
+          color: var(--color-primary);
+          &:hover {
+            text-decoration: underline !important;
+          }
+        }
+        @media (max-width: 1399px) {
+          font-size: 24px;
+          line-height: 32px;
+        }
+       
+      }
+    }
+  }
+}

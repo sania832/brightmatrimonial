@@ -1,0 +1,102 @@
+#banner-section {
+  background: url("../images/hero-banner.jpg") no-repeat center center / cover;
+  min-height: 898px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  width: 100%;
+  position: relative;
+  @media (max-width: 1399px) {
+    min-height: 698px;
+  }
+  @media (max-width: 1299px) {
+    min-height: 550px;
+  }
+  @media (max-width: 567px) {
+    min-height: 780px;
+  }
+  form {
+    width: 100%;
+    min-height: 180px;
+    background: var(--color-white);
+    border-radius: 14px;
+    padding: 12px;
+    margin-bottom: 160px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    @media (max-width: 1299px) {
+      margin-bottom: 100px;
+    }
+    @media (max-width: 1199px) {
+      margin-bottom: 50px;
+    }
+    .form-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      .agefromto {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      label {
+        font-family: var(--font-primary);
+        color: var(--color-primary);
+        font-size: 26px;
+        line-height: 39px;
+        font-weight: 600;
+        margin-bottom: 20px;
+        @media (max-width: 1399px) {
+          font-size: 20px;
+          line-height: 32px;
+        }
+      }
+      select {
+        border: 2px solid var(--color-primary);
+        color: var(--color-primary);
+        height: 56px;
+        font-family: var(--font-primary);
+        color: var(--color-primary);
+        font-size: 20px;
+        line-height: 30px;
+        font-weight: 600;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        appearance: none;
+        background: #fff url("../images/dropdown-arrow.svg") right 0.75rem
+          center/18px 08px no-repeat;
+        &:focus {
+          outline: none;
+          box-shadow: none;
+        }
+        // background-image: ;
+        @media (max-width: 1399px) {
+          font-size: 18px;
+          line-height: 28px;
+        }
+      }
+      .btn-submit {
+        border: 1px solid var(--color-primary);
+        background: var(--color-primary);
+        color: var(--color-white);
+        border-radius: 46px;
+        width: 100%;
+        min-height: 60px;
+        transition: all 0.4s;
+        font-size: 26px;
+        line-height: 39px;
+        font-weight: 600;
+        @media (max-width: 1399px) {
+          font-size: 20px;
+          line-height: 32px;
+        }
+        &:hover {
+          background: transparent;
+          color: var(--color-primary);
+        }
+      }
+    }
+  }
+}

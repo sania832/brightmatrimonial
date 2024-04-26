@@ -1,0 +1,12 @@
+/* CUSTOM CSS*/
+.app-header__logo .logo-src {height: 48px;width: 97px;}
+.app-header__logo .logo-src img{max-height: 55px;}
+.validation-div{color:red;}
+.image-preview{padding: 10px 2px; width: 225px; height: 225px;}
+.swal2-popup{font-size: 15px!important;}
+.text-theme{color: #f0bb22 !important;}
+.btn-theme{background: #f0b922; border-color: #f0b922;}
+.btn-theme:hover {background-color: #f1c43a; border-color: #f1c43a;}
+.revenue-statistics{font-size: 32px; text-align: center; margin-top: 80px; margin-bottom: 80px;}
+.img-wrap {position: relative;}
+.img-wrap .close {position: absolute; font-size: 40px; color: #ffffff; top: 6px; right: 2px; z-index: 100;}

@@ -1,0 +1,75 @@
+#WhyChooseUs {
+  width: 100%;
+  height: auto;
+  padding: 0;
+  margin: 0;
+  display: block;
+  background: rgba(255, 255, 255, 1) url("../images/bg-pattern-01.png") repeat
+    center center / cover;
+  .whychooseus-main {
+    margin-top: 50px;
+    @media (max-width: 991px) {
+      margin-top: 0;
+    }
+  }
+  .whychooseus-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: column;
+    img {
+      width: 100%;
+      padding: 80px;
+      @media (max-width: 1399px) {
+        padding: 40px;        
+      }
+      @media (max-width: 991px) {
+        padding: 16px;
+        margin-bottom: 40px;
+        width: 80%;
+      }
+      @media (max-width: 567px) {
+        width: 90%;
+        padding: 0;
+      }
+    }
+  }
+  .whychooseus-content {
+    .whychooseus__title {
+      h4 {
+        font-size: 28px;
+        color: var(--color-primary);;
+        margin-bottom: 30px;
+        font-weight: 600 !important;
+        @media (max-width: 1199px) {
+          font-size: 24px;
+          margin-bottom: 28px;
+        }
+        @media (max-width: 991px) {
+          margin-bottom: 15px;
+          font-size: 20px;
+          margin-bottom: 26px;
+        }
+        @media (max-width: 767px) {
+          margin-bottom: 16px;
+        }
+      }
+    }
+    .whychooseus__des {
+      p {
+        color: #828282;
+        font-size: 18px;
+        line-height: 26px;
+        margin-bottom: 30px;
+        text-align: left;
+        @media (max-width: 1199px) {
+          font-size: 16px;
+          margin-bottom: 24px;
+        }
+        @media (max-width: 767px) {
+          margin-bottom: 16px;
+        }
+      }
+    }
+  }
+}
