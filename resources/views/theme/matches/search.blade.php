@@ -100,24 +100,7 @@
 														</select>
 													</div>
 												</div>
-												<div class="col-12 col-md-6 mb-3 mb-md-0 ">
-													<div class="form-group">
-														<label for="relationship-type">Relationship Type</label>
-														<select class="custom-select" id="relationship_type">
-															<option value="" selected>Select</option>
-                                                            @foreach($options['relationship_type'] as $key => $value)
-                                                                <option value="{{ $key }}">{{ $value }}</option>
-                                                            @endforeach
-														</select>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="col-12 col-lg-6">
-										<div class="sign-box">
-											<div class="row">
-												<div class="col-12 col-md-6 mb-3 mb-md-0">
+                                                <div class="col-12 col-md-6 mb-3 mb-md-0">
 													<div class="form-group">
 														<label for="maritial-status">Income</label>
 														<div class="row">
@@ -140,7 +123,25 @@
 														</div>
 													</div>
 												</div>
-												<div class="col-12 col-md-6 mb-3 mb-md-0">
+												{{-- <div class="col-12 col-md-6 mb-3 mb-md-0 ">
+													<div class="form-group">
+														<label for="relationship-type">Relationship Type</label>
+														<select class="custom-select" id="relationship_type">
+															<option value="" selected>Select</option>
+                                                            @foreach($options['relationship_type'] as $key => $value)
+                                                                <option value="{{ $key }}">{{ $value }}</option>
+                                                            @endforeach
+														</select>
+													</div>
+												</div> --}}
+											</div>
+										</div>
+									</div>
+									<div class="col-12 col-lg-6">
+										<div class="sign-box">
+											<div class="row">
+
+												{{-- <div class="col-12 col-md-6 mb-3 mb-md-0">
 													<div class="form-group">
 														<label for="sexual-orientation">Sexual Orientation</label>
 														<select class="custom-select" id="sexual_orientation">
@@ -150,7 +151,7 @@
                                                                 @endforeach
 														</select>
 													</div>
-												</div>
+												</div> --}}
 											</div>
 										</div>
 									</div>
@@ -209,15 +210,12 @@
 
 		var response = runAjax(SITE_URL +'/get_matches', data);
 
-        console.log(response);
-
         if (response) { // check if the response is defined
         response.then(function (value) { // process the response using a Promise
             if(value.status == '200'){
 			var htmlData = '';
 			$('#search-list').empty();
 			if(value.data.length > 0){
-                console.log(data);
 				$.each(value.data, function(index, value) {
                     htmlData += '<li>' +
                         '<a href="{{ url("profile")}}/' + value.id + '" class="match-item">' +
@@ -230,13 +228,13 @@
                                     '<p class="match-id">Profile ID : BG' + (value.id ? value.id : '') + '</p>' +
                                     '<img class="match-info-img" src="{{ asset("themeAssets/images/title-border.svg") }}" alt="">' +
                                     '<div class="row">' +
-                                        '<div class="col-sm-12 col-md-6"><p>' + value.bio.age + '</p></div>' +
-                                        '<div class="col-sm-12 col-md-6"><p>' + value.bio.city + '</p></div>' +
-                                        '<div class="col-sm-12 col-md-6"><p>' + value.bio.height + '</p></div>' +
-                                        '<div class="col-sm-12 col-md-6"><p>' + value.bio.state + '</p></div>' +
-                                        '<div class="col-sm-12 col-md-6"><p>' + value.bio.marital_status + '</p></div>' +
-                                        '<div class="col-sm-12 col-md-6"><p>' + value.bio.income + '</p></div>' +
-                                        '<div class="col-sm-12"><p>' + value.bio.occupation + '</p></div>' +
+                                        '<div class="col-sm-12 col-md-6"><p>' + value.age + '</p></div>' +
+                                        '<div class="col-sm-12 col-md-6"><p>' + value.city + '</p></div>' +
+                                        '<div class="col-sm-12 col-md-6"><p>' + value.height + '</p></div>' +
+                                        '<div class="col-sm-12 col-md-6"><p>' + value.state + '</p></div>' +
+                                        '<div class="col-sm-12 col-md-6"><p>' + value.marital_status + '</p></div>' +
+                                        '<div class="col-sm-12 col-md-6"><p>' + value.income + '</p></div>' +
+                                        // '<div class="col-sm-12"><p>' + value.occupation + '</p></div>' +
                                     '</div>' +
                                 '</div>' +
                             '</div>' +

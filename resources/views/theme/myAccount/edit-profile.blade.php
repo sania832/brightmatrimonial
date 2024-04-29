@@ -262,7 +262,7 @@
                                 <select class="custom-select " name="marital_status" id="marital_status">
                                     <option value="" selected>Select</option>
                                     @foreach($options['marital_status'] as $key => $value)
-                                        <option @if(old('marital_status') == $key) selected @elseif($key = $data->marital_status) selected @endif value="{{ $key }}">{{ $value }}</option>
+                                        <option @if(old('marital_status') == $key || $key == $data->marital_status) selected @endif value="{{ $key }}">{{ $value }}</option>
                                     @endforeach
                                 </select>
                                 @if ($errors->has('state'))
@@ -296,10 +296,10 @@
                         <div class="col-md-4">
                             <div class="position-relative form-group">
                                 <label for="height" class="">{{ trans('user_bio.height') }}</label>
-                                <select class="custom-select " name="height" id="height">
+                                <select class="custom-select" name="height" id="height">
                                     <option value="" selected>Select</option>
                                     @foreach($options['height'] as $key => $value)
-                                        <option @if(old('height') == $key) selected @elseif($key = $data->height) selected @endif value="{{ $key }}">{{ $value }}</option>
+                                        <option @if(old('height') == $key || $key == $data->height) selected @endif value="{{ $key }}">{{ $value }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -319,9 +319,9 @@
                                     <option @if($data->manglik == 'No' || old('manglik') == 'No') selected @endif value="No">No</option>
                                 </select>
                             </div>
-                            @if ($errors->has('height'))
+                            @if ($errors->has('manglik'))
                                 <div class="alert alert-danger">
-                                    {{$errors->first('height')}}
+                                    {{$errors->first('manglik')}}
                                 </div>
                             @endif
                         </div>
@@ -388,7 +388,7 @@
                                 <select class="custom-select " name="position" id="position">
                                     <option value="" selected>Select</option>
                                     @foreach($options['position'] as $key => $value)
-                                        <option @if(old('position') == $key) selected @elseif($key = $data->position) selected @endif value="{{ $key }}">{{ $value }}</option>
+                                        <option @if(old('position') == $key || $key == $data->position) selected @endif value="{{ $key }}">{{ $value }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -420,11 +420,11 @@
                             <div class="position-relative form-group">
                                 <label for="income" class="">Income</label>
                                 <select class="custom-select" name="income" id="income">
-                                @if($data->income_type == 'Yearly')
+                                @if($data->income_type == 'Yearly' || old('income_type') == "Yearly")
                                     @foreach($options['yearly_income'] as $key => $value)
                                         <option @if(old('income') == $key) selected @elseif($key == $data->income) selected @endif value="{{ $key }}">{{ $value }}</option>
                                     @endforeach
-                                @elseif($data->income_type == 'Monthly')
+                                @elseif($data->income_type == 'Monthly' || old('income_type') == "Monthly")
                                     @foreach($options['monthly_income'] as $key => $value)
                                         <option @if(old('income') == $key) selected @elseif($key == $data->income) selected @endif value="{{ $key }}">{{ $value }}</option>
                                     @endforeach
@@ -500,7 +500,7 @@
                                 <select class="custom-select " name="cast" id="cast">
                                     <option value="" selected>Select</option>
                                     @foreach($options['cast'] as $key => $value)
-                                        <option @if(old('cast') == $key) selected @elseif($key = $data->cast) selected @endif value="{{ $key }}">{{ $value }}</option>
+                                        <option @if(old('cast') == $key || $key == $data->cast) selected @endif value="{{ $key }}">{{ $value }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -518,7 +518,7 @@
                                 <select class="custom-select " name="sub_cast" id="sub_cast">
                                     <option value="" selected>Select</option>
                                     @foreach($options['sub_cast'] as $key => $value)
-                                        <option @if(old('sub_cast') == $key) selected @elseif($key = $data->sub_cast) selected @endif value="{{ $key }}">{{ $value }}</option>
+                                        <option @if(old('sub_cast') == $key || $key == $data->sub_cast) selected @endif value="{{ $key }}">{{ $value }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -535,7 +535,7 @@
                                 <select class="custom-select" name="family_type" id="family_type">
                                     <option value="" selected>Select</option>
                                     @foreach($options['family_type'] as $key => $value)
-                                        <option @if(old('family_type') == $key) selected @elseif($key = $data->family_type) selected @endif value="{{ $key }}">{{ $value }}</option>
+                                        <option @if(old('family_type') == $key || $key == $data->family_type) selected @endif value="{{ $key }}">{{ $value }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -552,7 +552,7 @@
                                 <select class="custom-select " name="father_occupation" id="father_occupation">
                                     <option value="" selected>Select</option>
                                     @foreach($options['father_occupation'] as $key => $value)
-                                        <option @if(old('father_occupation') == $key) selected @elseif($key = $data->father_occupation) selected @endif value="{{ $key }}">{{ $value }}</option>
+                                        <option @if(old('father_occupation') == $key || $key == $data->father_occupation) selected @endif value="{{ $key }}">{{ $value }}</option>
                                     @endforeach
                                 </select>
                                 <div class="validation-div" id="val-father_occupation"></div>
@@ -748,17 +748,37 @@
         });
     });
 
-    // function previewImage(input, imageId) {
-    //     const file = input.files[0];
-    //     const reader = new FileReader();
+    $('#income_type').change(function() {
 
-    //     reader.onload = function(e) {
-    //         const imageElement = document.getElementById(imageId);
-    //         imageElement.src = e.target.result;
-    //     }
+        var incomeType = $(this).val(); // Get the selected state ID
 
-    //     reader.readAsDataURL(file);
-    // }
+        // Construct the URL using the state ID
+
+        var url = "{{ url('/') }}/live-data-fetch/" + incomeType;
+
+        console.log('income type' + incomeType);
+
+        $.ajax({
+            url: url,
+            dataType: "json",
+            type: 'GET',
+            delay: 250,
+            success: function(data) {
+            console.log('Received income Data', data); // Print the received city data
+
+            // Clear existing options in the city dropdown
+            $('#income').empty();
+
+            // Append new options based on the received city data
+            $.each(data, function(index, income) {
+                $('#income').append('<option value="' + income.id + '">' + income.title + '</option>');
+            });
+        },
+        error: function(xhr, status, error) {
+            console.log('Error', error); // Print the error message
+        }
+        });
+    });
 
 </script>
 @endsection

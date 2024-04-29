@@ -23,9 +23,12 @@
                                                         </h4>
                                                         <span>{{ $value['last_seen'] }}</span>
                                                     </div>
-                                                    <p style="font-size: 15px">
-                                                        {{ $value['last_message'] ? (strlen($value['last_message']) > 20 ? substr($value['last_message'], 0, 20) . '...' : $value['last_message']) : "" }}
-                                                    </p>
+                                                    <div class="d-flex flex-row justify-content-between">
+                                                        <p style="font-size: 15px">
+                                                            {{ $value['last_message'] ? (strlen($value['last_message']) > 20 ? substr($value['last_message'], 0, 20) . '...' : $value['last_message']) : "" }}
+                                                        </p>
+                                                        @if($value['unseen_message'])<p id="data-unseen-id-{{ $value['id'] }}" class="unseen-message-badge badge badge-pill badge-primary" style="border-radius: 50%; padding: 2px 8px; color: white; background-color: rgb(139, 19, 19);">{{ $value['unseen_message'] }}</span>@endif
+                                                    </div>
                                                 </div>
                                             </a>
                                         </li>
@@ -80,7 +83,8 @@
 
                 // Log the constructed URL
                 const url = `http://127.0.0.1:8000/chat-user-data/${userId}`;
-                console.log('Fetching data from:', url);
+
+
 
                 // Send fetch request to fetch chat data
                 fetch(url)
@@ -92,6 +96,10 @@
                     })
                     .then(data => {
                         // Update the chat-box with the fetched data
+                        const element = document.getElementById('data-unseen-id-'+ userId);
+                if (element) {
+                    element.style.display = 'none'; // Change 'propertyName' and 'newValue' to the desired CSS property and value
+                }
                         updateChatBox(data);
                     })
                     .catch(error => {
@@ -99,7 +107,6 @@
                         // console.error('Error fetching chat data:', error);
                     });
             });
-
             // Trigger click event on the first interested user by default
             if (index === 0) {
                 user.click();
@@ -108,6 +115,8 @@
     });
 
     function updateChatBox(data) {
+// location.reload();
+
         const chatBox = document.getElementById('chat-box');
 
         // Clear previous chat content
@@ -155,8 +164,6 @@
 
         // Append the HTML for the chat header to the chat box
         chatBox.innerHTML += headerHtml;
-
-        console.log(headerHtml);
 
         // Append the conversation area
         const conversationHtml = `
@@ -270,7 +277,10 @@
         } else if (dateTime.toDateString() === yesterday.toDateString()) {
             dateText = 'Yesterday';
         } else {
-            dateText = date;
+            const year = dateTime.getFullYear();
+            const month = String(dateTime.getMonth() + 1).padStart(2, '0'); // Add leading zero if needed
+            const day = String(dateTime.getDate()).padStart(2, '0'); // Add leading zero if needed
+            dateText = `${day}-${month}-${year}`;
         }
 
         // Check if the last displayed date for this user is different from the current message's date

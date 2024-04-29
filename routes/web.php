@@ -52,6 +52,7 @@ Route::group(['middleware' => ['checkUser:Customer']], function() {
     Route::get('/chat-user-data/{id}', 'App\Http\Controllers\theme\ChatController@usersdata')->name('chat-user-data');
     Route::post('/send-message', 'App\Http\Controllers\theme\ChatController@sendMessage')->name('send-message');
     Route::post('/chat-list', 'App\Http\Controllers\theme\ChatController@chatList')->name('chat-list');
+    Route::get('/friend-list', 'App\Http\Controllers\theme\ChatController@friend_list')->name('friend-list');
 
     //Interest
     Route::get('/interest', 'App\Http\Controllers\theme\ProfileController@interest')->name('interest');

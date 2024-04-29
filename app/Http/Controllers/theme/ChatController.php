@@ -46,10 +46,12 @@ class ChatController extends CommonController
             $currentTimestamp = date('Y-m-d H:i:s'); // Get the current timestamp
             User::where('id', $user->id)->update(['live_at' => $currentTimestamp]);
 
+
             foreach($userIds as $id){
 
                 $in_user = User::find($id);
                 $last_chat = Chat::whereIn('user_id', [$user->id, $id])->whereIn('friend_id', [$id, $user->id])->latest('updated_at')->first();
+                $unseen_message = Chat::where('user_id',$id)->where('friend_id', $user->id)->where('is_read',0)->count();
 
                 $lastSeen = "";
                 if ($last_chat) {
@@ -74,7 +76,8 @@ class ChatController extends CommonController
                     'name' => $in_user->name,
                     'id' => $in_user->id,
                     'last_seen' => $lastSeen,
-                    'last_message' => $last_chat ? $last_chat->message : ""
+                    'last_message' => $last_chat ? $last_chat->message : "",
+                    'unseen_message' => $unseen_message,
                 ];
 
             }
@@ -99,12 +102,14 @@ class ChatController extends CommonController
             return $this->sendError(trans('customer_api.invalid_user'),'');
         }
 
+        Chat::where(['friend_id' => $user->id, 'user_id' => $id])->update(['is_read' => 1]);
+
         DB::beginTransaction();
 		try{
+
+            // update message to is_read 1 of selected user
             $details = Interested::where(['person_id'=>$user->id, 'user_id'=>$id])->first();
             $friend = Friend::where(['friend_id'=>$user->id, 'user_id'=>$id])->first();
-
-            // dd($friend);
 
             if($details || $friend){
                 if(isset($details) && $details->status == 'pending'){
@@ -283,8 +288,6 @@ class ChatController extends CommonController
 		}
 
 		try{
-
-
 			// GET LIST
 			$chats = Chat::select('chat.*')
                     ->leftJoin('users as t2', 't2.id', '=', 'chat.friend_id')
@@ -308,7 +311,7 @@ class ChatController extends CommonController
                     'sender_name' => $sender->name,
                     'receiver_name' => $receiver->name,
                     'type' => ($chat->user_id == $user->id) ? 'send' : 'receive',
-                    'timestamp' => $chat->created_at->format('Y-m-d H:i:s')
+                    'timestamp' => $chat->created_at->format('Y-m-d H:i:s'),
                 ];
             }
 
@@ -349,5 +352,73 @@ class ChatController extends CommonController
 	// 		return $this->ajaxError($e->getMessage(),'');
 	// 	}
 	// }
+
+    public function friend_list(){
+
+        //Get User Data
+		$user = Auth::user();
+        $interested_list = [];
+		if(empty($user)){
+			return $this->ajaxError(trans('customer_api.invalid_user'),'');
+		}
+
+		DB::beginTransaction();
+		try{
+
+            $inrested_pending = Interested::join('users as t2','t2.id','interested.person_id')
+            ->where('interested.person_id',$user->id)->where('interested.status','pending')->pluck('interested.user_id');
+
+            $friend_list = Friend::join('users as t2','t2.id','friends.friend_id')->where('friends.user_id',$user->id)->pluck('friend_id');
+
+            // Merge the arrays and convert to a single unique array
+            $userIds = $inrested_pending->merge($friend_list)->unique()->toArray();
+
+            // to update last seen
+            $currentTimestamp = date('Y-m-d H:i:s'); // Get the current timestamp
+            User::where('id', $user->id)->update(['live_at' => $currentTimestamp]);
+
+
+            foreach($userIds as $id){
+
+                $in_user = User::find($id);
+                $last_chat = Chat::whereIn('user_id', [$user->id, $id])->whereIn('friend_id', [$id, $user->id])->latest('updated_at')->first();
+                $unseen_message = Chat::where('user_id',$id)->where('friend_id', $user->id)->where('is_read',0)->count();
+
+                $lastSeen = "";
+                if ($last_chat) {
+                    $lastSeenDate = $last_chat->updated_at->toDateString();
+                    $todayDate = now()->toDateString();
+                    $yesterdayDate = now()->subDays(1)->toDateString();
+
+                    if ($lastSeenDate === $todayDate) {
+                        // If last seen is today, display only the time
+                        $lastSeen = $last_chat->updated_at->format('H:i');
+                    } elseif ($lastSeenDate === $yesterdayDate) {
+                        // If last seen is yesterday, display 'Yesterday'
+                        $lastSeen = 'Yesterday';
+                    } else {
+                        // If last seen is before yesterday, display the date
+                        $lastSeen = $last_chat->updated_at->format('d/m/Y');
+                    }
+                }
+
+                $interested_list[] = [
+                    'profile_image' => $in_user->profile_image,
+                    'name' => $in_user->name,
+                    'id' => $in_user->id,
+                    'last_seen' => $lastSeen,
+                    'last_message' => $last_chat ? $last_chat->message : "",
+                    'unseen_message' => $unseen_message,
+                ];
+
+            }
+
+            return $this->sendResponse(trans('data found'),$interested_list);
+		}catch (\Exception $e) {
+			DB::rollback();
+			return $this->ajaxError($e->getMessage(),'');
+		}
+
+    }
 
 }

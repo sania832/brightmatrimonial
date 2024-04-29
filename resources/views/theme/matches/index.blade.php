@@ -86,13 +86,13 @@
                                     '<p class="match-id">Profile ID : BG' + (value.id ? value.id : '') + '</p>' +
                                     '<img class="match-info-img" src="{{ asset("themeAssets/images/title-border.svg") }}" alt="">' +
                                     '<div class="row">' +
-                                        '<div class="col-sm-12 col-md-6"><p>' + value.bio.age + '</p></div>' +
-                                        '<div class="col-sm-12 col-md-6"><p>' + value.bio.city + '</p></div>' +
-                                        '<div class="col-sm-12 col-md-6"><p>' + value.bio.height + '</p></div>' +
-                                        '<div class="col-sm-12 col-md-6"><p>' + value.bio.state + '</p></div>' +
-                                        '<div class="col-sm-12 col-md-6"><p>' + value.bio.marital_status + '</p></div>' +
-                                        '<div class="col-sm-12 col-md-6"><p>' + value.bio.income + '</p></div>' +
-                                        '<div class="col-sm-12"><p>' + value.bio.occupation + '</p></div>' +
+                                        '<div class="col-sm-12 col-md-6"><p>' + value.age + '</p></div>' +
+                                        '<div class="col-sm-12 col-md-6"><p>' + value.city + '</p></div>' +
+                                        '<div class="col-sm-12 col-md-6"><p>' + value.height + '</p></div>' +
+                                        '<div class="col-sm-12 col-md-6"><p>' + value.state + '</p></div>' +
+                                        '<div class="col-sm-12 col-md-6"><p>' + value.marital_status + '</p></div>' +
+                                        '<div class="col-sm-12 col-md-6"><p>' + value.income + '</p></div>' +
+                                        // '<div class="col-sm-12"><p>' + value.occupation + '</p></div>' +
                                     '</div>' +
                                 '</div>' +
                             '</div>' +

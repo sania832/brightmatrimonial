@@ -20,12 +20,10 @@ $(document).ready(function(e) {
 var runAjax = function (i = null, ii = null, type = 'POST') {
     return new Promise(function(resolve, reject) {
         if (!i) {
-            console.log('Empty URL provided. Aborting Ajax request.');
             reject('Empty URL provided.');
             return;
         }
 
-        console.log('Preparing Ajax request...');
         ii.append('visit_from', 'web');
         ii.append('_token', token);
 
@@ -39,13 +37,9 @@ var runAjax = function (i = null, ii = null, type = 'POST') {
             data: ii,
             cache: false,
             success: function (response) {
-                console.log('Ajax request successful. Response received:', response);
-                console.log('Response status code:', response.status);
-                console.log('Response message:', response.message);
                 resolve(response);
             },
             error: function(xhr, status, error) {
-                console.error('Ajax request failed. Status:', status, 'Error:', error);
                 reject(new Error('Error: ' + error));
             }
         });
@@ -119,13 +113,10 @@ function updateProfile(step = 1){
         response.then(function (value) { // process the response using a Promise
             if (value.status === '200') {
 				var nextStep = parseInt(step) + 1;
-				console.log("Next step:", nextStep); // Output the next step value for debugging
 				var nextUrl = SITE_URL + '/complete-profile/' + nextStep;
-				console.log("Next URL:", nextUrl); // Output the constructed URL for debugging
 				window.location.href = nextUrl; // Redirect to the next step
             } else if (value.status === '422') {
                 // there was an error with the data
-                console.log('The status is:', value.status);
                 $('.validation-div').text('');
                 $.each(value.error, function (index, value) {
                     $('.val-' + index).text(value);
@@ -140,7 +131,6 @@ function updateProfile(step = 1){
                 swal.fire({ title: value.message, type: 'error' });
             }
         }).catch(function (error) { // handle any errors that occur
-			console.log('An error occurred:', error);
             $('.validation-div').text('');
             swal.fire({ title: 'An error occurred while submitting the form. Please try again.', type: 'error' });
             // Enable the submit button

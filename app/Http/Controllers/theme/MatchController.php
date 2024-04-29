@@ -57,6 +57,7 @@ class MatchController extends CommonController
 	*/
 	public function search(Request $request)
 	{
+
 		try {
 			$page       	= 'searchMatchesPage';
 			$page_title 	= trans('title.search_matches');
@@ -140,19 +141,34 @@ class MatchController extends CommonController
                                 ->where('users.user_type','=','Customer')
                                 ->where('users.id', '!=', $user->id);
 
-                $filters = [
-                    'height',
-                    'religion',
-                    'cast',
-                    'marital_status',
-                    'relationship_type' => 'marital_status',
-                    'sexual_orientation',
-                ];
+                // $filters = [
+                //     'height',
+                //     'religion',
+                //     'cast',
+                //     'marital_status',
+                //     'relationship_type' => 'marital_status',
+                //     'sexual_orientation',
+                // ];
 
-                foreach ($filters as $filter => $column) {
-                    if ($request->$filter) {
-                        $query->where($column ?? $filter, $request->$filter);
-                    }
+                // foreach ($filters as $filter => $column) {
+                //     if ($request->$filter) {
+                //         $query->where($column ?? $filter, $request->$filter);
+                //     }
+                // }
+                if($request->height){
+                    $query->where('users_bio.height',$request->height);
+                }
+
+                if($request->religion){
+                    $query->where('users_bio.religion',$request->religion);
+                }
+
+                if($request->cast){
+                    $query->where('users_bio.cast',$request->cast);
+                }
+
+                if($request->marital_status){
+                    $query->where('users_bio.marital_status',$request->marital_status);
                 }
 
                 if ($request->age_from && $request->age_to) {
@@ -199,8 +215,25 @@ class MatchController extends CommonController
 
             }
 
-            if($data){
-				return $this->sendResponse(trans('common.data_found_success'),MatchesListResource::collection($data));
+            $matche_list = [];
+
+            foreach($data as $user){
+
+                $matche_list [] =  [
+                    'id'            => (string) $user->id,
+                    'image'       	=> $user->profile_image ? (string) asset($user->profile_image) : asset(config('constants.DEFAULT_THUMBNAIL')),
+                    'name'       	=> $user->name ? (string) $user->name : '',
+                    'age'   		=> $user->bio && $user->bio?->age ? $user->bio?->age : 'Age not specified',
+                    'city'          => $user->bio && $user->bio->city ? city::where('id',$user->bio->city)->pluck('name')->first() : "City not specified",
+                    'state'         => $user->bio && $user->bio->state ? State::where('id',$user->bio->state)->pluck('name')->first() : "State not specified",
+                    'height'        => $user->bio && $user->bio->height ? Option::where('id',$user->bio->height)->pluck('title')->first() : "Height not specified",
+                    'marital_status'=> $user->bio && $user->bio->marital_status ? Option::where('id',$user->bio->marital_status)->pluck('title')->first() : "Marital status not specified",
+                    'income'        => $user->bio && $user->bio->income ? Option::where('id',$user->bio->income)->pluck('title')->first() : "Income not specified",
+                ];
+            }
+
+            if($matche_list){
+				return $this->sendResponse(trans('common.data_found_success'),$matche_list);
 			}
 			return $this->sendResponse(trans('common.data_found_empty'),[]);
 

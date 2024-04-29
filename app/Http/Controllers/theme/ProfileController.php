@@ -35,6 +35,7 @@ use function Laravel\Prompts\select;
 class ProfileController extends CommonController
 {
 	use CommonHelper;
+    public $questions_list = [];
 
     /**
      *
@@ -50,8 +51,6 @@ class ProfileController extends CommonController
 	*/
 	public function profile(Request $request){
 
-        $route_name = $request->route()->getName();
-
 		$user = Auth()->user();
 		if(empty($user)){
 			header("Location: ". url('/')); exit;
@@ -63,14 +62,7 @@ class ProfileController extends CommonController
 			$viewed_matches		= ViewedMatchesHistory::where('user_id','=',$user->id)->count();
 			$my_matches			= Matches::where('user_id','=',$user->id)->count();
             $interest           = Interested::where('user_id','=',$user->id)->count();
-			$questions			= Question::where('questions.status', 'active')
-                                    ->leftJoin('question_answers as t2', function ($join) use ($user) {
-                                        $join->on('questions.id', '=', 't2.question_id')
-                                            ->where('t2.user_id', '=', $user->id);
-                                    })
-                                    ->whereNull('t2.user_id')
-                                    ->select('questions.*')
-                                    ->get();
+            $questions_list	    = $this->refreshQuestion();
 			$bio				= UserBio::where('user_id','=',$user->id)->first();
 
 			$viewed_matches 	= $viewed_matches ? $viewed_matches : '0';
@@ -99,11 +91,7 @@ class ProfileController extends CommonController
                 ];
             }
 
-			foreach($questions as $key=> $list){
-				$questions[$key]->options = QuestionOption::where(['question_id'=>$list->id])->get();
-			}
-
-			return view('theme/myAccount/profile', compact('page', 'page_title', 'user','questions','bio','viewed_matches','my_matches','interested','data'));
+			return view('theme/myAccount/profile', compact('page', 'page_title', 'user','questions_list','bio','viewed_matches','my_matches','interested','data'));
 
 		} catch (Exception $e) {
 		  return redirect()->back()->withError($e->getMessage());
@@ -259,8 +247,6 @@ class ProfileController extends CommonController
 	*
 	*/
 	public function post_complete_profile(Request $request){
-
-        Log::info($request->city);
 
 		if($request->step == ''){
 			$this->ajaxError(trans('common.invalid_step'),[]);
@@ -532,7 +518,6 @@ class ProfileController extends CommonController
 
     public function answer_question(Request $request)
     {
-        Log::info($request);
         // $validator = Validator::make($request->all(), [
 		// 	'answer_id'		=> 'sometimes|exists:question_options,id',
 		// ]);
@@ -583,17 +568,25 @@ class ProfileController extends CommonController
 
 			$exist = QuestionAnswer::where(['user_id'=>$user->id, 'question_id'=>$answer->question_id])->first();
 			if($exist){
-                Log::info('edit success');
 				$query = QuestionAnswer::where(['user_id'=>$user->id, 'question_id'=>$answer->question_id])->update($data);
 			}else{
-                Log::info('create success');
 				$query = QuestionAnswer::create($data);
 			}
 
+            // $this->questions	= Question::where('questions.status', 'active')
+            //                         ->leftJoin('question_answers as t2', function ($join) use ($user) {
+            //                             $join->on('questions.id', '=', 't2.question_id')
+            //                                 ->where('t2.user_id', '=', $user->id);
+            //                         })
+            //                         ->whereNull('t2.user_id')
+            //                         ->select('questions.*')
+            //                         ->get();
+
 			if($query){
 				DB::commit();
-                Log::info('final succesful');
-				return redirect('/profile');
+				$questions_list = $this->refreshQuestion();
+
+                return redirect()->route('profile')->with(compact('questions_list'));
 			}
 			$this->ajaxError(trans('customer_api.try_again'),[]);
         }catch(\Exception $e){
@@ -1078,6 +1071,34 @@ class ProfileController extends CommonController
 		}catch(\Exception $e){
             DB::rollback();
 			return $this->sendError($e->getMessage(),[]);
+        }
+    }
+
+    public function refreshQuestion(){
+
+        $user = Auth::user();
+        if(empty($user)){
+            return $this->ajaxError(trans('customer_api.invalid_user'),'');
+        }
+
+		try{
+
+			$questions = Question::where('questions.status', 'active')
+                                    ->leftJoin('question_answers as t2', function ($join) use ($user) {
+                                        $join->on('questions.id', '=', 't2.question_id')
+                                            ->where('t2.user_id', '=', $user->id);
+                                    })
+                                    ->whereNull('t2.user_id')
+                                    ->select('questions.*')
+                                    ->get();
+
+            foreach($questions as $key=> $list){
+                $questions[$key]->options = QuestionOption::where(['question_id'=>$list->id])->get();
+            }
+
+			return $questions;
+		}catch(\Exception $e){
+			return $this->ajaxError($e->getMessage(),[]);
         }
     }
 

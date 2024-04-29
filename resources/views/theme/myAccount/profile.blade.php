@@ -51,7 +51,7 @@
 			</div>
 		</section>
 
-        @if(!$questions->isEmpty())
+        @if(!$questions_list->isEmpty())
         <section class="find-prefect-match">
             <div class="container">
                 <div class="row prefect-match-box">
@@ -64,7 +64,7 @@
                             <img src="images/title-border.svg" alt="" width="450">
                         </div>
                         <div id="matchQue">
-                            @foreach($questions as $question)
+                            @foreach($questions_list as $question)
                             <div class="item">
                                 <div class="custom-form" data-question-id="{{ $question->id }}">
                                     <form class="question-form">
@@ -93,7 +93,6 @@
                             </div>
                             @endforeach
                         </div>
-
                     </div>
                 </div>
 
@@ -309,69 +308,70 @@
 	}
 
     $(document).ready(function() {
-    var questions = $(".item");
-    var currentQuestionIndex = 0;
+        var questions = $(".item");
+        var currentQuestionIndex = 0;
 
-    // Function to display the current question
-    function displayCurrentQuestion() {
-        questions.hide().eq(currentQuestionIndex).show();
-    }
-
-    // Display the first question
-    displayCurrentQuestion();
-
-    // Handle next question button click
-    $(document).on('click', '.next-question', function(e) {
-        e.preventDefault();
-
-        // Get the current form and question ID
-        var currentForm = $(this).closest('form');
-
-        // If an option is selected, submit the form
-        if (currentForm.find('input[type="radio"]:checked').length > 0) {
-            // Submit the form asynchronously
-            submitAnswer(currentForm);
+        // Function to display the current question
+        function displayCurrentQuestion() {
+            questions.hide().eq(currentQuestionIndex).show();
         }
 
-        // Move to the next question
-        currentQuestionIndex++;
-        if (currentQuestionIndex < questions.length) {
-            displayCurrentQuestion();
-        } else {
-            // All questions answered, loop back to the first question
-            currentQuestionIndex = 0;
-            displayCurrentQuestion();
-        }
-    });
-
-    // Handle back question button click
-    $(document).on('click', '.back-question', function(e) {
-        e.preventDefault();
-
-        // Move to the previous question
-        currentQuestionIndex--;
-        if (currentQuestionIndex < 0) {
-            // Last question reached, loop back to the last question
-            currentQuestionIndex = questions.length - 1;
-        }
+        // Display the first question
         displayCurrentQuestion();
-    });
 
-    // Function to submit the answer asynchronously
-    function submitAnswer(form) {
-        $.ajax({
-            url: "{{ route('question_answer') }}",
-            method: "POST",
-            data: form.serialize(), // Serialize form data
-            success: function(response) {
-                console.log('Answer submitted successfully');
-            },
-            error: function(xhr, status, error) {
-                console.log('Error submitting answer');
+        // Handle next question button click
+        $(document).on('click', '.next-question', function(e) {
+            e.preventDefault();
+
+            // Get the current form and question ID
+            var currentForm = $(this).closest('form');
+
+            // If an option is selected, submit the form
+            if (currentForm.find('input[type="radio"]:checked').length > 0) {
+                // Submit the form asynchronously
+                submitAnswer(currentForm);
+            }
+
+            // Move to the next question
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                displayCurrentQuestion();
+            } else {
+                // All questions answered, loop back to the first question
+                currentQuestionIndex = 0;
+                displayCurrentQuestion();
             }
         });
-    }
-});
+
+        // Handle back question button click
+        $(document).on('click', '.back-question', function(e) {
+            e.preventDefault();
+
+            // Move to the previous question
+            currentQuestionIndex--;
+            if (currentQuestionIndex < 0) {
+                // Last question reached, loop back to the last question
+                currentQuestionIndex = questions.length - 1;
+            }
+            displayCurrentQuestion();
+        });
+
+        // Function to submit the answer asynchronously
+        function submitAnswer(form) {
+            $.ajax({
+                url: "{{ route('question_answer') }}",
+                method: "POST",
+                data: form.serialize(), // Serialize form data
+                success: function(response) {
+                    console.log('Answer submitted successfully');
+                    window.location.reload();
+                },
+                error: function(xhr, status, error) {
+                    console.log('Error submitting answer');
+                }
+            });
+        }
+    });
 
 </script>
 @endsection
