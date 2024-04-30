@@ -268,11 +268,11 @@
 							</ul>
 						</div>
 
-						<div class="p-bio-box">
+						{{-- <div class="p-bio-box">
 							<div class="theme-title text-center mb-0">
 								<h2>Favorite
-                                    {{-- <img class="edit-icon" src="{{ asset('themeAssets/images/awesome-edit.svg') }}"
-                                    alt=""> --}}
+                                    <img class="edit-icon" src="{{ asset('themeAssets/images/awesome-edit.svg') }}"
+                                    alt="">
                                 </h2>
 								<img src="{{ asset('themeAssets/images/title-border.svg') }}" alt="">
 							</div>
@@ -286,7 +286,7 @@
 									<p class="value" id=""></p>
 								</li>
 							</ul>
-						</div>
+						</div> --}}
 					</div>
 				</div>
 			</div>

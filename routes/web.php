@@ -30,6 +30,13 @@ Route::get('/',[HomeController::class , 'index'])->name('firstPage');
 
 Route::get('/404', 'App\Http\Controllers\CmsController@page_notFound')->name('404Page');
 
+// CMS
+Route::get('/about-us', 'App\Http\Controllers\CmsController@aboutUs')->name('about-us');
+Route::get('/contact-us', 'App\Http\Controllers\CmsController@contactUs')->name('contact-us');
+Route::get('/terms', 'App\Http\Controllers\CmsController@terms')->name('terms');
+Route::get('/privacy', 'App\Http\Controllers\CmsController@privacy')->name('privacy');
+Route::get('/data', 'App\Http\Controllers\CmsController@data')->name('data');
+
 Route::group(['middleware' => ['checkUser:Customer']], function() {
 
     //Matches
@@ -40,12 +47,6 @@ Route::group(['middleware' => ['checkUser:Customer']], function() {
     Route::post('/get_search_matches', 'App\Http\Controllers\theme\MatchController@ajax_search')->name('searchMatches');
     Route::get('/your_match', 'App\Http\Controllers\theme\MatchController@yourMatch')->name('yourMatch');
 
-    // CMS
-    Route::get('/about-us', 'App\Http\Controllers\CmsController@aboutUs')->name('about-us');
-    Route::get('/contact-us', 'App\Http\Controllers\CmsController@contactUs')->name('contact-us');
-    Route::get('/terms', 'App\Http\Controllers\CmsController@terms')->name('terms');
-    Route::get('/privacy', 'App\Http\Controllers\CmsController@privacy')->name('privacy');
-    Route::get('/data', 'App\Http\Controllers\CmsController@data')->name('data');
 
     //Chat
     Route::get('/chat', 'App\Http\Controllers\theme\ChatController@index')->name('chatPage');

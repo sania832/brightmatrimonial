@@ -1,6 +1,6 @@
 		<div class="app-header header-shadow">
 			<div class="app-header__logo">
-				<a class="logo-src" href="{{ url('/') }}" target="_blank">
+				<a class="logo-src" @if(Auth::user()->user_type == "Customer") href="{{ url('/') }}" @endif target="_blank">
 					<img style="max-width: 140px;" src="{{asset('/adminAssets/images/logo.png')}}">
 				</a>
 				<div class="header__pane ml-auto">
