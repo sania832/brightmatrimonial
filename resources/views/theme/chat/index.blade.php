@@ -9,7 +9,7 @@
             @if(isset($interested_list) && count($interested_list) > 0)
                 <div class="container">
                     <div class="row">
-                        <div class="col-sm-12 col-lg-4 mb-4 mb-lg-0" style="overflow: hidden;">
+                        <div class="col-sm-12 col-lg-4" style="overflow: hidden;">
                             <div class="chat-box" id="interested-list" style="overflow-y: hidden;">
                                 <ul style="overflow-y: auto; width: calc(100%); scrollbar-width: none; -ms-overflow-style: none;">
                                     @foreach ($interested_list as $id => $value)
@@ -107,10 +107,10 @@
                         // console.error('Error fetching chat data:', error);
                     });
             });
-            // Trigger click event on the first interested user by default
-            if (index === 0) {
-                user.click();
-            }
+            // Trigger click event on the first interested user by default,
+            // if (index === 0) {
+            //     user.click();
+            // }
         });
     });
 

@@ -113,8 +113,9 @@
 					<div class="col-12 col-lg-6 mb-3 mb-xl-0">
 						<div class="p-bio-box">
 							<div class="theme-title text-center mb-0">
-								<h2>Basic Details <img class="edit-icon" src="{{ asset('themeAssets/images/awesome-edit.svg') }}"
-                                    alt=""></h2>
+								<h2>Basic Details
+                                    {{-- <img class="edit-icon" src="{{ asset('themeAssets/images/awesome-edit.svg') }}" alt=""> --}}
+                                </h2>
 								<img src="{{ asset('themeAssets/images/title-border.svg') }}" alt="">
 							</div>
 							<ul>
@@ -138,8 +139,10 @@
 						</div>
 						<div class="p-bio-box">
 							<div class="theme-title text-center mb-0">
-								<h2>Profile Details<img class="edit-icon" src="{{ asset('themeAssets/images/awesome-edit.svg') }}"
-                                    alt=""></h2>
+								<h2>Profile Details
+                                    {{-- <img class="edit-icon" src="{{ asset('themeAssets/images/awesome-edit.svg') }}"
+                                    alt=""> --}}
+                                </h2>
 								<img src="{{ asset('themeAssets/images/title-border.svg') }}" alt="">
 							</div>
 							<ul>
@@ -175,8 +178,10 @@
 						</div>
 						<div class="p-bio-box">
 							<div class="theme-title text-center mb-0">
-								<h2>Education & Career<img class="edit-icon" src="{{ asset('themeAssets/images/awesome-edit.svg') }}"
-                                    alt=""></h2>
+								<h2>Education & Career
+                                    {{-- <img class="edit-icon" src="{{ asset('themeAssets/images/awesome-edit.svg') }}"
+                                    alt=""> --}}
+                                </h2>
 								<img src="{{ asset('themeAssets/images/title-border.svg') }}" alt="">
 							</div>
 							<ul>
@@ -202,8 +207,10 @@
 					<div class="col-12 col-lg-6">
 						<div class="p-bio-box">
 							<div class="theme-title text-center mb-0">
-								<h2>Family Details <img class="edit-icon" src="{{ asset('themeAssets/images/awesome-edit.svg') }}"
-                                    alt=""></h2>
+								<h2>Family Details
+                                    {{-- <img class="edit-icon" src="{{ asset('themeAssets/images/awesome-edit.svg') }}"
+                                    alt=""> --}}
+                                </h2>
 								<img src="{{ asset('themeAssets/images/title-border.svg') }}" alt="">
 							</div>
 							<ul>
@@ -243,8 +250,10 @@
 						</div>
 						<div class="p-bio-box">
 							<div class="theme-title text-center mb-0">
-								<h2>About your Self <img class="edit-icon" src="{{ asset('themeAssets/images/awesome-edit.svg') }}"
-											alt=""></h2>
+								<h2>About your Self
+                                    {{-- <img class="edit-icon" src="{{ asset('themeAssets/images/awesome-edit.svg') }}"
+                                    alt=""> --}}
+                                </h2>
 								<img src="{{ asset('themeAssets/images/title-border.svg') }}" alt="">
 							</div>
 							<ul>
@@ -261,8 +270,10 @@
 
 						<div class="p-bio-box">
 							<div class="theme-title text-center mb-0">
-								<h2>Favorite <img class="edit-icon" src="{{ asset('themeAssets/images/awesome-edit.svg') }}"
-                                    alt=""></h2>
+								<h2>Favorite
+                                    {{-- <img class="edit-icon" src="{{ asset('themeAssets/images/awesome-edit.svg') }}"
+                                    alt=""> --}}
+                                </h2>
 								<img src="{{ asset('themeAssets/images/title-border.svg') }}" alt="">
 							</div>
 							<ul>

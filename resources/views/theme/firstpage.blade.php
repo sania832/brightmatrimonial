@@ -4,7 +4,7 @@
 	<main>
         <section id="banner-section">
 			<div class="container-fluid">
-                @if (Auth::user() && Auth::user()->user_type = "Customer")
+                @if (Auth::user() && Auth::user()->user_type == "Customer")
                     <form class="ai-signup" action="javascript:void(0);" method="POST" onsubmit="partnerPreference();">
                         @csrf
                         <div class="form-row">

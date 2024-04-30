@@ -1005,6 +1005,8 @@ class ProfileController extends CommonController
                 'looking_for'       => $request->looking_for,
 			];
 
+            Log::info($request);
+
 			// Get Data
 			$details = PartnerPreference::where(['user_id'=>$user->id])->first();
 			if($details){

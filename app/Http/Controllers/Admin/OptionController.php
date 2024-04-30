@@ -138,9 +138,9 @@ class OptionController extends CommonController
 	public function store(Request $request){
 		// dd($request);
 		$validator = Validator::make($request->all(), [
-			'slug'		=> 'required|min:3|max:99',
-			'title'		=> 'required|min:3|max:99',
-			'status'	=> 'required|min:3|max:99',
+			'slug'		=> 'required|min:3|max:150',
+			'title'		=> 'required|min:3|max:150',
+			'status'	=> 'required|min:3|max:150',
 		]);
 		if($validator->fails()){
 			return $this->ajaxValidationError(trans('common.error'),$validator->errors());

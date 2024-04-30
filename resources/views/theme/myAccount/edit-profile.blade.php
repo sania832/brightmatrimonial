@@ -189,14 +189,13 @@
                             </div>
                         </div>
                         {{-- community --}}
-
                         <div class="col-md-4">
                             <div class="position-relative form-group">
                                 <label for="community" class="">{{ trans('user_bio.community') }}</label>
                                 <select class="custom-select" name="community" id="community">
                                     <option value="" selected>Select</option>
                                     @foreach($options['community'] as $key => $value)
-                                        <option @if(old('community') == $key) selected @elseif($key == $data->community) selected @endif value="{{ $key }}">{{ $value }}</option>
+                                        <option @if(old('community') == $key || $key == $data->community) selected @endif value="{{ $key }}">{{ $value }}</option>
                                     @endforeach
                                 </select>
                                 @if ($errors->has('community'))
@@ -214,7 +213,7 @@
                                 <select class="custom-select" name="mother_tongue" id="mother_tongue">
                                     <option value="" selected>Select</option>
                                     @foreach($options['mother_tongue'] as $key => $value)
-                                        <option @if(old('mother_tounge') == $key) selected @elseif($key == $data->mother_tongue) selected @endif value="{{ $key }}">{{ $value }}</option>
+                                        <option @if(old('mother_tounge') == $key || $key == $data->mother_tongue) selected @endif value="{{ $key }}">{{ $value }}</option>
                                     @endforeach
                                 </select>
                                 <div class="validation-div" id="val-mother_tongue"></div>
@@ -228,7 +227,7 @@
                                 <select class="custom-select " name="state" id="state">
                                     <option value="" selected>Select</option>
                                     @foreach($options['state'] as $key => $value)
-                                        <option @if(old('state') == $key) selected @elseif($key == $data->state) selected @endif value="{{ $key }}">{{ $value }}</option>
+                                        <option @if(old('state') == $key || $key == $data->state) selected @endif value="{{ $key }}">{{ $value }}</option>
                                     @endforeach
                                 </select>
                                 @if ($errors->has('state'))
@@ -245,7 +244,7 @@
                                 <select class="custom-select " name="city" id="city">
                                     <option value="" selected>Select</option>
                                     @foreach($options['city'] as $key => $value)
-                                        <option @if(old('city') == $key) selected @elseif($key == $data->city) selected @endif value="{{ $key }}">{{ $value }}</option>
+                                        <option @if(old('city') == $key || $key == $data->city) selected @endif value="{{ $key }}">{{ $value }}</option>
                                     @endforeach
                                 </select>
                                 @if ($errors->has('state'))
@@ -358,7 +357,7 @@
                                 <select class="custom-select" name="highest_qualification" id="highest_qualification">
                                     <option value="" selected>Select</option>
                                     @foreach($options['highest_qualification'] as $key => $value)
-                                        <option @if(old('highest_qualification') == $key) selected @elseif($data->highest_qualificatin == $key) selected @endif value="{{ $key }}">{{ $value }}</option>
+                                        <option @if(old('highest_qualification') == $key || $data->highest_qualificatin == $key) selected @endif value="{{ $key }}">{{ $value }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -471,7 +470,7 @@
                                 <select class="custom-select " name="family_living_in" id="family_living_in">
                                     <option value="" selected>Select</option>
                                     @foreach($options['family_living_in'] as $key => $value)
-                                        <option @if(old('family_living_in') == $key) selected @elseif($key == $data->family_living_in) selected @endif value="{{ $key }}">{{ $value }}</option>
+                                        <option @if(old('family_living_in') == $key || $key == $data->family_living_in) selected @endif value="{{ $key }}">{{ $value }}</option>
                                     @endforeach
                                 </select>
                             </div>
