@@ -18,7 +18,7 @@
                                         <li>
                                             <a href="{{ route('userProfile',['id' => $value['id']]) }}" class="match-item">
                                                 <div class="col-12 col-md-2 match-img-container">
-                                                    <img class="match-img" src="{{ $value['image'] ? $value['image'] : '/images/default_image.webp' }}" alt="{{ $value['name'] ? $value['name'] : '' }}" style="width: 100px; height: 100px; object-fit: cover;">
+                                                    <img class="match-img" src="{{ $value['image'] ? $value['image'] : 'default/default-user.jpg' }}" alt="{{ $value['name'] ? $value['name'] : '' }}" style="width: 100px; height: 100px; object-fit: cover;">
                                                 </div>
                                                 <div class="match-info-container col-12 col-md-10">
                                                     <div class="match-info">
@@ -78,34 +78,42 @@
                 $('#' + section).empty();
                 if (value.data.length > 0) {
                     $.each(value.data, function(index, value) {
-                    htmlData += '<li>' +
-                        '<a href="{{ url("profile")}}/' + value.id + '" class="match-item">' +
-                            '<div class="col-12 col-md-2 match-img-container">' +
-                                '<img class="match-img" src="' + (value.image ? value.image : '/images/default_image.webp') + '" alt="' + (value.name ? value.name : '') + '" style="width: 100px; height: 100px; object-fit: cover;">' +
-                            '</div>' +
-                            '<div class="match-info-container col-12 col-md-10">' +
-                                '<div class="match-info">' +
-                                    '<h2>' + (value.name ? value.name : '') + '</h2>' +
-                                    '<p class="match-id">Profile ID : BG' + (value.id ? value.id : '') + '</p>' +
-                                    '<img class="match-info-img" src="{{ asset("themeAssets/images/title-border.svg") }}" alt="">' +
-                                    '<div class="row">' +
-                                        '<div class="col-sm-12 col-md-6"><p>' + value.bio.age + '</p></div>' +
-                                        '<div class="col-sm-12 col-md-6"><p>' + value.bio.city + '</p></div>' +
-                                        '<div class="col-sm-12 col-md-6"><p>' + value.bio.height + '</p></div>' +
-                                        '<div class="col-sm-12 col-md-6"><p>' + value.bio.state + '</p></div>' +
-                                        '<div class="col-sm-12 col-md-6"><p>' + value.bio.marital_status + '</p></div>' +
-                                        '<div class="col-sm-12 col-md-6"><p>' + value.bio.income + '</p></div>' +
-                                        '<div class="col-sm-12"><p>' + value.bio.occupation + '</p></div>' +
+                        var defaultImagePath = '{{ url('') }}' + '/images/default_user.jpg'; // Path to the default image within your assets
+
+                        var imageUrl = (value.image && /\.(?:jpg|jpeg|png|gif)$/.test(value.image)) ? value.image : defaultImagePath;
+                        var altText = value.name || '';
+
+                        var imageElement = '<img class="match-img" src="' + imageUrl + '" alt="' + altText + '" style="width: 100px; height: 100px; object-fit: cover;">';
+
+                        htmlData += '<li>' +
+                            '<a href="{{ url("profile")}}/' + value.id + '" class="match-item">' +
+                                '<div class="col-12 col-md-2 match-img-container">' +
+                                    imageElement +
+                                '</div>' +
+                                '<div class="match-info-container col-12 col-md-10">' +
+                                    '<div class="match-info">' +
+                                        '<h2>' + (value.name ? value.name : '') + '</h2>' +
+                                        '<p class="match-id">Profile ID : BG' + (value.id ? value.id : '') + '</p>' +
+                                        '<img class="match-info-img" src="{{ asset("themeAssets/images/title-border.svg") }}" alt="">' +
+                                        '<div class="row">' +
+                                            '<div class="col-sm-12 col-md-6"><p>' + value.age + '</p></div>' +
+                                            '<div class="col-sm-12 col-md-6"><p>' + value.city + '</p></div>' +
+                                            '<div class="col-sm-12 col-md-6"><p>' + value.height + '</p></div>' +
+                                            '<div class="col-sm-12 col-md-6"><p>' + value.state + '</p></div>' +
+                                            '<div class="col-sm-12 col-md-6"><p>' + value.marital_status + '</p></div>' +
+                                            '<div class="col-sm-12 col-md-6"><p>' + value.income + '</p></div>' +
+                                            // '<div class="col-sm-12"><p>' + value.occupation + '</p></div>' +
+                                        '</div>' +
                                     '</div>' +
                                 '</div>' +
-                            '</div>' +
-                        '</a>' +
-                    '</li>';
-                });
-
+                            '</a>' +
+                        '</li>';
+                    });
+                }else {
+                    // If no records found, display a message
+                    htmlData = '<p class="text-center p-2 rounded" style="background-color: rgba(211, 211, 211, 1); color: black;" >No records found.</p>';
                 }
-
-                $('#' + section).html(htmlData);
+			$('#search-list').html(htmlData);
             }
         });
     }

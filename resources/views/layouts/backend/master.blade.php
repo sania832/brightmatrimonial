@@ -15,19 +15,19 @@
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
   <!-- jQuery -->
-  <script src="{{asset('/adminAssets/scripts/jquery-3.5.0.min.js')}}"></script>
+  <script src="{{asset('adminAssets/scripts/jquery-3.5.0.min.js')}}"></script>
   
-  <link rel="stylesheet" href="{{asset('/adminAssets/main.d810cf0ae7f39f28f336.css')}}">
+  <link rel="stylesheet" href="{{asset('adminAssets/main.d810cf0ae7f39f28f336.css')}}">
   
   <!-- Sweetalert -->
-  <script src="{{asset('/adminAssets/sweetalert/sweetalert2.js')}}"></script>
+  <script src="{{asset('adminAssets/sweetalert/sweetalert2.js')}}"></script>
 
   <!-- CUSTOM CSS -->
-  <link rel="stylesheet" href="{{asset('/adminAssets/custom.css')}}" />
+  <link rel="stylesheet" href="{{asset('adminAssets/custom.css')}}" />
   
   <!-- CUSTOM JS -->
   <script>var token = '{{ csrf_token() }}'; </script>
-  <script src="{{asset('/adminAssets/scripts/custom.js') }}"></script>
+  <script src="{{asset('adminAssets/scripts/custom.js') }}"></script>
   
   @yield('css')
   
@@ -65,7 +65,7 @@
 	</div>
 	<!-- ./wrapper -->
 
-	<script src="{{asset('/adminAssets/scripts/main.d810cf0ae7f39f28f336.js') }}"></script>
+	<script src="{{asset('adminAssets/scripts/main.d810cf0ae7f39f28f336.js') }}"></script>
 	@yield('js')
 </body>
 </html>

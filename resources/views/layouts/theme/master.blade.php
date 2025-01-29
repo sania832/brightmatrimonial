@@ -11,13 +11,13 @@
 	<meta name="author" content="Bright Matrimony">
     <meta name="keywords" content="" />
     <meta name="description" content=""/>
-
+    
 	<!-- Favicons-->
-    <link rel="shortcut icon" href="{{ asset('favicon.png')}}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('/themeAssets/images/favicon.png')}}" type="image/x-icon">
     <link rel="apple-touch-icon" type="image/x-icon" href="img/apple-touch-icon-57x57-precomposed.png">
-    <link rel="apple-touch-icon" type="image/x-icon" sizes="72x72" href="{{ asset('themeAssets/images/apple-touch-icon-72x72-precomposed.png')}}">
-    <link rel="apple-touch-icon" type="image/x-icon" sizes="114x114" href="{{ asset('themeAssets/images/apple-touch-icon-114x114-precomposed.png')}}">
-    <link rel="apple-touch-icon" type="image/x-icon" sizes="144x144" href="{{ asset('themeAssets/images/apple-touch-icon-144x144-precomposed.png')}}">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="72x72" href="{{ asset('/themeAssets/images/apple-touch-icon-72x72-precomposed.png')}}">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="114x114" href="{{ asset('/themeAssets/images/apple-touch-icon-114x114-precomposed.png')}}">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="144x144" href="{{ asset('/themeAssets/images/apple-touch-icon-144x144-precomposed.png')}}">
 
     <!-- GOOGLE WEB FONT -->
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700&display=swap" rel="stylesheet">

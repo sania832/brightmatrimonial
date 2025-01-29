@@ -29,7 +29,7 @@ Route::prefix('customer')->group( function() {
 		Route::get('logout', 'App\Http\Controllers\Api\Customer\Auth\AuthController@logout');
 		Route::post('logout', 'App\Http\Controllers\Api\Customer\Auth\AuthController@logout');
 		Route::post('reset_password', 'App\Http\Controllers\Api\Customer\Auth\AuthController@reset_password');
-
+		Route::post('/support', 'App\Http\Controllers\UserSupportController@store');
 		//USER
 		Route::post('send_notification', 'App\Http\Controllers\Api\Customer\UserController@send_notification');
 		Route::get('profile', 'App\Http\Controllers\Api\Customer\UserController@profile');
@@ -50,6 +50,8 @@ Route::prefix('customer')->group( function() {
 		Route::post('save_viewed_match_history','App\Http\Controllers\Api\Customer\UserController@save_viewed_match');
 		Route::post('save_interest','App\Http\Controllers\Api\Customer\UserController@save_interest');
 		Route::get('get_articles','App\Http\Controllers\Api\Customer\UserController@get_articles');
+		Route::post('upload_profilePhoto', 'App\Http\Controllers\UserProfileController@uploadProfilePhoto');
+
 
 		Route::get('sent_interest_list','App\Http\Controllers\Api\Customer\UserController@sent_interestList');
 		Route::post('received_interest_list','App\Http\Controllers\Api\Customer\UserController@received_interestList');

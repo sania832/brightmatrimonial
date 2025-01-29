@@ -44,7 +44,9 @@ class BioDataResource extends JsonResource
 		$income 				= Option::where('id','=',$this->income)->pluck('title')->first();
 		$position 				= Option::where('id','=',$this->position)->pluck('title')->first();
 		$religion				= Option::where('id','=',$this->religion)->pluck('title')->first();
-		$cast 					= Option::where('id','=',$this->cast)->pluck('title')->first();
+		$cast 					= Option::where('id','=',$this->cast)->pluck('title')->first();	
+		$sub_cast				= Option::where('id','=',$this->sub_cast)->pluck('title')->first();
+
 		$father_occupation		= Option::where('id','=',$this->father_occupation)->pluck('title')->first();
 		$family_living_in		= City::where('id','=',$this->family_living_in)->pluck('name')->first();
 		$family_type			= Option::where('id','=',$this->family_type)->pluck('title')->first();
@@ -92,9 +94,10 @@ class BioDataResource extends JsonResource
 		// return parent::toArray($request);
 		return [
             'id'                		=> (string) $this->id,
+            'user_id'                   => (string) $this->user_id,
             'religion'             		=> $religion ? $religion : '',
             'gender'             		=> $gender ? $gender : '',
-            // 'community'					=> $community ? $community : '',
+            'community'					=> $community ? $community : '',
             'mother_tongue'             => $mother_tongue ? $mother_tongue : '',
             'state'             		=> $state ? $state : '',
             'city'             			=> $city ? $city : '',
@@ -103,15 +106,15 @@ class BioDataResource extends JsonResource
             'diet'						=> $diet ? $diet : '',
             'height'					=> $height ? $height : '',
             'user_type'					=> $user_type ? $user_type : '',
-            // 'horoscope_require'			=> $this->horoscope_require ? $this->horoscope_require : '',
-            // 'manglik'					=> $this->manglik ? $this->manglik : '',
+            'horoscope_require'			=> $this->horoscope_require ? $this->horoscope_require : '',
+            'manglik'					=> $this->manglik ? $this->manglik : '',
             'highest_qualification'		=> $highest_qualification ? $highest_qualification : '',
             'company_name'				=> $this->company_name ? $this->company_name : '',
             'income_type'				=> $this->income_type ? $this->income_type : '',
             'income'					=> $income ? $income : '',
             // 'position'					=> $position ? $position : '',
             'cast'						=> $cast ? $cast : '',
-            // 'sub_cast'					=> $this->sub_cast ? $this->sub_cast : '',
+            'sub_cast'					=> $sub_cast ? $sub_cast : '',
 
 			/* Family Details */
 			'family_type'				=> $family_type ? $family_type : '',
@@ -119,16 +122,16 @@ class BioDataResource extends JsonResource
             'brother'					=> $this->brother ? $this->brother : '0',
             'sister'					=> $this->sister ? $this->sister : '0',
             'family_living_in'			=> $family_living_in ? $family_living_in : '',
-            // 'family_bio'				=> $this->family_bio ? $this->family_bio : '',
-            // 'family_address'			=> $this->family_address ? $this->family_address : '',
-            // 'family_contact_no'			=> $this->family_contact_no ? $this->family_contact_no : '',
+            'family_bio'				=> $this->family_bio ? $this->family_bio : '',
+            'family_address'			=> $this->family_address ? $this->family_address : '',
+            'family_contact_no'			=> $this->family_contact_no ? $this->family_contact_no : '',
             'about'						=> $this->about ? $this->about : '',
 
 			// 'country_code'				=> $this->country_code ? $this->country_code : '',
             'mobile_no'					=> $contact_number  ? $contact_number  : '',
-            // 'document_type'				=> $this->document_type  ? $this->document_type  : '',
-            // 'document_number'			=> $this->document_number  ? $this->document_number  : '',
-            // 'document'					=> $this->document ? (string) asset('data/public/'. $this->document) : asset('public/'. config('constants.DEFAULT_THUMBNAIL')),
+            'document_type'				=> ($this->document_type == 1) ? 'Pan Card' : (($this->document_type == 2) ? 'Voter Card' : (($this->document_type == 3) ? 'Driving License' : '')),
+            'document_number'			=> $this->document_number  ? $this->document_number  : '',
+            'document'					=> $this->document ? (string) asset('bright-metromonial/public/'. $this->document) : asset('default/default_document.webp'),
 
 			'sexual_orientation'		=> $sexual_orientation ? $sexual_orientation : '',
 			// 'interest'					=> $interest ? $interest : '',

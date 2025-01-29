@@ -31,7 +31,8 @@ class AuthController extends BaseController
         $validator = Validator::make($request->all(), [
             //'country_code' => 'required|min:2|max:4',
             'username' => 'required|min:5|max:80',
-            'password' => 'required|min:8|max:25'
+            'password' => 'required|min:8|max:25',
+            'device_type' => 'nullable|in:android,iPhone'
         ]);
         if($validator->fails()){
             return $this->sendValidationError('', $validator->errors()->first());
@@ -53,7 +54,7 @@ class AuthController extends BaseController
 					DB::table('oauth_access_tokens')->where('user_id', $user->id)->update([ 'revoked' => true ]);
                 }
 
-				$data = $request->except('phone_number','password','user_type');
+				$data = $request->except('phone_number','password','user_type','username');
 				$createArray = array();
 
 				foreach ($data as $key => $value) {
@@ -62,7 +63,9 @@ class AuthController extends BaseController
 
 				$device_detail = DeviceDetail::where('user_id',Auth::user()->id)->first();
 				if($device_detail){
+				    // dd($createArray);
 					$device_detail->update($createArray);
+					
 				} else {
 					$createArray['user_id'] = Auth::user()->id;
 
@@ -85,6 +88,8 @@ class AuthController extends BaseController
 					if($step_data){
 						if($step_data->step){ $user->completed_step = $step_data->step; }
 						$user->bio_data = new BioDataResource($step_data);
+					}else{
+					    $user->bio_data = new BioDataResource(new UserBio());
 					}
 
 					return $this->sendResponse(new AuthUserResource($user), trans('customer_api.login_success'));

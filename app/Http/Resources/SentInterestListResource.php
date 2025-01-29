@@ -19,7 +19,7 @@ class SentInterestListResource extends JsonResource
             'id'		=> (string)$this->id,
             'user_id'	=> $this->person_id ? $this->person_id : '0',
             //'status'	=> $this->status ? $this->status : '',
-			'image'       	=> $this->profile_image ? (string) asset('data/public/'. $this->profile_image) : asset('public/'. config('constants.DEFAULT_THUMBNAIL')),
+			'image'       	=> $this->profile_image ? (string) asset('bright-metromonial/public/'. $this->profile_image) : asset('default/default-user.jpg'),
             'name'       	=> $this->name ? (string) $this->name : '',
             'bio'   		=> $this->bio ? new BioDataResource($this->bio) : null,
         ];

@@ -1,7 +1,7 @@
 		<div class="app-header header-shadow">
 			<div class="app-header__logo">
 				<a class="logo-src" @if(Auth::user()->user_type == "Customer") href="{{ url('/') }}" @endif target="_blank">
-					<img style="max-width: 140px;" src="{{asset('/adminAssets/images/logo.png')}}">
+					<img style="max-width: 140px;" src="{{asset('adminAssets/images/logo.png')}}">
 				</a>
 				<div class="header__pane ml-auto">
 					<div>
@@ -105,42 +105,42 @@
                                                                             <div class="avatar-wrapper mt-2 avatar-wrapper-overlap">
                                                                                 <div class="avatar-icon-wrapper avatar-icon-sm">
                                                                                     <div class="avatar-icon">
-                                                                                        <img src="{{asset('public/adminAssets/images/avatars/1.jpg')}}" alt="">
+                                                                                        <img src="{{asset('adminAssets/images/avatars/1.jpg')}}" alt="">
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="avatar-icon-wrapper avatar-icon-sm">
                                                                                     <div class="avatar-icon">
-                                                                                        <img src="{{asset('public/adminAssets/images/avatars/2.jpg')}}" alt="">
+                                                                                        <img src="{{asset('adminAssets/images/avatars/2.jpg')}}" alt="">
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="avatar-icon-wrapper avatar-icon-sm">
                                                                                     <div class="avatar-icon">
-                                                                                        <img src="{{asset('public/adminAssets/images/avatars/3.jpg')}}" alt="">
+                                                                                        <img src="{{asset('adminAssets/images/avatars/3.jpg')}}" alt="">
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="avatar-icon-wrapper avatar-icon-sm">
                                                                                     <div class="avatar-icon">
-                                                                                        <img src="{{asset('public/adminAssets/images/avatars/4.jpg')}}" alt="">
+                                                                                        <img src="{{asset('adminAssets/images/avatars/4.jpg')}}" alt="">
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="avatar-icon-wrapper avatar-icon-sm">
                                                                                     <div class="avatar-icon">
-                                                                                        <img src="{{asset('public/adminAssets/images/avatars/5.jpg')}}" alt="">
+                                                                                        <img src="{{asset('adminAssets/images/avatars/5.jpg')}}" alt="">
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="avatar-icon-wrapper avatar-icon-sm">
                                                                                     <div class="avatar-icon">
-                                                                                        <img src="{{asset('public/adminAssets/images/avatars/9.jpg')}}" alt="">
+                                                                                        <img src="{{asset('adminAssets/images/avatars/9.jpg')}}" alt="">
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="avatar-icon-wrapper avatar-icon-sm">
                                                                                     <div class="avatar-icon">
-                                                                                        <img src="{{asset('public/adminAssets/images/avatars/7.jpg')}}" alt="">
+                                                                                        <img src="{{asset('adminAssets/images/avatars/7.jpg')}}" alt="">
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="avatar-icon-wrapper avatar-icon-sm">
                                                                                     <div class="avatar-icon">
-                                                                                        <img src="{{asset('public/adminAssets/images/avatars/8.jpg')}}" alt="">
+                                                                                        <img src="{{asset('adminAssets/images/avatars/8.jpg')}}" alt="">
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="avatar-icon-wrapper avatar-icon-sm avatar-icon-add">
@@ -331,7 +331,7 @@
 							<div tabindex="-1" role="menu" aria-hidden="true" class="rm-pointers dropdown-menu dropdown-menu-right">
 								<div class="dropdown-menu-header">
 									<div class="dropdown-menu-header-inner pt-4 pb-4 bg-focus">
-										<div class="menu-header-image opacity-05" style="background-image: url('{{asset('/adminAssets/images/dropdown-header/city2.jpg')}}');"></div>
+										<div class="menu-header-image opacity-05" style="background-image: url('{{asset('adminAssets/images/dropdown-header/city2.jpg')}}');"></div>
 										<div class="menu-header-content text-center text-white">
 											<h6 class="menu-header-subtitle mt-0"> Choose Language</h6>
 										</div>
@@ -358,17 +358,17 @@
 								<div class="widget-content-left">
 									<div class="btn-group">
 										<a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="p-0 btn">
-											<img width="42" class="rounded-circle" src="{{ asset(config('constants.DEFAULT_USER_IMAGE')) }}" alt=""> <i class="fa fa-angle-down ml-2 opacity-8"></i>
+											<img width="42" class="rounded-circle" src="{{ Auth::user()->gender == "Male" ? asset('bright-metromonial/public/themeAssets/images/profile-default-male.jpg') : asset('bright-metromonial/public/themeAssets/images/profile-default-female.jpg') }}" alt=""> <i class="fa fa-angle-down ml-2 opacity-8"></i>
 										</a>
 										<div tabindex="-1" role="menu" aria-hidden="true" class="rm-pointers dropdown-menu-lg dropdown-menu dropdown-menu-right">
 											<div class="dropdown-menu-header">
 												<div class="dropdown-menu-header-inner bg-info">
-													<div class="menu-header-image opacity-2" style="background-image: url('{{asset('/adminAssets/images/dropdown-header/city3.jpg')}}');"></div>
+													<div class="menu-header-image opacity-2" style="background-image: url('{{asset('adminAssets/images/dropdown-header/city3.jpg')}}');"></div>
 													<div class="menu-header-content text-left">
 														<div class="widget-content p-0">
 															<div class="widget-content-wrapper">
 																<div class="widget-content-left mr-3">
-																	<img width="42" class="rounded-circle" src="{{ asset(config('constants.DEFAULT_USER_IMAGE')) }}" alt="">
+																	<img width="42" class="rounded-circle" src="{{ Auth::user()->gender == "Male" ? asset('bright-metromonial/public/themeAssets/images/profile-default-male.jpg') : asset('bright-metromonial/public/themeAssets/images/profile-default-female.jpg') }}" alt="">
 																</div>
 																<div class="widget-content-left">
 																	<div class="widget-heading">{{ Auth::user()->name }}</div>

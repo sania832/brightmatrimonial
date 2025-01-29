@@ -41,9 +41,9 @@
                             <div class="position-relative form-group">
                                 <label for="profile_image">{{ trans('users.profile_picture') }}</label><br>
                                 @if($user['profile_image'])
-                                    <img width="122" height="122" class="rounded-circle" id="profile_image_preview" src="{{ asset($user['profile_image']) }}">
+                                    <img width="122" height="122" class="rounded-circle" id="profile_image_preview" src="{{ asset('bright-metromonial/public/' . $user['profile_image']) }}">
                                 @else
-                                    <img width="122" height="122" class="rounded-circle" id="profile_image_preview" src="{{ asset('placeholder_profile_image.png') }}">
+                                    <img width="122" height="122" class="rounded-circle" id="profile_image_preview" src="{{ asset('default/default-user.jpg') }}">
                                 @endif
                                 <!-- Input field for uploading profile image -->
                                 <input class="pt-3" type="file" id="profile_image" name="profile_image" accept="image/*" onchange="previewImage(this, 'profile_image_preview')">
@@ -61,9 +61,9 @@
                             <div class="position-relative form-group">
                                 <label for="cover_image">{{ trans('users.cover_image') }}</label><br>
                                 @if($user['cover_image'])
-                                    <img style="max-height:122px;" id="cover_image_preview" src="{{ asset($user['cover_image']) }}">
+                                    <img style="max-height:122px;" id="cover_image_preview" src="{{ asset('bright-metromonial/public/' . $user['cover_image']) }}">
                                 @else
-                                    <img style="max-height:122px;" id="cover_image_preview" src="{{ asset('placeholder_cover_image.png') }}">
+                                    <img style="max-height:122px;" id="cover_image_preview" src="{{ asset('default/default-user.jpg') }}">
                                 @endif
                                 <!-- Input field for uploading cover image -->
                                 <input type="file" id="cover_image" name="cover_image" accept="image/*" onchange="previewImage(this, 'cover_image_preview')">
@@ -209,14 +209,14 @@
 
                         <div class="col-md-4">
                             <div class="position-relative form-group">
-                                <label for="mother_tongue" class="">{{ trans('user_bio.mother_tongue') }}</label>
-                                <select class="custom-select" name="mother_tongue" id="mother_tongue">
+                                <label for="mother_tounge" class="">Mother Tounge</label>
+                                <select class="custom-select" name="mother_tounge" id="mother_tounge">
                                     <option value="" selected>Select</option>
-                                    @foreach($options['mother_tongue'] as $key => $value)
-                                        <option @if(old('mother_tounge') == $key || $key == $data->mother_tongue) selected @endif value="{{ $key }}">{{ $value }}</option>
+                                    @foreach($options['mother_tounge'] as $key => $value)
+                                        <option @if(old('mother_tounge') == $key || $key == $data->mother_tounge) selected @endif value="{{ $key }}">{{ $value }}</option>
                                     @endforeach
                                 </select>
-                                <div class="validation-div" id="val-mother_tongue"></div>
+                                <div class="validation-div" id="val-mother_tounge"></div>
                             </div>
                         </div>
                         {{-- living with family --}}
@@ -277,12 +277,9 @@
                                 <label for="diet" class="">{{ trans('user_bio.diet') }}</label>
                                 <select class="custom-select " name="diet" id="marital_status">
                                     <option value="" selected>Select</option>
-                                    <option @if($options['diet'] = 'Vegitarian' || old('diet') == 'Vegitarian') selected @endif value="Vegitarian">Vegitarian</option>
-                                    <option @if($options['diet'] = 'Non-Vegitarian' || old('diet') == 'Non-Vegitarian') selected @endif value="Non-Vegitarian">Non-Vegitarian</option>
-                                    <option @if($options['diet'] = 'Ocationally-Non-Vegitarian' || old('diet') == 'Ocationally-Non-Vegitarian') selected @endif value="Ocationally-Non-Vegitarian">Ocationally-Non-Vegitarian</option>
-                                    <option @if($options['diet'] = 'Eggitarian' || old('diet') == 'Eggitarian') selected @endif value="Eggitarian">Eggitarian</option>
-                                    <option @if($options['diet'] = 'Jain' || old('diet') == 'Jain') selected @endif value="Jain">Jain</option>
-                                    <option @if($options['diet'] = 'Vegan' || old('diet') == 'Vegan') selected @endif value="Vegan">Vegan</option>
+                                    @foreach($options['diet'] as $key => $value)
+                                        <option @if($data->diet == $key || old('diet') == $key) selected @endif value="{{ $key }}">{{ $value }}</option>
+                                    @endforeach
                                 </select>
                                 @if ($errors->has('diet'))
                                     <div class="alert alert-danger">
@@ -678,29 +675,22 @@
                         </div>
                         {{-- document image --}}
                         <div class="col-md-4">
-                            <label for="document">Document Image</label>
-                            <div class="form-group">
-                                <input type="file" class="form-control" id="document" name="document" placeholder="Upload Document"
-                                @if($data['document']) value="{{ $data['document'] }}" @endif>
-                                {{-- @if($data['document']) <input type="hidden" name="photo" value="{{ $data['document'] }}"/> @endif --}}
-                                {{-- @if($data['document']) <div class="valid-feedback" style="display:block;">{{ $data['document'] }}</div> @endif --}}
-                                <div class="row">
-                                    @if($data['document'])
-                                        <div class="col-6">
-                                            <img id="document_preview" alt="preview image" style="max-height: 150px;"  src="{{ 'bright-metromonial/public/uploads/2024/04/4d8699157abbd5624731d1373e67df07.png'.asset($data['document'])}}" />
-                                        </div>
-                                    @else
-                                        <div class="col-6">
-                                            <img id="document_preview" src="" alt="preview image" style="max-height: 150px;display:none;">
-                                        </div>
-                                    @endif
-                                </div>
+                            <div class="position-relative form-group">
+                                <label for="document">Document Image</label><br>    
+                            <!-- Input field for uploading document image -->
+                                <input class="" type="file" id="document" name="document" accept="image/*" onchange="previewImage(this, 'document_preview')">
+                                <input class="" type="hidden" name="document" value="{{ $user['document'] }}">
+                                @if($data['document'])
+                                    <img class="pt-3" width="122" height="122" id="document_preview" src="{{ asset('bright-metromonial/public/' . $data['document']) }}">
+                                @else
+                                    <img class="pt-3" width="122" height="122" id="document_preview" src="{{ asset('default/default_document.webp') }}">
+                                @endif
                                 @if ($errors->has('document'))
-                                <div class="alert alert-danger">
-                                    {{$errors->first('document')}}
-                                </div>
-                            @endif
-                            </div>
+                                    <div class="alert alert-danger">
+                                        {{$errors->first('document')}}
+                                    </div>
+                                @endif
+                            </div>    
                         </div>
                     </div>
                     <!-- Centered submit button -->

@@ -35,10 +35,10 @@
 										<div class="validation-div val-religion"></div>
 									</div>
 									<div class="form-group">
-										<label for="MotherTongue">Mother Tongue</label>
-										<select class="custom-select" name="mother_tongue" id="mother_tongue">
+										<label for="mother_tounge">Mother Tounge</label>
+										<select class="custom-select" name="mother_tounge" id="mother_tounge">
 											<option value="" selected>Select</option>
-											@foreach($options['mother_tongue'] as $key => $value)
+											@foreach($options['mother_tounge'] as $key => $value)
 												<option value="{{ $key }}">{{ $value }}</option>
 											@endforeach
 										</select>

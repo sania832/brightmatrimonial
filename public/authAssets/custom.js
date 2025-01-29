@@ -144,7 +144,7 @@ function partnerPreference(){
 	data.append('from_age', $('.ai-signup #from_age').val());
 	data.append('to_age', $('.ai-signup #to_age').val());
 	data.append('religion', $('.ai-signup #religion').val());
-	data.append('mother_tounge', $('.ai-signup #mother_tounge').val());
+	data.append('mother_tongue', $('.ai-signup #mother_tongue').val());
 
     console.log("Data to be sent:");
 	for (const [key, value] of data.entries()) {

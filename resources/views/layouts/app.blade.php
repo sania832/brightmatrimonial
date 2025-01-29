@@ -9,10 +9,27 @@
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Nunito+Sans:wght@400&display=swap" rel="stylesheet">
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+        <style>
+            /* Apply the fonts */
+            h1, h2, h3, h4, h5, h6 {
+                font-family: 'Playfair Display', serif;
+                font-weight: 700; /* Bold for headings */
+            }
+
+            h4 {
+                font-weight: 400; /* Regular for subheading */
+            }
+
+            p, li, span, div {
+                font-family: 'Nunito Sans', sans-serif;
+                font-weight: 400; /* Regular weight for body text */
+            }
+        </style>
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">

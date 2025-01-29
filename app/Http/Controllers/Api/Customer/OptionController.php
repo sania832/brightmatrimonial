@@ -23,23 +23,32 @@ class OptionController extends BaseController
 	*/
 	public function option_list(Request $request)
 	{
+	    
 		$validator = Validator::make($request->all(), [
-		  'type' => 'required'
+		  'type' => 'nullable'
 		]);
+		
 		if($validator->fails()){
 		  return $this->sendValidationError('', $validator->errors()->first());
 		}
 
 		try{
+		    if(!$request?->type){
+		        $data = Option::all()->groupBy('type')->map(function ($group) {
+                    return OptionListResource::collection($group);
+                })->toArray();
+                return $this->sendArrayResponse($data, trans('customer_api.data_found_success'));
+		    }
+		    
 			// Get Data
 			$query = Option::query();
-
+            
 			if($request->parent_id){
                 $query->where(['parent' => $request->parent_id]);
 			}
 
 			$data = OptionListResource::collection($query->where(['type'=>$request->type])->get());
-
+            
 			if(count($data)>0){
 				return $this->sendArrayResponse($data, trans('customer_api.data_found_success'));
 			}

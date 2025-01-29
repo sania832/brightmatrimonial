@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
 use App\Models\Helpers\CommonHelper;
 use App\Http\Controllers\Api\BaseController;
+use Illuminate\Support\Facades\Log;
 
 use App\Models\User;
 use App\Models\Friend;
@@ -64,10 +65,13 @@ class UserController extends BaseController
 
             // GET USER DATA
             $user = User::where('id', $user_id)->first();
+            
 			if($user){
 				$bio_data = UserBio::where('user_id',$user->id)->first();
 				if($bio_data){
 					$user->bio_data = new BioDataResource($bio_data);
+				}else{
+				    $user->bio_data = new BioDataResource(new UserBio());
 				}
 			}
             return $this->sendResponse(new UserResource($user), trans('customer_api.data_found_success'));
@@ -322,15 +326,16 @@ class UserController extends BaseController
         if(empty($user)){
             return $this->sendError('',trans('customer_api.invalid_user'));
         }
-
+    
         DB::beginTransaction();
 		try{
 			$query = GalleryImage::where(['id'=>$request->id, 'user_id'=>$user->id])->delete();
+			
 			if($query){
 				DB::commit();
 				return $this->sendResponse([], trans('common.delete_success'));
 			}
-			$this->sendResponse([], trans('common.delete_error'));
+			return $this->sendResponse([], trans('common.delete_error'));
 		}catch(\Exception $e){
             DB::rollback();
 			return $this->sendError('',$e);
@@ -649,24 +654,29 @@ class UserController extends BaseController
 
 
 			$gender = [ ];
-			if($user->bio->relation_type == "2") { // LGBTQ
+			if($user->bio?->relation_type == "2") { // LGBTQ
 				$gender = ["Female", "Male"];
-			} else if($user->bio->relation_type == "3") { //Heterosexual
+			} else if($user->bio?->relation_type == "3") { //Heterosexual
 				if($user->gender == "Male"){
 					$gender = ["Female"];
 				} else {
 					$gender = ["Male"];
 				}
-			} else if($user->bio->relation_type == "4") { //Asexual
+			} else if($user->bio?->relation_type == "4") { //Asexual
 				if($user->gender == "Male"){
 					$gender = ["Male"];
 				} else {
 					$gender = ["Female"];
 				}
-			} else if($user->bio->relation_type == "5"){ //Bisexual
+			} else if($user->bio?->relation_type == "5"){ //Bisexual
 					 $gender = ["Female", "Male"];
 			} else {
-				$gender = ["Male" => "Female", "Female" => "Male"];
+			    if($user->gender == "Male"){
+					$gender = ["Female"];
+				} else {
+					$gender = ["Male"];
+				}
+				// $gender = ["Male" => "Female", "Female" => "Male"];
 			}
 
 
@@ -674,10 +684,10 @@ class UserController extends BaseController
 
 			// GET profile_completion
             $data['profile_completion']     = $this->calculate_profile() ?? "0";
-
+            
 			// GET Daily Matches
             $data['daily_matches'] 			= MatchesListResource::collection(User::where(['user_type'=>'Customer'])->where("id", "!=", $user->id)->whereIn('gender', $gender)->offset($offset)->limit(10)->inRandomOrder()->get());
-
+			
 			// GET Just Joined
             $data['question_matches']		= QuestionMatchesListResource::collection(Matches::select('t2.*')->join('users as t2', 't2.id', '=', 'matches.match_id')
 			->whereIn('t2.gender' , $gender )
@@ -695,6 +705,7 @@ class UserController extends BaseController
 			return $this->sendResponse($data, trans('customer_api.data_found_success'));
 
         }catch(\Exception $e){
+            dd($e);
             DB::rollback();
             return $this->sendError('',trans('customer_api.data_found_empty'));
         }
@@ -742,9 +753,10 @@ class UserController extends BaseController
             }
 
 			$query = Article::all();
-
+            
 			return $this->sendArrayResponse($query, trans('customer_api.data_found_success'));
         }catch(\Exception $e){
+            
             DB::rollback();
             return $this->sendError('',trans('customer_api.data_found_empty'));
         }
@@ -1099,43 +1111,63 @@ class UserController extends BaseController
     }
 
 	/**
-	* Blocked Interest List
-	*
-	* @return \Illuminate\Http\Response
-	*/
-    public function blocked_interestList(Request $request)
-    {
-		$page   	 = $request->page ?? 1;
-		$count  	 = $request->count ?? '100';
+ * Blocked Interest List
+ *
+ * @return \Illuminate\Http\Response
+ */
+public function blocked_interestList(Request $request)
+{
+    $page = $request->page ?? 1;
+    $count = $request->count ?? '100';
 
-		if ($page <= 0){ $page = 1; }
-		$start = $count * ($page - 1);
-
-        $user = Auth::user();
-        if(empty($user)){
-            return $this->sendError('',trans('customer_api.invalid_user'));
-        }
-
-        try{
-
-			$query	= User::select('users.*','t2.status','t2.person_id');
-
-			//User Check
-			$query->join('interested as t2', 't2.user_id', '=', 'users.id');
-			$query->where(['t2.person_id'=>$user->id]);
-
-			$query->where('t2.status', 'blocked');
-
-			$details = $query->inRandomOrder()->offset($start)->limit($count)->get();
-
-            if(count($details)>0){
-				return $this->sendArrayResponse(BlockedInterestListResource::collection($details), trans('customer_api.data_found_success'));
-			}
-			return $this->sendArrayResponse([], trans('customer_api.data_found_empty'));
-		}catch(\Exception $e){
-            return $this->sendError([], $e->getMessage());
-        }
+    if ($page <= 0) {
+        $page = 1;
     }
+    $start = $count * ($page - 1);
+
+    $user = Auth::user();
+
+    // Debugging: Check if user is authenticated
+    if (empty($user)) {
+        \Log::debug('Blocked Interest List: User is not authenticated');
+        return $this->sendError('', trans('customer_api.invalid_user'));
+    }
+
+    // Debugging: Log user information
+    \Log::debug('Blocked Interest List: Authenticated user details', ['user_id' => $user->id, 'email' => $user->email]);
+
+    try {
+        $query = User::select('users.*', 't2.status', 't2.person_id');
+
+        // Debugging: Before joining the table
+        \Log::debug('Blocked Interest List: Building query before join');
+
+        // User Check
+        $query->join('interested as t2', 't2.user_id', '=', 'users.id');
+        $query->where(['t2.person_id' => $user->id]);
+
+        // Debugging: After joining
+        \Log::debug('Blocked Interest List: Query after join', ['query' => $query->toSql()]);
+
+        $query->where('t2.status', 'blocked');
+
+        // Fetch data
+        $details = $query->inRandomOrder()->offset($start)->limit($count)->get();
+
+        // Debugging: Log query results
+        \Log::debug('Blocked Interest List: Query results', ['details' => $details]);
+
+        if (count($details) > 0) {
+            return $this->sendArrayResponse(BlockedInterestListResource::collection($details), trans('customer_api.data_found_success'));
+        }
+
+        return $this->sendArrayResponse([], trans('customer_api.data_found_empty'));
+    } catch (\Exception $e) {
+        // Debugging: Log exception
+        \Log::error('Blocked Interest List: Exception occurred', ['message' => $e->getMessage()]);
+        return $this->sendError([], $e->getMessage());
+    }
+}
 
 	/**
 	* Change Interest Status
@@ -1274,104 +1306,110 @@ class UserController extends BaseController
 	* Saved Partner Preference
 	* @return \Illuminate\Http\Response
 	*/
-    public function savePartnerPreference(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            // 'height'			=> 'required',
-            // 'marital_status'	=> 'required',
-            'start_age'			=> 'required',
-            'end_age'			=> 'required',
-            'looking_for'       => 'required',
-            'religion'          => 'required',
-            //'religion'			=> 'required',
-            //'community'			=> 'required',
-            'mother_tounge'		=> 'required',
-            //'city_living_in'	=> 'required',
-            //'qualification'		=> 'required',
-            //'working_with'		=> 'required',
-            //'profession_area'	=> 'required',
-            //'income'			=> 'required',
-            //'diet'				=> 'required',
-        ]);
-        if($validator->fails()){
-            return $this->sendValidationError('', $validator->errors()->first());
-        }
-
-        $user = Auth::user();
-        if(empty($user)){
-            return $this->sendError('',trans('customer_api.invalid_user'));
-        }
-
-        DB::beginTransaction();
-		try{
-
+	public function savePartnerPreference(Request $request)
+	{
+		$validator = Validator::make($request->all(), [
+			'start_age' => 'required',
+			'end_age' => 'required',
+			'looking_for' => 'required',
+			'religion' => 'required',
+			'mother_tongue' => 'required',
+		]);
+	
+		if ($validator->fails()) {
+			return $this->sendValidationError('', $validator->errors()->first());
+		}
+	
+		$user = Auth::user();
+		if (empty($user)) {
+			return $this->sendError('', trans('customer_api.invalid_user'));
+		}
+	
+		DB::beginTransaction();
+		try {
 			$data = [
-				'user_id'			=> $user->id,
-				// 'height'			=> $request->height,
-				// 'marital_status'	=> $request->marital_status,
-				'religion'			=> $request->religion,
-				//'community'		=> $request->community,
-				'start_age'			=> $request->start_age,
-				'end_age'			=> $request->end_age,
-				'mother_tongue'		=> $request->mother_tongue,
-				// 'state_living_in'	=> $request->state_living_in,
-				// 'city_living_in'	=> $request->city_living_in,
-				// 'qualification'		=> $request->qualification,
-				// 'working_with'		=> $request->working_with,
-				// 'profession_area'	=> $request->profession_area,
-				// 'income'			=> $request->income,
-				// 'diet'				=> $request->diet,
-                'looking_for'       => $request->looking_for,
+				'user_id' => $user->id,
+				'religion' => $request->religion,
+				'start_age' => $request->start_age,
+				'end_age' => $request->end_age,
+				'mother_tongue' => $request->mother_tongue,
+				'looking_for' => $request->looking_for,
 			];
-
-			// Get Data
-			$details = PartnerPreference::where(['user_id'=>$user->id])->first();
-			if($details){
-				$query = PartnerPreference::where(['user_id'=>$user->id])->update($data);
-				if($query){
-
-					User::where('id',$user->id)->update(['step_complete' => 7]);
+	
+			// Log the data being saved
+			Log::info('Saving partner preference data:', $data);
+	
+			$details = PartnerPreference::where(['user_id' => $user->id])->first();
+			if ($details) {
+				// Update existing record
+				$query = PartnerPreference::where(['user_id' => $user->id])->update($data);
+				if ($query) {
+					User::where('id', $user->id)->update(['step_complete' => 7]);
 					DB::commit();
-					return $this->sendResponse([], trans('customer_api.saved_success'));
+	
+					// Log success
+					Log::info('Partner preference updated successfully for user ID ' . $user->id);
+	
+					return $this->sendResponse($data, trans('customer_api.saved_success'));
 				}
-			}else{
+			} else {
+				// Create new record
 				$query = PartnerPreference::create($data);
-				if($query){
-
-					User::where('id',$user->id)->update(['step_complete' => 7]);
+				if ($query) {
+					User::where('id', $user->id)->update(['step_complete' => 7]);
 					DB::commit();
-					return $this->sendResponse([], trans('customer_api.saved_success'));
+	
+					// Log success
+					Log::info('Partner preference created successfully for user ID ' . $user->id);
+	
+					return $this->sendResponse($data, trans('customer_api.saved_success'));
 				}
 			}
-
+	
 			DB::rollback();
-			return $this->sendError('',trans('customer_api.update_error'));
-		}catch(\Exception $e){
-            DB::rollback();
+			return $this->sendError('', trans('customer_api.update_error'));
+		} catch (\Exception $e) {
+			DB::rollback();
+	
+			// Log the exception
+			Log::error('Error saving partner preference for user ID ' . $user->id . ': ' . $e->getMessage());
+	
 			return $this->sendError([], $e->getMessage());
-        }
-    }
+		}
+	}
 
 	/**
-	* Get Partner Preference List
-	* @return \Illuminate\Http\Response
-	*/
-    public function partnerPreferences(Request $request)
-    {
-        $user = Auth::user();
-        if(empty($user)){
-            return $this->sendError('',trans('customer_api.invalid_user'));
+ * Get Partner Preference List
+ * @return \Illuminate\Http\Response
+ */
+public function partnerPreferences(Request $request)
+{
+    $user = Auth::user();
+    if (empty($user)) {
+        return $this->sendError('', trans('customer_api.invalid_user'));
+    }
+
+    try {
+        // Get Data
+        $details = PartnerPreference::where(['user_id' => $user->id])->first();
+        
+        if ($details) {
+            // Log the details (optional)
+            \Log::info('Partner Preference Details:', ['user_id' => $user->id, 'details' => $details]);
+
+            return $this->sendResponse(new PartnerPreferenceResource($details), trans('customer_api.data_found_success'));
         }
 
-        try{
-			// Get Data
-			$details = PartnerPreference::where(['user_id'=>$user->id])->first();
-			if($details){
-				return $this->sendResponse(new PartnerPreferenceResource($details), trans('customer_api.data_found_success'));
-			}
-			return $this->sendResponse([], trans('customer_api.data_found_empty'));
-		}catch(\Exception $e){
-            return $this->sendError([], $e->getMessage());
-        }
+        // Log that no data was found (optional)
+        \Log::info('No Partner Preference found for user:', ['user_id' => $user->id]);
+
+        return $this->sendResponse([], trans('customer_api.data_found_empty'));
+    } catch (\Exception $e) {
+        // Log the error
+        \Log::error('Error fetching Partner Preference:', ['user_id' => $user->id, 'error' => $e->getMessage()]);
+
+        return $this->sendError([], $e->getMessage());
     }
+}
+
 }

@@ -75,21 +75,21 @@ class MatchController extends BaseController
 		// $gender = [Male => Female, Female => Male]
 		try{
 			$gender = [];
-			if($user->bio->relation_type == "2") { // LGBTQ
+			if($user->bio?->relation_type == "2") { // LGBTQ
 				$gender = ["Female", "Male"];
-			} else if($user->bio->relation_type == "3") { //Heterosexual
+			} else if($user->bio?->relation_type == "3") { //Heterosexual
 				if($user->gender == "Male"){
 					$gender = ["Female"];
 				} else {
 					$gender = ["Male"];
 				}
-			} else if($user->bio->relation_type == "4") { //Asexual
+			} else if($user->bio?->relation_type == "4") { //Asexual
 				if($user->gender == "Male"){
 					$gender = ["Male"];
 				} else {
 					$gender = ["Female"];
 				}
-			} else if($user->bio->relation_type == "5"){ //Bisexual
+			} else if($user->bio?->relation_type == "5"){ //Bisexual
 					 $gender = ["Female", "Male"];
 			} else {
 				$gender = ["Male" => "Female", "Female" => "Male"];
@@ -97,24 +97,21 @@ class MatchController extends BaseController
 
 			if($type == 'question-match'){
 				$query = Matches::select('t2.*')->join('users as t2', 't2.id', '=', 'matches.match_id')
-												->whereIn('t2.gender' , $gender )
-												->where('user_id', '=', $user->id)
-												// ->groupBy('matches.match_id')
-												->orderBy('matches.id', 'ASC')
-												->offset($offset)
-												->limit($count)
-												->get();
-
-												$this->refreshMatches();
-			}else if($type == 'daily'){
-
-			$query = User::where(['user_type'=>'Customer'])
-						->where("id", "!=", $user->id)
-						->whereIn('gender', $gender)
-						->offset($offset)->limit(10)
-						->inRandomOrder()
+						->whereIn('t2.gender' , $gender )
+						->where('user_id', '=', $user->id)
+						// ->groupBy('matches.match_id')
+						->orderBy('matches.id', 'ASC')
+						->offset($offset)
+						->limit($count)
 						->get();
-
+						$this->refreshMatches();
+			}else if($type == 'daily'){
+    			$query = User::where(['user_type'=>'Customer'])
+    						->where("id", "!=", $user->id)
+    						->whereIn('gender', $gender)
+    						->offset($offset)->limit(10)
+    						->inRandomOrder()
+    						->get();
 			}else if($type == 'just-joined'){
 				$query = User::where(['user_type'=>'Customer'])
 							->whereIn('gender', $gender)
@@ -124,7 +121,6 @@ class MatchController extends BaseController
 							->limit(10)
 							->inRandomOrder()
 							->get();
-
 			}else if($type == 'verified'){
 				$query = User::where(['user_type'=>'Customer'])
 							->whereIn('gender', $gender)
@@ -134,12 +130,9 @@ class MatchController extends BaseController
 							->limit($count)
 							->inRandomOrder()
 							->get();
-
 			}else{
 				return $this->sendArrayResponse([], trans('customer_api.data_found_empty'));
 			}
-
-            // dd($query);
 
 			if(count($query)>0){
 				return $this->sendArrayResponse(MatchesListResource::collection($query), trans('customer_api.data_found_success'));
@@ -147,6 +140,7 @@ class MatchController extends BaseController
 			return $this->sendArrayResponse([], trans('customer_api.data_found_empty'));
 
 		}catch (\Exception $e) {
+		  //  dd($e);
 			return $this->sendError('', $e->getMessage());
 		}
 	}

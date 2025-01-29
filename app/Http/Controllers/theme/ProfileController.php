@@ -77,7 +77,7 @@ class ProfileController extends CommonController
                     'religion' => Option::where('id',$bio->religion)->pluck('title')->first(),
                     'sub_cast' => Option::where('id',$bio->sub_cast)->pluck('title')->first(),
                     'community' => Option::where('id',$bio->community)->pluck('title')->first(),
-                    'mother_tounge' => Option::where('id',$bio->mother_tongue)->pluck('title')->first(),
+                    'mother_tongue' => Option::where('id',$bio->mother_tongue)->pluck('title')->first(),
                     'family_type' => Option::where('id',$bio->family_type)->pluck('title')->first(),
                     'father_occupation' => Option::where('id',$bio->father_occupation)->pluck('title')->first(),
                     'city' => city::where('id',$bio->city)->pluck('name')->first(),
@@ -87,6 +87,9 @@ class ProfileController extends CommonController
                     'position' => Option::where('id',$bio->position)->pluck('title')->first(),
                     'income' => Option::where('id',$bio->income)->pluck('title')->first(),
                     'family_living_in' => city::where('id',$bio->family_living_in)->pluck('name')->first(),
+                    'diet' => Option::where('id',$bio->diet)->pluck('title')->first(),
+                    'profile_image' => $user->profile_image ? asset('bright-metromonial/public/'. $user->profile_image) : ($user->gender == "Male" ? asset('bright-metromonial/public/themeAssets/images/profile-default-male.jpg') : asset('bright-metromonial/public/themeAssets/images/profile-default-female.png')),
+                    'cover_image' => $user->cover_image ? asset('bright-metromonial/public/'. $user->cover_image) : ($user->gender == "Male" ? asset('bright-metromonial/public/themeAssets/images/cover-default-male.jpg') : asset('bright-metromonial/public/themeAssets/images/cover-default-female.jpg')),
 
                 ];
             }
@@ -147,7 +150,7 @@ class ProfileController extends CommonController
                 'religion' => Option::where('id',$bio?->religion)->pluck('title')->first(),
                 'sub_cast' => Option::where('id',$bio?->sub_cast)->pluck('title')->first(),
                 'community' => Option::where('id',$bio?->community)->pluck('title')->first(),
-                'mother_tounge' => Option::where('id',$bio?->mother_tounge)->pluck('title')->first(),
+                'mother_tongue' => Option::where('id',$bio?->mother_tongue)->pluck('title')->first(),
                 'family_type' => Option::where('id',$bio?->family_type)->pluck('title')->first(),
                 'father_occupation' => Option::where('id',$bio?->father_occupation)->pluck('title')->first(),
                 'city' => city::where('id',$bio?->city)->pluck('name')->first(),
@@ -157,6 +160,9 @@ class ProfileController extends CommonController
                 'position' => Option::where('id',$bio?->position)->pluck('title')->first(),
                 'income' => Option::where('id',$bio?->income)->pluck('title')->first(),
                 'family_living_in' => city::where('id',$bio?->family_living_in)->pluck('name')->first(),
+                'profile_image' => $user->profile_image ? asset('bright-metromonial/public/'. $user->profile_image) : ($user->gender == "Male" ? asset('bright-metromonial/public/themeAssets/images/profile-default-male.jpg') : asset('bright-metromonial/public/themeAssets/images/profile-default-female.png')),
+                'cover_image' => $user->cover_image ? asset('bright-metromonial/public/'. $user->cover_image) : ($user->gender == "Male" ? asset('bright-metromonial/public/themeAssets/images/cover-default-male.jpg') : asset('bright-metromonial/public/themeAssets/images/cover-default-female.jpg')),
+                'diet' => Option::where('id',$bio->diet)->pluck('title')->first(),
 
             ];
 
@@ -186,7 +192,7 @@ class ProfileController extends CommonController
 		if($step == 0){
 			$options = [
 				'religion' => Option::where('type','=','religion')->where('status','active')->orderBy('title', 'asc')->pluck('title','id')->toArray(),
-                'mother_tongue' => Language::where('status','active')->orderBy('title', 'asc')->pluck('title','id')->toArray(),
+                'mother_tongue' => Option::where('type','=','mother_tongue')->where('status','active')->orderBy('title', 'asc')->pluck('title','id')->toArray(),
 				'community' => Option::where('type','=','community')->where('status','active')->orderBy('title', 'asc')->pluck('title','id')->toArray()
 			];
 
@@ -679,7 +685,7 @@ class ProfileController extends CommonController
 
         $options = [
             'religion' => Option::where('type','=','religion')->where('status','active')->orderBy('title', 'asc')->pluck('title','id')->toArray(),
-            'mother_tongue' => Language::where('status','active')->orderBy('title', 'asc')->pluck('title','id')->toArray(),
+            'mother_tongue' => Option::where('type','=','mother_tongue')->where('status','active')->orderBy('title', 'asc')->pluck('title','id')->toArray(),
             'community' => Option::where('type','=','community')->where('status','active')->orderBy('title', 'asc')->pluck('title','id')->toArray(),
             'state' => State::where('status', 'active')->orderBy('name', 'asc')->orderBy('name', 'asc')->pluck('name', 'id')->toArray(),
             'city' =>  City::where('status', 'active')->orderBy('name', 'asc')->orderBy('name', 'asc')->pluck('name', 'id')->toArray(),
@@ -732,17 +738,38 @@ class ProfileController extends CommonController
 		try {
 
 			$profileData  =  UserBio::where('user_id',$user->id)->first();
+			
+			if(!empty($request->document)){
+                $document_image = $this->saveMedia($request->file('document'));
+            }else{
+                $document_image = $profileData->document;
+            }
+
+            if(!empty($request->hasFile('profile_image'))){
+                $profile_image = $this->saveMedia($request->file('profile_image'));
+            }else{
+                $profile_image = $user->profile_image;
+            }
+
+            if(!empty($request->hasFile('cover_image'))){
+                $cover_image = $this->saveMedia($request->file('cover_image'));
+            }else{
+                $cover_image = $user->cover_image;
+            }
+			
+			
 			if($profileData){
 
                 $user_data = [
-                    'first_name'		=>$request->first_name,
-                    'last_name'			=>$request->last_name,
-                    'name'				=>$request->first_name .' '. $request->last_name,
-                    'email'				=>$request->email,
-                    'phone_number'		=>$request->phone_number,
+                    'first_name'		=> $request->first_name,
+                    'last_name'			=> $request->last_name,
+                    'name'				=> $request->first_name .' '. $request->last_name,
+                    'email'				=> $request->email,
+                    'phone_number'		=> $request->phone_number,
                     'dob'               => $request->dob,
-                    'profile_image'     => $request->profile_iamge,
-                    'cover_image'       => $request->cover_image
+                    'profile_image'     => $profile_image,
+                    'cover_image'       => $cover_image,
+                    
                 ];
 
                 User::where('id',$user->id)->update($user_data);
@@ -784,29 +811,9 @@ class ProfileController extends CommonController
                     'mobile_no'		        => $request->mobile_no,
                     'document_type'		    => $request->document_type,
                     'document_number'	    => $request->document_number,
-                    'document'              => $request->document,
+                    'document'              => $document_image,
 
                 ];
-
-                if(!empty($request->document)){
-                    $this->saveMedia($request->file('document'));
-                }
-
-                if(!empty($request->hasFile('profile_image'))){
-                    $profile_image = $this->saveMedia($request->file('profile_image'));
-                    User::where('id',$user->id)->update(['profile_image' => $profile_image]);
-                }else{
-                    $profile_image = $user->profile_image;
-                    User::where('id',$user->id)->update(['profile_image' => $profile_image]);
-                }
-
-                if(!empty($request->hasFile('cover_image'))){
-                    $cover_image = $this->saveMedia($request->file('cover_image'));
-                    User::where('id',$user->id)->update(['cover_image' => $cover_image]);
-                }else{
-                    $cover_image = $user->cover_image;
-                    User::where('id',$user->id)->update(['cover_image' => $cover_image]);
-                }
 
 				$profileData->fill($bio_data);
 				$return  =  $profileData->save();
@@ -861,14 +868,15 @@ class ProfileController extends CommonController
             foreach($query as $user){
                 $data [] =  [
                     'id'            => (string) $user->id,
-                    'image'       	=> $user->profile_image ? (string) asset($user->profile_image) : asset(config('constants.DEFAULT_THUMBNAIL')),
+                    'image'       	=> $user->profile_image ? asset('bright-metromonial/public/'. $user->profile_image) : ($user->gender == "Male" ? asset('bright-metromonial/public/themeAssets/images/profile-default-male.jpg') : asset('bright-metromonial/public/themeAssets/images/profile-default-female.png')),
                     'name'       	=> $user->name ? (string) $user->name : '',
-                    'age'   		=> $user->bio?->age ?? '',
-                    'city'          => city::where('id',$user->bio->city)->pluck('name')->first(),
-                    'state'         => State::where('id',$user->bio->state)->pluck('name')->first(),
-                    'height'        => Option::where('id',$user->bio->height)->pluck('title')->first(),
-                    'marital_status'=> Option::where('id',$user->bio->marital_status)->pluck('title')->first(),
-                    'income'        => Option::where('id',$user->bio->income)->pluck('title')->first(),
+                    'name'       	=> $user->name ? (string) $user->name : '',
+                    'age'   		=> $user->bio?->age ? $user->bio?->age : "Age not specified",
+                    'city'          => $user->bio->city ? city::where('id',$user->bio->city)->pluck('name')->first() : "City not specified",
+                    'state'         => $user->bio->state ? State::where('id',$user->bio->state)->pluck('name')->first() : "State not specified",
+                    'height'        => $user->bio->height ? Option::where('id',$user->bio->height)->pluck('title')->first() : "Height not specified",
+                    'marital_status'=> $user->bio->marital_status ? Option::where('id',$user->bio->marital_status)->pluck('title')->first() : "Marital status not specified",
+                    'income'        => $user->bio->income ? Option::where('id',$user->bio->income)->pluck('title')->first() : "Income not specified",
                 ];
             }
 
@@ -964,7 +972,7 @@ class ProfileController extends CommonController
             'to_age'			=> 'required',
             'religion'			=> 'required',
             //'community'			=> 'required',
-            'mother_tounge'		=> 'required',
+            'mother_tongue'		=> 'required',
             //'city_living_in'	=> 'required',
             //'qualification'		=> 'required',
             //'working_with'		=> 'required',
@@ -994,7 +1002,7 @@ class ProfileController extends CommonController
 				//'community'		=> $request->community,
 				'start_age'			=> $request->from_age,
 				'end_age'			=> $request->to_age,
-				'mother_tongue'		=> $request->mother_tounge,
+				'mother_tongue'		=> $request->mother_tongue,
 				// 'state_living_in'	=> $request->state_living_in,
 				// 'city_living_in'	=> $request->city_living_in,
 				// 'qualification'		=> $request->qualification,

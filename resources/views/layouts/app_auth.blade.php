@@ -7,15 +7,15 @@
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
-  <link rel="stylesheet" href="{{asset('/adminAsset/bootstrap/css/bootstrap.min.css')}}">
+  <link rel="stylesheet" href="{{asset('public/adminAsset/bootstrap/css/bootstrap.min.css')}}">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="{{ asset('/adminAsset/dist/css/AdminLTE.min.css') }} ">
+  <link rel="stylesheet" href="{{ asset('public/adminAsset/dist/css/AdminLTE.min.css') }} ">
   <!-- iCheck -->
-  <link rel="stylesheet" href="{{ asset('/adminAsset/plugins/iCheck/square/blue.css') }} ">
+  <link rel="stylesheet" href="{{ asset('public/adminAsset/plugins/iCheck/square/blue.css') }} ">
   @yield('css')
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -38,17 +38,17 @@
 <!-- /.login-box -->
 
 <!-- jQuery 3 -->
-<script src="{{ asset('/adminAsset/bower_components/jquery/dist/jquery.min.js') }} "></script>
+<script src="{{ asset('public/adminAsset/bower_components/jquery/dist/jquery.min.js') }} "></script>
 <!-- Bootstrap 3.3.7 -->
-<script src="{{ asset('/adminAsset/bower_components/bootstrap/dist/js/bootstrap.min.js') }} "></script>
+<script src="{{ asset('public/adminAsset/bower_components/bootstrap/dist/js/bootstrap.min.js') }} "></script>
 <!-- SlimScroll -->
-<script src="{{ asset('/adminAsset/bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
+<script src="{{ asset('public/adminAsset/bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
 <!-- FastClick -->
-<script src="{{ asset('/adminAsset/bower_components/fastclick/lib/fastclick.js') }}"></script>
+<script src="{{ asset('public/adminAsset/bower_components/fastclick/lib/fastclick.js') }}"></script>
 <!-- AdminLTE App -->
-<script src="{{ asset('/adminAsset/dist/js/adminlte.min.js') }}"></script>
+<script src="{{ asset('public/adminAsset/dist/js/adminlte.min.js') }}"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="{{ asset('/adminAsset/dist/js/demo.js') }}"></script>
+<script src="{{ asset('public/adminAsset/dist/js/demo.js') }}"></script>
 <script>
   $(document).ready(function () {
     $('.sidebar-menu').tree()

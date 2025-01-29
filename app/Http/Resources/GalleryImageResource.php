@@ -18,7 +18,7 @@ class GalleryImageResource extends JsonResource
         // return parent::toArray($request);
          return [
             'id'	=> (string) $this->id,
-            'image'	=> $this->image ? asset('data/public/'. $this->image) : '',
+            'image'	=> $this->image ? asset('bright-metromonial/public/'. $this->image) : '',
         ];
     }
 }

@@ -221,7 +221,7 @@ class MatchController extends CommonController
 
                 $matche_list [] =  [
                     'id'            => (string) $user->id,
-                    'image'       	=> $user->profile_image ? (string) asset($user->profile_image) : asset(config('constants.DEFAULT_THUMBNAIL')),
+                    'image'       	=> $user->profile_image ? asset('bright-metromonial/public/'. $user->profile_image) : ($user->gender == "Male" ? asset('bright-metromonial/public/themeAssets/images/profile-default-male.jpg') : asset('bright-metromonial/public/themeAssets/images/profile-default-female.png')),
                     'name'       	=> $user->name ? (string) $user->name : '',
                     'age'   		=> $user->bio && $user->bio?->age ? $user->bio?->age : 'Age not specified',
                     'city'          => $user->bio && $user->bio->city ? city::where('id',$user->bio->city)->pluck('name')->first() : "City not specified",
@@ -321,14 +321,15 @@ class MatchController extends CommonController
             foreach($query as $user){
                 $data [] =  [
                     'id'            => (string) $user->id,
-                    'image'       	=> $user->profile_image ? (string) asset($user->profile_image) : asset(config('constants.DEFAULT_THUMBNAIL')),
+                    'image'       	=> $user->profile_image ? asset('bright-metromonial/public/'. $user->profile_image) : ($user->gender == "Male" ? asset('bright-metromonial/public/themeAssets/images/profile-default-male.jpg') : asset('bright-metromonial/public/themeAssets/images/profile-default-female.png')),
                     'name'       	=> $user->name ? (string) $user->name : '',
-                    'age'   		=> $user->bio?->age ?? '',
-                    'city'          => city::where('id',$user->bio->city)->pluck('name')->first(),
-                    'state'         => State::where('id',$user->bio->state)->pluck('name')->first(),
-                    'height'        => Option::where('id',$user->bio->height)->pluck('title')->first(),
-                    'marital_status'=> Option::where('id',$user->bio->marital_status)->pluck('title')->first(),
-                    'income'        => Option::where('id',$user->bio->income)->pluck('title')->first(),
+                    'name'       	=> $user->name ? (string) $user->name : '',
+                    'age'   		=> $user->bio && $user->bio?->age ? $user->bio?->age : 'Age not specified',
+                    'city'          => $user->bio && $user->bio->city ? city::where('id',$user->bio->city)->pluck('name')->first() : "City not specified",
+                    'state'         => $user->bio && $user->bio->state ? State::where('id',$user->bio->state)->pluck('name')->first() : "State not specified",
+                    'height'        => $user->bio && $user->bio->height ? Option::where('id',$user->bio->height)->pluck('title')->first() : "Height not specified",
+                    'marital_status'=> $user->bio && $user->bio->marital_status ? Option::where('id',$user->bio->marital_status)->pluck('title')->first() : "Marital status not specified",
+                    'income'        => $user->bio && $user->bio->income ? Option::where('id',$user->bio->income)->pluck('title')->first() : "Income not specified",
                 ];
             }
 
@@ -380,14 +381,15 @@ class MatchController extends CommonController
                 foreach($query as $user){
                     $data [] =  [
                         'id'            => (string) $user->id,
-                        'image'       	=> $user->profile_image ? (string) asset($user->profile_image) : asset(config('constants.DEFAULT_THUMBNAIL')),
+                        'image'       	=> $user->profile_image ? asset('bright-metromonial/public/'. $user->profile_image) : ($user->gender == "Male" ? asset('bright-metromonial/public/themeAssets/images/profile-default-male.jpg') : asset('bright-metromonial/public/themeAssets/images/profile-default-female.png')),
                         'name'       	=> $user->name ? (string) $user->name : '',
-                        'age'   		=> $user->bio?->age ?? '',
-                        'city'          => city::where('id',$user->bio->city)->pluck('name')->first(),
-                        'state'         => State::where('id',$user->bio->state)->pluck('name')->first(),
-                        'height'        => Option::where('id',$user->bio->height)->pluck('title')->first(),
-                        'marital_status'=> Option::where('id',$user->bio->marital_status)->pluck('title')->first(),
-                        'income'        => Option::where('id',$user->bio->income)->pluck('title')->first(),
+                        'name'       	=> $user->name ? (string) $user->name : '',
+                        'age'   		=> $user->bio && $user->bio?->age ? $user->bio?->age : 'Age not specified',
+                        'city'          => $user->bio && $user->bio->city ? city::where('id',$user->bio->city)->pluck('name')->first() : "City not specified",
+                        'state'         => $user->bio && $user->bio->state ? State::where('id',$user->bio->state)->pluck('name')->first() : "State not specified",
+                        'height'        => $user->bio && $user->bio->height ? Option::where('id',$user->bio->height)->pluck('title')->first() : "Height not specified",
+                        'marital_status'=> $user->bio && $user->bio->marital_status ? Option::where('id',$user->bio->marital_status)->pluck('title')->first() : "Marital status not specified",
+                        'income'        => $user->bio && $user->bio->income ? Option::where('id',$user->bio->income)->pluck('title')->first() : "Income not specified",
                     ];
                 }
             }

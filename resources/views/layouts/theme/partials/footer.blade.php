@@ -1,4 +1,4 @@
-	@if($page != 'paymentOrder')
+	{{-- @if($page != 'paymentOrder')
 	<footer>
 		<div class="container-fluid">
 			<div class="row">
@@ -48,4 +48,4 @@
 			</div>
 		</div>
 	</footer>
-	@endif
+	@endif --}}

@@ -82,9 +82,8 @@
                 lastDisplayedDates = {};
 
                 // Log the constructed URL
-                const url = `http://127.0.0.1:8000/chat-user-data/${userId}`;
-
-
+                const url = "{{ url('/chat-user-data/') }}/" + userId;
+                console.log(url);
 
                 // Send fetch request to fetch chat data
                 fetch(url)
@@ -126,7 +125,7 @@
         const chatUser = data.data.chat_user;
 
         // Generate the full URL to the profile image
-        const profileImageUrl = '{{ asset('') }}' + chatUser.profile_image;
+        const profileImageUrl = chatUser.profile_image ? '{{ asset('bright-metromonial/public/') }}/' + chatUser.profile_image : '{{ asset('default/default-user.jpg') }}';
 
         // HTML for the chat header
         const liveAtTime = new Date(chatUser.live_at);
@@ -154,9 +153,17 @@
                         <span>${liveAtDisplay}</span>
                     </div>
                     <div class="chat-message-request">
-                        ${data.data.status_option.map(option => `
-                            <a class="btn btn-custom ml-3" href="{{ url('/interest-status-change/${option.toLowerCase()}/${chatUser.id}') }}" data-status="${option.toLowerCase()}">${option === 'accept' ? 'Accept' : (option === 'reject' ? 'Reject' : (option === 'block' ? 'Block' : (option === 'unblock' ? 'Unblock' : option)))}</a>
-                        `).join('')}
+                        ${data.data.status_option.map(option => {
+                            if (option === 'accept' || option === 'reject') {
+                                return `
+                                    <a class="btn btn-custom ml-3" href="{{ url('/interest-status-change/${option.toLowerCase()}/${chatUser.id}') }}" data-status="${option.toLowerCase()}">
+                                        ${option === 'accept' ? 'Accept' : 'Reject'}
+                                    </a>
+                                `;
+                            } else {
+                                return ''; // Empty string to hide the button
+                            }
+                        }).join('')}
                     </div>
                 </div>
             </div>

@@ -72,7 +72,7 @@ class ChatController extends CommonController
                 }
 
                 $interested_list[] = [
-                    'profile_image' => $in_user->profile_image,
+                    'profile_image' => ($in_user->profile_image) ? asset('bright-metromonial/public/' . $in_user->profile_image) : 'default/default-user.jpg',
                     'name' => $in_user->name,
                     'id' => $in_user->id,
                     'last_seen' => $lastSeen,
@@ -157,7 +157,7 @@ class ChatController extends CommonController
 
     public function change_interestStatus($status,$id)
     {
-
+    
         $user = Auth::user();
         if(empty($user)){
             return $this->ajaxError(trans('customer_api.invalid_user'),'');

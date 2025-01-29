@@ -24,6 +24,10 @@ Route::get('lang/{locale}', 'App\Http\Controllers\HomeController@lang')->name('l
 Auth::routes();
 Route::post('/loginUser', 'App\Http\Controllers\Auth\LoginController@loginUser')->name('loginUser');
 Route::post('/registerUser', 'App\Http\Controllers\Auth\RegisterController@register')->name('registerUser');
+Route::get('/support', 'App\Http\Controllers\UserSupportController@index')->name('support.index');
+Route::post('/support', 'App\Http\Controllers\UserSupportController@store')->name('support.submit');
+
+
 
 //front page
 Route::get('/',[HomeController::class , 'index'])->name('firstPage');

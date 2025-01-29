@@ -62,13 +62,11 @@ class UserController extends CommonController
 			// GET DATA
 			$data		=  User::where('id', $id)->first();
 			$user_bio	=  UserBio::where('user_id', $id)->first();
-            // dd($user_bio->mother_tongue);
-            // dd(Option::where('type','mother_tounge')->where('id',$user_bio->mother_tongue)->pluck('title')->first());
-
+            
             $user_details = [
                 'religion' => Option::where('type','religion')->where('id',$user_bio->religion)->pluck('title')->first(),
                 'community' => Option::where('type','community')->where('id',$user_bio->community)->pluck('title')->first(),
-                'mother_tounge' => Option::where('type','mother_tounge')->where('id',$user_bio->mother_tongue)->pluck('title')->first(),
+                'mother_tongue' => Option::where('type','mother_tongue')->where('id',$user_bio->mother_tongue)->pluck('title')->first(),
                 'city' => City::where('id',$user_bio->city)->pluck('name')->first(),
                 'marital_status' => Option::where('type','marital_status')->where('id',$user_bio->marital_status)->pluck('title')->first(),
                 // 'diet' => Option::where('type','diet')->where('id',$user_bio->diet)->pluck('title')->first(),

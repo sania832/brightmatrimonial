@@ -18,7 +18,7 @@
                                         <li>
                                             <a href="{{ route('userProfile',['id' => $value['id']]) }}" class="match-item">
                                                 <div class="col-12 col-md-2 match-img-container">
-                                                    <img class="match-img" src="{{ $value['image'] ? $value['image'] : '/images/default_image.webp' }}" alt="{{ $value['name'] ? $value['name'] : '' }}" style="width: 100px; height: 100px; object-fit: cover;">
+                                                    <img class="match-img" src=" {{ $value['image'] }} " alt="{{ $value['name'] }} " style="width: 100px; height: 100px; object-fit: cover;">
                                                 </div>
                                                 <div class="match-info-container col-12 col-md-10">
                                                     <div class="match-info">
@@ -81,7 +81,7 @@
                         htmlData += `
                             <a href="{{ url("profile")}}/${value.id}" class="d-flex flex-row mb-4 border p-4">
                                 <div class="col-12 col-md-2 match-img-container">
-                                    <img class="match-img" src="${SITE_URL}/${value.profile_image ? value.profile_image : '/images/default_image.webp'}" alt="${value.name ? value.name : ''}" style="width: 100px; height: 100px; object-fit: cover;">
+                                    '<img class="match-img" src="' + value.image + '" alt="' + value.name + '" style="width: 100px; height: 100px; object-fit: cover;">' +
                                 </div>
                                 <div class="match-info-container col-12 col-md-10">
                                     <div class="match-info">

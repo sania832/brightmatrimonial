@@ -26,7 +26,7 @@ class FriendListResource extends JsonResource
 		return [
             'id'            		=> (string)$this->id,
             'name'          		=> $this->name,
-            'image'					=> $this->profile_image ? (string) asset('data/public/'. $this->profile_image) : asset('public/'. config('constants.DEFAULT_THUMBNAIL')),
+            'image'					=> $this->profile_image ? (string) asset('bright-metromonial/public/'. $this->profile_image) : asset('default/default-user.jpg'),
             'is_online'        		=> $this->isOnline ? (string)$this->isOnline : '0',
             'last_message'          => $last_message->message ?? 'No new messages',
 			'bio'   				=> $this->bio ? new BioDataResource($this->bio) : null

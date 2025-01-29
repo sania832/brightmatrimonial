@@ -17,7 +17,7 @@
 									<ul class="user-prfile">
 										<li class="navbar-item dropdown">
 											<a class="nav-link dropdown-toggle" href="javascript:void(0);" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-												<img src="@if(Auth::user()->profile_image) {{ asset(''. Auth::user()->profile_image)}} @else {{ asset(config('constants.DEFAULT_USER_IMAGE'))}} @endif" height="84px" width="84px" class="rounded-circle">
+												<img src="{{ Auth::user()->profile_image ? asset('bright-metromonial/public/'. Auth::user()->profile_image) : (Auth::user()->gender == "Male" ? asset('bright-metromonial/public/themeAssets/images/profile-default-male.jpg') : asset('bright-metromonial/public/themeAssets/images/profile-default-female.png')) }}" height="84px" width="84px" class="rounded-circle">
 											</a>
 											<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
 												<a class="dropdown-item" href="{{ route('profile') }}">Dashboard</a>
@@ -116,7 +116,7 @@
 				<ul class="user-prfile">
 					<li class="navbar-item dropdown">
 						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							<img src="@if(Auth::user() && Auth::user()->profile_image) {{ asset(''. Auth::user()->profile_image)}} @else {{ asset(config('constants.DEFAULT_USER_IMAGE'))}} @endif" height="84px" width="84px" class="rounded-circle">
+							<img src="{{ Auth::user()->profile_image ? asset('bright-metromonial/public/'. Auth::user()->profile_image) : (Auth::user()->gender == "Male" ? asset('bright-metromonial/public/themeAssets/images/profile-default-male.jpg') : asset('bright-metromonial/public/themeAssets/images/profile-default-female.png')) }}" height="84px" width="84px" class="rounded-circle">
 						</a>
 						<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
 							<a class="dropdown-item" href="{{ route('profile') }}">Dashboard</a>

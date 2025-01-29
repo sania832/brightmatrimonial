@@ -10,12 +10,12 @@
 		<section class="profile-banner">
 			<div class="container">
 				<div class="profile-img-box">
-					<img class="profile-cover" src="@if(Auth::user()->cover_image) {{ asset(''. Auth::user()->cover_image)}} @else {{ asset(config('constants.DEFAULT_USER_IMAGE'))}} @endif" alt="">
+					<img class="profile-cover" src="{{ $data['cover_image'] }}" alt="">
 				</div>
 				<div class="row profile-detail">
 					<div class="col-md-12 col-lg-4 profile-detail-info">
 						<div class="profile-img-box">
-							<img class="profile-img rounded-circle" src="@if(Auth::user()->profile_image) {{ asset(''. Auth::user()->profile_image)}} @else {{ asset(config('constants.DEFAULT_USER_IMAGE'))}} @endif" alt="">
+							<img class="profile-img rounded-circle" src="{{ $data['profile_image'] }}" alt="">
 							{{-- <a class="add-new" href="{{ url('/complete-profile/6') }}"><img class="share-img" src="{{ asset('themeAssets/images/ionic-ios-add.svg') }}"alt=""></a> --}}
 						</div>
 						<h2>{{ Auth::user()->name }}</h2>
@@ -132,8 +132,8 @@
 									<p class="value" id="community">{{ $data['community'] }}</p>
 								</li>
 								<li>
-									<p class="title">Mother Tongue</p>
-									<p class="value" id="mother_tongue">{{ $data['mother_tounge'] }}</p>
+									<p class="title">Mother tounge</p>
+									<p class="value" id="mother_tounge">{{ $data['mother_tounge'] }}</p>
 								</li>
 							</ul>
 						</div>
@@ -160,7 +160,7 @@
 								</li>
 								<li>
 									<p class="title">Diet</p>
-									<p class="value" id="diet">{{ $bio->diet }}</p>
+									<p class="value" id="diet">{{ $data['diet'] }}</p>
 								</li>
 								<li>
 									<p class="title">Height</p>
@@ -198,7 +198,7 @@
 									<p class="value" id="position">{{ $data['position'] }}</p>
 								</li>
 								<li>
-									<p class="title">Yearly Income</p>
+									<p class="title">{{ $bio->income_type == "income_year" ? "Yearly Income" : "Monthly Income" }}</p>
 									<p class="value" id="income">{{ $data['income'] }}</p>
 								</li>
 							</ul>

@@ -31,8 +31,8 @@ class UserResource extends JsonResource
         return [
             'id'            		=> (string)$this->id,
             'name'          		=> $this->name,
-            'profile_image'			=> $this->profile_image ? (string) asset('data/public/'. $this->profile_image) : asset('public/'. config('constants.DEFAULT_THUMBNAIL')),
-            'cover_image'			=> $this->cover_image ? (string) asset('data/public/'. $this->cover_image) : asset('public/'. config('constants.DEFAULT_THUMBNAIL')),
+            'profile_image'			=> $this->profile_image ? (string) asset('bright-metromonial/public/' . $this->profile_image) : asset('default/default-user.jpg'),
+            'cover_image'			=> $this->cover_image ? (string) asset('bright-metromonial/public/' . $this->cover_image) : asset('default/default-user.jpg'),
             'gender'        		=> $this->gender ? $this->gender : '',
             'dob'           		=> $this->dob ? date('d-m-Y', strtotime($this->dob)) : '',
             'email'         		=> $this->email,
@@ -49,7 +49,7 @@ class UserResource extends JsonResource
 			'profile_steps'			=> $this->step_complete ? (string)$this->step_complete : '0',
             'is_step_complete'		=> $is_step_complete,
             'status'        		=> $this->status,
-            'bio_data'        		=> $this->bio_data ? $this->bio_data : null,
+            'bio_data'        		=> $this->bio_data ? $this->bio_data : (object)[],
         ];
     } 
 }
