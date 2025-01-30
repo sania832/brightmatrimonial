@@ -10,12 +10,12 @@
 		<section class="profile-banner">
 			<div class="container">
 				<div class="profile-img-box">
-					<img class="profile-cover" src="{{ $data['cover_image'] }}" alt="">
+					<img class="profile-cover" src="{{ $data['cover_image'] ?? "" }}" alt="">
 				</div>
 				<div class="row profile-detail">
 					<div class="col-md-12 col-lg-4 profile-detail-info">
 						<div class="profile-img-box">
-							<img class="profile-img rounded-circle" src="{{ $data['profile_image'] }}" alt="">
+							<img class="profile-img rounded-circle" src="{{ $data['profile_image'] ?? "" }}" alt="">
 							{{-- <a class="add-new" href="{{ url('/complete-profile/6') }}"><img class="share-img" src="{{ asset('themeAssets/images/ionic-ios-add.svg') }}"alt=""></a> --}}
 						</div>
 						<h2>{{ Auth::user()->name }}</h2>
@@ -125,15 +125,15 @@
 								</li>
 								<li>
 									<p class="title">Religion</p>
-									<p class="value" id="religion">{{ $data['religion'] }}</p>
+									<p class="value" id="religion">{{ $data['religion'] ?? "" }}</p>
 								</li>
 								<li>
 									<p class="title">Community</p>
-									<p class="value" id="community">{{ $data['community'] }}</p>
+									<p class="value" id="community">{{ $data['community'] ?? "" }}</p>
 								</li>
 								<li>
 									<p class="title">Mother tounge</p>
-									<p class="value" id="mother_tounge">{{ $data['mother_tounge'] }}</p>
+									<p class="value" id="mother_tounge">{{ $data['mother_tounge'] ?? "" }}</p>
 								</li>
 							</ul>
 						</div>
@@ -148,31 +148,31 @@
 							<ul>
 								<li>
 									<p class="title">City</p>
-									<p class="value" id="city">{{ $data['city'] }}</p>
+									<p class="value" id="city">{{ $data['city'] ?? "" }}</p>
 								</li>
 								<li>
 									<p class="title">Live with your family</p>
-									<p class="value" id="live_with_family">{{ $bio->live_with_family }}</p>
+									<p class="value" id="live_with_family">{{ $bio?->live_with_family }}</p>
 								</li>
 								<li>
 									<p class="title">Marital Status</p>
-									<p class="value" id="marital_status">{{ $data['marital_status'] }}</p>
+									<p class="value" id="marital_status">{{ $data['marital_status'] ?? "" }}</p>
 								</li>
 								<li>
 									<p class="title">Diet</p>
-									<p class="value" id="diet">{{ $data['diet'] }}</p>
+									<p class="value" id="diet">{{ $data['diet'] ?? "" }}</p>
 								</li>
 								<li>
 									<p class="title">Height</p>
-									<p class="value" id="height">{{ $data['height'] }}</p>
+									<p class="value" id="height">{{ $data['height'] ?? "" }}</p>
 								</li>
 								<li>
 									<p class="title">Manglik</p>
-									<p class="value" id="manglik">{{ $bio->manglik }}</p>
+									<p class="value" id="manglik">{{ $bio?->manglik }}</p>
 								</li>
 								<li>
 									<p class="title">Horoscope necessary</p>
-									<p class="value" id="horoscope_require">{{ $bio->horoscope_require }}</p>
+									<p class="value" id="horoscope_require">{{ $bio?->horoscope_require }}</p>
 								</li>
 							</ul>
 						</div>
@@ -187,19 +187,19 @@
 							<ul>
 								<li>
 									<p class="title">Highest Education</p>
-									<p class="value" id="highest_qualification">{{ $data['highest_education'] }}</p>
+									<p class="value" id="highest_qualification">{{ $data['highest_education'] ?? "" }}</p>
 								</li>
 								<li>
 									<p class="title">Company Name</p>
-									<p class="value" id="company_name">{{ $bio->company_name  }}</p>
+									<p class="value" id="company_name">{{ $bio?->company_name  }}</p>
 								</li>
 								<li>
 									<p class="title">Position</p>
-									<p class="value" id="position">{{ $data['position'] }}</p>
+									<p class="value" id="position">{{ $data['position'] ?? "" }}</p>
 								</li>
 								<li>
-									<p class="title">{{ $bio->income_type == "income_year" ? "Yearly Income" : "Monthly Income" }}</p>
-									<p class="value" id="income">{{ $data['income'] }}</p>
+									<p class="title">{{ $bio?->income_type == "income_year" ? "Yearly Income" : "Monthly Income" }}</p>
+									<p class="value" id="income">{{ $data['income'] ?? "" }}</p>
 								</li>
 							</ul>
 						</div>
@@ -216,35 +216,35 @@
 							<ul>
 								<li>
 									<p class="title">Cast</p>
-									<p class="value" id="cast">{{ $data['cast'] }}</p>
+									<p class="value" id="cast">{{ $data['cast'] ?? "" }}</p>
 								</li>
 								<li>
 									<p class="title">Sub-Cast</p>
-									<p class="value" id="sub_cast">{{ $data['sub_cast'] }}</p>
+									<p class="value" id="sub_cast">{{ $data['sub_cast'] ?? "" }}</p>
 								</li>
 								<li>
 									<p class="title">Family</p>
-									<p class="value" id="family_type">{{ $data['family_type'] }}</p>
+									<p class="value" id="family_type">{{ $data['family_type'] ?? "" }}</p>
 								</li>
 								<li>
 									<p class="title">Father occupation</p>
-									<p class="value" id="father_occupation">{{ $data['father_occupation'] }}</p>
+									<p class="value" id="father_occupation">{{ $data['father_occupation'] ?? "" }}</p>
 								</li>
 								<li>
 									<p class="title">Brothers</p>
-									<p class="value" id="brother">{{ $bio->brother }}</p>
+									<p class="value" id="brother">{{ $bio?->brother }}</p>
 								</li>
 								<li>
 									<p class="title">Sister</p>
-									<p class="value" id="sister">{{ $bio->sister }}</p>
+									<p class="value" id="sister">{{ $bio?->sister }}</p>
 								</li>
 								<li class="flex-column align-items-start">
 									<p class="title">Family Bio</p>
-									<p class="value" id="family_bio">{{ $bio->family_bio }}</p>
+									<p class="value" id="family_bio">{{ $bio?->family_bio }}</p>
 								</li>
 								<li>
 									<p class="title">Family Contact</p>
-									<p class="value" id="family_contact_no">{{ $bio->family_contact_no }}</p>
+									<p class="value" id="family_contact_no">{{ $bio?->family_contact_no }}</p>
 								</li>
 							</ul>
 						</div>
@@ -259,11 +259,11 @@
 							<ul>
 								<li class="flex-column align-items-start">
 									<p class="title">About Your Self</p>
-									<p class="value" id="about">{{ $bio->about }}</p>
+									<p class="value" id="about">{{ $bio?->about }}</p>
 								</li>
 								<li>
 									<p class="title">Contact </p>
-									<p class="value" id="mobile_no">{{ $user->phone_number }}</p>
+									<p class="value" id="mobile_no">{{ $user?->phone_number }}</p>
 								</li>
 							</ul>
 						</div>

@@ -88,11 +88,23 @@ function registerUsers(){
 	data.append('profile_for', $('.ai-signup #profile_for').val());
 	data.append('gender', $('.ai-signup #gender').val());
 	data.append('password', $('.ai-signup #password').val());
-	data.append('day', $('.ai-signup #day').val());
-	data.append('month', $('.ai-signup #month').val());
-	data.append('year', $('.ai-signup #year').val());
+	
 	data.append('password_confirmation', $('.ai-signup #password_confirmation').val());
-		console.log("Data to be sent:");
+
+    
+    if($('.ai-signup #dob').val()){
+        console.log($('.ai-signup #dob').val());
+        var dob = $('.ai-signup #dob').val();
+        var dobArray = dob.split("-");
+        data.append('day', dobArray[2]);
+        data.append('month', dobArray[1]);
+        data.append('year', dobArray[0]);
+    }else{
+        data.append('day', $('.ai-signup #day').val());
+        data.append('month', $('.ai-signup #month').val());
+        data.append('year', $('.ai-signup #year').val());
+    }
+	console.log("Data to be sent:");
 	for (const [key, value] of data.entries()) {
 		console.log(key + ": " + value);
 	}
@@ -112,7 +124,7 @@ function registerUsers(){
 				});
             } else if (value.status === '422') {
                 // there was an error with the data
-                console.log('The status is:', value.status);
+                console.log('The status is:', value.status, value.error);
                 $('.validation-div').text('');
                 $.each(value.error, function (index, value) {
                     $('.val-' + index).text(value);

@@ -5,11 +5,253 @@
 /* Profile */
 .profile-bio-other .theme-title{align-items: baseline;}
 
-@media only screen and (max-width: 768px) {
-	
+.ul-style-none{
+    list-style: none !important;
+    padding: 0px;
+}
+.footer-bg{
+    background-color: #A31622;
+    padding-top: 20px;
+}
+.menu-link{
+    color: black;
+    padding: 5px;
+    margin: 3px;
+    font-weight: bold;
+
+}
+.why-choose-us-ul{
+    font-size: 20px;
+    list-style: none;
+    line-height: 3rem;
+    /* margin: 0px auto; */
+}
+.title-sub-text{
+    font-size: 18px;
+    font-weight: bold;
+}
+.services-text{
+    font-size: 15px;
+}
+.custom-border{
+    width: 100%;
+    max-width: fit-content;
+}
+.custom-btn{
+    background: #a11a2e !important;
+    border-color: #a11a2e !important;
+    color: white !important;
+}
+.font-color-red{
+    color: #a11a2e;
+}
+.form-control{
+    border-color: #a11a2e !important;
+}
+/* Homepage CSS */
+
+    /* Navbar font styling */
+.text-playfair {
+    font-family: 'Playfair Display', serif;
 }
 
-@media (max-width: 1599px){
-	#banner-section form {margin: 0 auto 10px;}
+.font-bold {
+    font-weight: bold;
+}
 
+/* Adjust any additional navbar font styling if necessary */
+.navbar {
+    font-family: 'Nunito Sans', sans-serif;
+}
+
+/* Font for headings */
+.font-playfair {
+    font-family: 'Playfair Display', serif;
+}
+
+/* Font for body text */
+.font-nunito {
+    font-family: 'Nunito Sans', sans-serif;
+}
+
+.hero-section {
+	background-image: url('{{ asset("themeAssets/images/mainbanner_enhanced.jpg") }}'); /* Background image */
+	background-size: cover; /* Ensure the image covers the section */
+	background-position: center center; /* Center the background image */
+	background-repeat: no-repeat; /* Prevent repeating the background image */
+	width: 100%; /* Full width of the parent container */
+	height: 60vh; /* Set height to 60% of the viewport height */
+}
+
+/* ================== */
+/* nav bar spicfoc */
+/* Maroon color class */
+.text-maroon {
+    color: #800000; /* Maroon Red */
+}
+
+/* ======================================================================== */
+/* Logo Section Styles */
+.text-2xl {
+    font-size: 1.5rem; /* Adjust font size for text */
+}
+
+.flex {
+    display: flex; /* Use flexbox for alignment */
+    align-items: center; /* Vertically center the items */
+    justify-content: center; /* Horizontally center the items */
+}
+
+.items-center {
+    align-items: center; /* Ensure logo is vertically aligned */
+}
+
+.mr-3 {
+    margin-right: -2.25rem; /* Space between the logo and text */
+}
+
+.h-16 {
+    height: 4rem; /* Set the logo height (adjustable) */
+    width: auto; /* Ensure the aspect ratio of the logo is preserved */
+}
+
+/* -------------------- */
+
+
+/* Adjust the height of the navbar for better spacing */
+nav {
+  height: 82px; /* Increased navbar height */
+  position: relative; /* Ensure mobile menu is positioned relative to navbar */
+}
+/* ============ */
+
+/* Default logo size */
+/* Default styles for the logo image */
+/* Default styles for the logo image */
+.logo-img {
+	margin-right: 0.75rem; /* mr-3 equivalent */
+	height: 2.75rem; /* h-7 equivalent */
+	width: 125px;
+}
+
+/* Default size for desktop */
+h2 {
+	font-size: 1.25rem; /* Adjust to your preferred desktop size */
+}
+
+
+/* ================================ */
+/* Default Styles */
+
+
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr); /* 6 columns by default */
+  gap: 16px;
+}
+
+.grid > div {
+  padding: 10px;
+}
+
+/* Heading Styles */
+h3 {
+  font-family: 'Playfair Display', serif;
+  color: white;
+  margin-bottom: 0px;
+  font-size: 1.25rem;
+}
+
+ul {
+  font-family: 'Nunito Sans', sans-serif;
+  color: white;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  color: #e50914; /* Hover color for links */
+}
+
+/* ================================aboutus--------------- */
+.footer-section-container {
+  display: flex; /* Arrange items horizontally */
+  justify-content: space-between; /* Distribute the sections evenly */
+  gap: 16px; /* Adjust the gap between sections */
+}
+
+.footer-section {
+  width: 33%; /* Make each section take up 1/3 of the container */
+  text-align: center; /* Center the content */
+}
+
+.footer-heading {
+  font-size: 1.25rem; /* Adjust font size */
+  font-weight: bold; /* Make the font bold */
+  color: #000; /* Set text color */
+  margin-bottom: 10px; /* Adjust margin as needed */
+}
+
+/* ========= */
+.custom-link {
+    font-size: 0.9rem; /* Default small font size */
+    color: black;
+}
+
+.footer-section-container {
+    background-color: #f5f5dc; /* Change to your desired color */
+}
+
+/* =================== */
+ /* Initially, the mobile menu is hidden */
+/* Initially, the mobile menu is hidden */
+#mobile-menu {
+    display: none;
+}
+
+/* Show the mobile menu when the menu toggle has the "active" class */
+#menu-toggle.active + #mobile-menu {
+    display: block;
+}
+
+/* Show the hamburger icon on mobile view */
+@media (max-width: 1024px) {
+    .menu-toggle {
+        display: block;
+        font-size: 30px; /* Adjust the size of the hamburger icon */
+        margin-left: 10px; /* Add margin to the left of the button */
+        margin-right: 10px; /* Add margin to the right of the button */
+    }
+
+    /* Hide the desktop menu */
+    .lg\\:flex {
+        display: none;
+    }
+
+    /* Display the mobile menu */
+    .mobile-menu {
+        display: block;
+        margin-left: 10px; /* Add left margin */
+        margin-right: 10px; /* Add right margin */
+    }
+
+    /* Adjust the padding of mobile menu */
+    .mobile-menu a {
+        padding: 10px 0;
+    }
+}
+
+/* Hide the hamburger icon on desktop view */
+@media (min-width: 1025px) {
+    .menu-toggle {
+        display: none;
+    }
+
+    /* Show the desktop menu */
+    .lg\\:flex {
+        display: flex;
+    }
 }
