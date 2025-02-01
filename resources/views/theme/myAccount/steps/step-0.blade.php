@@ -38,9 +38,9 @@
 										<label for="mother_tounge">Mother Tounge</label>
 										<select class="custom-select" name="mother_tounge" id="mother_tounge">
 											<option value="" selected>Select</option>
-											@foreach($options['mother_tounge'] as $key => $value)
+											{{-- @foreach($options['mother_tounge'] as $key => $value)
 												<option value="{{ $key }}">{{ $value }}</option>
-											@endforeach
+											@endforeach --}}
 										</select>
 										<div class="validation-div val-mother_tongue"></div>
 									</div>

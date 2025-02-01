@@ -119,7 +119,7 @@ function registerUsers(){
 					type: 'success',
 					// Pass the jQuery object to the swal.fire method
 					onClose: function() {
-						window.location.href = SITE_URL +'/';
+						window.location.href = SITE_URL +'/complete-profile/';
 					}
 				});
             } else if (value.status === '422') {

@@ -16,11 +16,10 @@ class UserBio extends Model
 		'about','country_code','mobile_no',
 		'document_type','document_number','document',
 		'sexual_orientation','hobbies','interest','ug_digree','pg_digree','highest_qualification','occupation','company_position','working_professional','favorite_music','favorite_books','dress_style','favorite_movies','favorite_sports','cuisine','sun_sign','rashi','nakshtra',
-		'dob','tob','age','profile_image','cover_image',
+		'dob','tob','age','profile_image','cover_image','open_to_pets'
     ];
 
-    public function user()
-    {
+    public function user(){
         //return $this->belongsTo('App\Models\User','id');
 		return $this->belongsTo(User::class, 'user_id', 'id');
     }

@@ -1311,9 +1311,15 @@ public function blocked_interestList(Request $request)
 		$validator = Validator::make($request->all(), [
 			'start_age' => 'required',
 			'end_age' => 'required',
-			'looking_for' => 'required',
 			'religion' => 'required',
 			'mother_tongue' => 'required',
+			'state_living_in' => 'required',
+			'city_living_in' => 'required',
+			'live_with_family' => 'required',
+			'marital_status' => 'required',
+			'diet' => 'required',
+			'income' => 'required',
+			'qualification' => 'required'
 		]);
 	
 		if ($validator->fails()) {
@@ -1333,7 +1339,13 @@ public function blocked_interestList(Request $request)
 				'start_age' => $request->start_age,
 				'end_age' => $request->end_age,
 				'mother_tongue' => $request->mother_tongue,
-				'looking_for' => $request->looking_for,
+				'state_living_in' => $request->state_living_in,
+				'city_living_in' => $request->city_living_in,
+				'live_with_family' => $request->live_with_family,
+				'marital_status' => $request->marital_status,
+				'diet' => $request->diet,
+				'income' => $request->income,
+				'qualification' => $request->qualification
 			];
 	
 			// Log the data being saved
