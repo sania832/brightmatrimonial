@@ -55,19 +55,16 @@
 										<div class="validation-div val-height"></div>
 									</div>
 									<div class="form-group">
-										<label>Are You Manglik?</label>
-										<div class="switch-field">
-											<input type="radio" id="manglik-Yes" name="manglik" value="Yes" />
-											<label for="manglik-Yes">Yes</label>
-											<input type="radio" id="manglik-No" name="manglik" value="No" />
-											<label for="manglik-No">No</label>
-										</div>
-										<div class="validation-div val-manglik"></div>
+										<label for="height">Weight*</label>
+										<input type="text" name="weight" id="weight" class="custom-select" value="{{ $data->weight }}">
+										{{-- <select class="custom-select " name="weight" id="weight">
+											<option value="" selected>Select</option>
+											@foreach($options['height'] as $key => $value)
+												<option value="{{ $key }}">{{ $value }}</option>
+											@endforeach
+                                        </select> --}}
+										<div class="validation-div val-height"></div>
 									</div>
-								</div>
-							</div>
-							<div class="col-12 col-lg-6">
-								<div class="sign-box">
 									<div class="form-group">
 										<label>You Live With Your Family?</label>
 										<div class="switch-field">
@@ -78,6 +75,11 @@
 										</div>
 										<div class="validation-div val-live_with_family"></div>
 									</div>
+								</div>
+							</div>
+							<div class="col-12 col-lg-6">
+								<div class="sign-box">
+									
                                     <div class="form-group">
                                         <label>Your Diet</label>
                                         <div class="switch-field diet-field">
@@ -88,16 +90,15 @@
                                         </div>
                                         <div class="validation-div val-diet"></div>
                                     </div>
+									{{-- <div class="col-12"> --}}
+										{{-- <div class="sign-box"> --}}
 									<div class="form-group">
-										<label>Horoscope Match Is necessary?</label>
-										<div class="switch-field">
-											<input type="radio" id="horoscope_require-Yes" name="horoscope_require" value="Yes" />
-											<label for="horoscope_require-Yes">Yes</label>
-											<input type="radio" id="horoscope_require-No" name="horoscope_require" value="No" />
-											<label for="horoscope_require-No">No</label>
-										</div>
-										<div class="validation-div val-horoscope_require"></div>
+										<label for="about">About Your Self*</label>
+										<textarea class="form-control" id="about" rows="10">{{ $data->about }}</textarea>
+										<div class="validation-div val-about"></div>
 									</div>
+										{{-- </div> --}}
+									{{-- </div> --}}
 								</div>
 							</div>
 							<div class="col-12 col-sm-12 mt-5">
@@ -112,9 +113,9 @@
         $("#marital_status option[value='{{ $data->marital_status }}']").attr("selected", true);
         $("#height option[value='{{ $data->height }}']").attr("selected", true);
         $("#live_with_family-{{ $data->live_with_family }}").prop("checked", true);
-        $("#manglik-{{ $data->manglik }}").prop("checked", true);
+        // $("#manglik-{{ $data->manglik }}").prop("checked", true);
         // $("input[name='diet'][value='{{ $data->diet }}']").attr("checked", "checked");
-        $("#horoscope_require-{{ $data->horoscope_require }}").prop("checked", true);
+        // $("#horoscope_require-{{ $data->horoscope_require }}").prop("checked", true);
 
         $('#state').change(function() {
         var stateId = $(this).val(); // Get the selected state ID

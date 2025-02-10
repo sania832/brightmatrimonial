@@ -47,7 +47,8 @@ var runAjax = function (i = null, ii = null, type = 'POST') {
 };
 
 // Update Profile
-function updateProfile(step = 1){
+async function updateProfile (step = 1) {
+	console.log('update profile', step)
 	var data = new FormData();
 	data.append('step', parseInt(step));
 	data.append('first_name', $('#completeProfile #first_name').val());
@@ -56,7 +57,7 @@ function updateProfile(step = 1){
 	data.append('month', $('#completeProfile #month').val());
 	data.append('year', $('#completeProfile #year').val());
 	data.append('religion', $('#completeProfile #religion').val());
-	data.append('community', $('#completeProfile #community').val());
+	// data.append('community', $('#completeProfile #community').val());
 	data.append('mother_tongue', $('#completeProfile #mother_tongue').val());
 
 	data.append('city', $('#completeProfile #city').val());
@@ -68,6 +69,7 @@ function updateProfile(step = 1){
     if (selectedDiet) { data.append('diet', selectedDiet); }
 	// if($('input[type="radio"][name="diet"]:checked').is(':checked')) { data.append('diet', $('input[type="radio"][name="diet"]:radio').val()); }
 	data.append('height', $('#completeProfile #height').val());
+	data.append('weight', $('#completeProfile #weight').val());
 	//data.append('horoscope_require', $('#completeProfile #horoscope_require').val());
 	if($('input[type="radio"][name="horoscope_require"]:checked').is(':checked')) { data.append('horoscope_require', $('input[type="radio"][name="horoscope_require"]:checked').val()); }
 	//data.append('manglik', $('#completeProfile #manglik').val());
@@ -81,9 +83,12 @@ function updateProfile(step = 1){
 	data.append('income', $('#completeProfile #income').val());
 
 	data.append('cast', $('#completeProfile #cast').val());
-	data.append('sub_cast', $('#completeProfile #sub_cast').val());
+	// data.append('sub_cast', $('#completeProfile #sub_cast').val());
 	data.append('family_type', $('#completeProfile #family_type').val());
 	data.append('father_occupation', $('#completeProfile #father_occupation').val());
+	data.append('mother_occupation', $('#completeProfile #mother_occupation').val());
+	data.append('number_of_siblings', $('#completeProfile #number_of_siblings').val());
+
 	if($('input[type="radio"][name="brother"]:checked').is(':checked')) { data.append('brother', $('input[type="radio"][name="brother"]:checked').val()); }
 	if($('input[type="radio"][name="sister"]:checked').is(':checked')) { data.append('sister', $('input[type="radio"][name="sister"]:checked').val()); }
 	data.append('family_living_in', $('#completeProfile #family_living_in').val());
@@ -107,9 +112,10 @@ function updateProfile(step = 1){
 		data.append('document_number', $('#document_number'+document_type).val());
 		data.append('document', $('#fileDocument'+document_type)[0].files[0]);
 	}
-
+	console.log('Completed Profile Body : ', data.values);
 	var response = runAjax(SITE_URL +'/completeProfile', data);
-	    if (response) { // check if the response is defined
+	console.log('Response LLL ', response)
+	if (response) { // check if the response is defined
         response.then(function (value) { // process the response using a Promise
             if (value.status === '200') {
 				var nextStep = parseInt(step) + 1;
@@ -131,6 +137,7 @@ function updateProfile(step = 1){
                 swal.fire({ title: value.message, type: 'error' });
             }
         }).catch(function (error) { // handle any errors that occur
+			console.log('error', error);
             $('.validation-div').text('');
             swal.fire({ title: 'An error occurred while submitting the form. Please try again.', type: 'error' });
             // Enable the submit button

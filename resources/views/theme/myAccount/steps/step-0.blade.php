@@ -34,16 +34,7 @@
 										</select>
 										<div class="validation-div val-religion"></div>
 									</div>
-									<div class="form-group">
-										<label for="mother_tounge">Mother Tounge</label>
-										<select class="custom-select" name="mother_tounge" id="mother_tounge">
-											<option value="" selected>Select</option>
-											{{-- @foreach($options['mother_tounge'] as $key => $value)
-												<option value="{{ $key }}">{{ $value }}</option>
-											@endforeach --}}
-										</select>
-										<div class="validation-div val-mother_tongue"></div>
-									</div>
+									
 								</div>
 							</div>
 							<div class="col-12 col-lg-6">
@@ -90,14 +81,15 @@
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="Community">Community</label>
-										<select class="custom-select" name="community" id="community">
-                                            <option value="" selected>Select</option>
-											@foreach($options['community'] as $key => $value)
+										<label for="mother_tounge">Mother Tounge</label>
+										<select class="custom-select" name="mother_tounge" id="mother_tounge">
+											{{-- mother_tongue --}}
+											<option value="" selected>Select</option>
+											@foreach($options['mother_tongue'] as $key => $value)
 												<option value="{{ $key }}">{{ $value }}</option>
 											@endforeach
 										</select>
-										<div class="validation-div val-community"></div>
+										<div class="validation-div val-mother_tongue"></div>
 									</div>
 								</div>
 							</div>

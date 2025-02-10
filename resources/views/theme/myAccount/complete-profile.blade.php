@@ -4,7 +4,7 @@
 	<main>
 		<section id="form-step-section">
 			<div class="container">
-				<form id="completeProfile" action="javascript:void(0);">
+				<form id="completeProfile" action="javascript:void(0);" method="POST" onsubmit="updateProfile({{ $step }});">
 					@csrf
 					@include('theme/myAccount/steps/step-'.$step)
 				</form>

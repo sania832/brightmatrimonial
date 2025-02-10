@@ -193,7 +193,7 @@ class ProfileController extends CommonController
 			$options = [
 				'religion' => Option::where('type','=','religion')->where('status','active')->orderBy('title', 'asc')->pluck('title','id')->toArray(),
                 'mother_tongue' => Option::where('type','=','mother_tongue')->where('status','active')->orderBy('title', 'asc')->pluck('title','id')->toArray(),
-				'community' => Option::where('type','=','community')->where('status','active')->orderBy('title', 'asc')->pluck('title','id')->toArray()
+				// 'community' => Option::where('type','=','community')->where('status','active')->orderBy('title', 'asc')->pluck('title','id')->toArray()
 			];
 
 		}elseif($step == 1){
@@ -217,10 +217,9 @@ class ProfileController extends CommonController
 
 			$options = [
 				'cast' => Option::where('type','=','cast')->where('status','active')->orderBy('title', 'asc')->pluck('title','id')->toArray(),
-				'sub_cast' => Option::where('type','=','sub_cast')->where('status','active')->orderBy('title', 'asc')->pluck('title','id')->toArray(),
+				'mother_occupation' => Option::where('type','=','mother_occupation')->where('status','active')->orderBy('title', 'asc')->pluck('title','id')->toArray(),
 				'family_type' => Option::where('type','=','family_type')->where('status','active')->orderBy('title', 'asc')->pluck('title','id')->toArray(),
 				'father_occupation' => Option::where('type','=','father_occupation')->where('status','active')->orderBy('title', 'asc')->pluck('title','id')->toArray(),
-				'family_living_in' => City::where('status','active')->where('status','active')->orderBy('name', 'asc')->pluck('name','id')->toArray()
 			];
 		}
 
@@ -261,7 +260,6 @@ class ProfileController extends CommonController
 		$step = (int)$request->step;
 
 		if($step === 0){
-
 			$validator = Validator::make($request->all(), [
 				'step' 				=> 'required',
 				'first_name'   		=> 'required|max:51',
@@ -270,13 +268,12 @@ class ProfileController extends CommonController
             	'month'       		=> 'required|numeric|min:1|max:12',
             	'year'              => 'required|numeric|min:1980|max:2010',
 				'religion'			=> 'required',
-				'community'			=> 'required',
+				// 'community'			=> 'required',
 				'mother_tongue'		=> 'required',
 			]);
 			if($validator->fails()){
 				return $this->ajaxValidationError(trans('common.error'), $validator->errors());
 			}
-
 		}else if($step === 1){
 			$validator = Validator::make($request->all(), [
                 'state'             => 'required',
@@ -285,8 +282,8 @@ class ProfileController extends CommonController
 				'marital_status'	=> 'required',
 				'diet' 				=> 'required',
 				'height'			=> 'required',
-				'horoscope_require'	=> 'required',
-				'manglik'			=> 'required',
+				'weight'			=> 'required',
+				'about'				=> 'required',
 			]);
 			if($validator->fails()){
 				return $this->ajaxValidationError(trans('common.error'), $validator->errors());
@@ -305,15 +302,11 @@ class ProfileController extends CommonController
 		}else if($step === 3){
 			$validator = Validator::make($request->all(), [
 				'cast'				=> 'required',
-				'sub_cast'			=> 'required',
 				'family_type'		=> 'required',
 				'father_occupation'	=> 'required',
-				'brother'			=> 'required',
-				'sister'			=> 'required',
-				'family_living_in'	=> 'required',
-				'family_bio'		=> 'required',
-				'address'			=> 'required',
-				'contact_no'		=> 'required',
+				'mother_occupation' => 'required',
+				'number_of_siblings'=> 'required',
+				
 			]);
 			if($validator->fails()){
 				return $this->ajaxValidationError(trans('common.error'), $validator->errors());
@@ -386,11 +379,9 @@ class ProfileController extends CommonController
                     $age = $dateOfBirth->age;
 
 					$data = [
-
 						'religion' 		=> $request->religion,
 						'community' 	=> $request->community,
 						'mother_tongue'	=> $request->mother_tongue,
-                        'age'           => $age
 					];
 
 				}else if($step === 1){
@@ -402,13 +393,13 @@ class ProfileController extends CommonController
 						'marital_status'	=> $request->marital_status,
 						'diet' 				=> $request->diet,
 						'height'			=> $request->height,
-						'horoscope_require'	=> $request->horoscope_require,
-						'manglik'			=> $request->manglik,
+						'about'				=> $request->about,
+						'weight'			=> $request->weight
 					];
 				}else if($step === 2){
 					$data = [
 						'step'					=> $step,
-						'highest_qualificatin'	=> $request->highest_qualification,
+						'highest_qualification'	=> $request->highest_qualification,
 						'company_name'			=> $request->company_name,
 						'income_type'			=> $request->income_type,
 						'position' 				=> $request->position,
@@ -418,15 +409,10 @@ class ProfileController extends CommonController
 					$data = [
 						'step'					=> $step,
 						'cast'					=> $request->cast,
-						'sub_cast'				=> $request->sub_cast,
 						'family_type'			=> $request->family_type,
 						'father_occupation'		=> $request->father_occupation,
-						'brother'				=> $request->brother,
-						'sister'				=> $request->sister,
-						'family_living_in'		=> $request->family_living_in,
-						'family_bio'			=> $request->family_bio,
-						'family_address'		=> $request->address,
-						'family_contact_no'		=> $request->contact_no,
+						'mother_occupation'		=> $request->mother_occupation,
+						'number_of_siblings'     => $request->number_of_siblings
 					];
 				}else if($step === 4){
 					$data = [
