@@ -49,7 +49,7 @@ function loginUser(){
 				type: 'success',
 				// Pass the jQuery object to the swal.fire method
 				onClose: function() {
-                    window.location.href = SITE_URL +'/admin';
+                    window.location.href = SITE_URL +'/profile';
 				}
 			});
         } else if (value.status === '422') {

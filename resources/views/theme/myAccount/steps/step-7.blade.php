@@ -1,128 +1,216 @@
-					<div id="step-7" class="varification-step">
-						<div class="row">
-							<div class="col-12 col-sm-12 ">
-								<div class="form-step-title">
-									<a class="back-icon" href="{{ url('/complete-profile/'. $step-1) }}"><img src="{{ asset('themeAssets/images/left-arrow.svg') }}" alt=""></a>
-									<h2>Varification</h2>
-									<img src="{{ asset('themeAssets/images/title-border.svg') }}" alt="" width="550">
-								</div>
-							</div>
-							<div class="col-12 col-sm-12 mt-3 mt-sm-5 mb-4 text-center">
-								<h4 class="mb-4">Member verification</h4>
-								<p class="sign-up-text pin-verfy-text mt-2 mb-4">We are moving towards a more secure
-									platform by verifying our users’ basic details.</p>
-								<img class="d-block mx-auto" src="{{ asset('themeAssets/images/shield.svg') }}" alt="">
-								<p class="sign-up-text verfy-text mt-4">I want to verify Using</p>
-							</div>
-							<div class="col-12 verification-tab">
-								<ul class="nav nav-tabs" role="tablist">
-									<li class="nav-item">
-										<a class="document_type nav-link active" href="#pan" role="tab" data-toggle="tab" data-document-type="1">PAN card</a>
-									</li>
-									<li class="nav-item">
-										<a class="document_type nav-link" href="#voter" role="tab" data-toggle="tab" data-document-type="2">Voter ID</a>
-									</li>
-									<li class="nav-item">
-										<a class="document_type nav-link" href="#driving" role="tab" data-toggle="tab" data-document-type="3">Driving License</a>
-									</li>
-								</ul>
+@section('css')
+	<link href="https://cdn.jsdelivr.net/npm/@coreui/coreui@5.2.0/dist/css/coreui.min.css" rel="stylesheet" integrity="sha384-u3h5SFn5baVOWbh8UkOrAaLXttgSF0vXI15ODtCSxl0v/VKivnCN6iHCcvlyTL7L" crossorigin="anonymous">
+@endsection
 
-								<!-- Tab panes -->
-								<div class="tab-content mt-4">
-									<div role="tabpanel" class="tab-pane fade in active show" id="pan">
-										<form action="javascript:void(0);">
-											<div class="row">
-												<div class="col-12 col-sm-9 col-lg-7 mx-auto ">
-													<div class="sign-box">
-														<div class="form-group">
-															<label for="pan-card-number">Pan Card Number</label>
-															<input type="text" class="form-control" id="document_number1">
-															<div class="validation-div val-document_number"></div>
-														</div>
-														<div class="form-group">
-															<label for="upload-pancard">Upload Pancard</label>
-															<input type="file" title="" class="form-control" placeholder="" id="fileDocument1" accept="image/png, image/gif, image/jpeg">
-															<div class="validation-div val-document"></div>
-														</div>
-														<div class="form-check">
-															<input type="checkbox" class="form-check-input" id="exampleCheck1">
-															<label class="form-check-label" for="exampleCheck1">I hereby
-																allow Sharley Venture provide above details to verify ID
-																document from the Issuing AuthorityThe details will only be
-																used for verification purposes and not shared with anyone
-																else</label>
-														</div>
-														<div class="col-12 col-sm-12 mt-5">
-															<button type="submit" class="btn btn-sign" onclick="updateProfile(7);">Submit</button>
-														</div>
-													</div>
-												</div>
-											</div>
-										</form>
-									</div>
-									<div role="tabpanel" class="tab-pane fade" id="voter">
-										<form action="javascript:void(0);">
-											<div class="row">
-												<div class="col-12 col-sm-9 col-lg-7 mx-auto ">
-													<div class="sign-box">
-														<div class="form-group">
-															<label for="voter-card-number">Voter ID Number</label>
-															<input type="text" class="form-control" id="document_number2">
-															<div class="validation-div val-document_number"></div>
-														</div>
-														<div class="form-group">
-															<label for="upload-voter">Upload Voter ID</label>
-															<input type="file" class="form-control" id="fileDocument2" accept="image/png, image/gif, image/jpeg">
-															<div class="validation-div val-document"></div>
-														</div>
-														<div class="form-check">
-															<input type="checkbox" class="form-check-input" id="exampleCheck1">
-															<label class="form-check-label" for="exampleCheck1">I hereby
-																allow Sharley Venture provide above details to verify ID
-																document from the Issuing AuthorityThe details will only be
-																used for verification purposes and not shared with anyone
-																else</label>
-														</div>
-														<div class="col-12 col-sm-12 mt-5">
-															<button type="submit" class="btn btn-sign" onclick="updateProfile(7);">Submit</button>
-														</div>
-													</div>
-												</div>
-											</div>
-										</form>
-									</div>
-									<div role="tabpanel" class="tab-pane fade" id="driving">
-										<form action="javascript:void(0);">
-											<div class="row">
-												<div class="col-12 col-sm-9 col-lg-7 mx-auto ">
-													<div class="sign-box">
-														<div class="form-group">
-															<label for="driving-license">Driving License Number</label>
-															<input type="text" class="form-control" id="document_number3">
-															<div class="validation-div val-document_number"></div>
-														</div>
-														<div class="form-group">
-															<label for="upload-driving-license">Upload Driving License</label>
-															<input type="file" class="form-control" id="fileDocument3" accept="image/png, image/gif, image/jpeg">
-															<div class="validation-div val-document"></div>
-														</div>
-														<div class="form-check">
-															<input type="checkbox" class="form-check-input" id="exampleCheck1">
-															<label class="form-check-label" for="exampleCheck1">I hereby
-																allow Sharley Venture provide above details to verify ID
-																document from the Issuing AuthorityThe details will only be
-																used for verification purposes and not shared with anyone
-																else</label>
-														</div>
-														<div class="col-12 col-sm-12 mt-5">
-															<button type="submit" class="btn btn-sign" onclick="updateProfile(7);">Submit</button>
-														</div>
-													</div>
-												</div>
-											</div>
-										</form>
-									</div>
+<div id="step-5" class="describe-your-self-step">
+	<div class="row">
+		<div class="col-12 col-sm-12">
+			<div class="form-step-title">
+				<a class="back-icon" href="{{ url('/complete-profile/'. $step-1) }}"><img src="{{ asset('themeAssets/images/left-arrow.svg') }}" alt=""></a>
+				<h2>Desired Partner</h2>
+				<img src="images/title-border.svg" alt="" width="550">
+			</div>
+		</div>
+		<div class="col-6">
+			<div class="sign-box align-items-start">
+				<div class="row">
+					<div class="col-12">
+						<div class="form-group">
+							<div class="row">
+								<div class="col-6">
+									<label>Min Age</label>
+									<select class="custom-select" name="min_age">
+										@for($i=18; $i < 50; $i++)
+										<option value="{{$i}}">{{$i}}</option>
+										@endfor
+									</select>
+								</div>
+								<div class="col-6">
+									<label>Max Age</label>
+									<select class="custom-select" name="max_age">
+										@for($i=20; $i < 50; $i++)
+										<option value="{{$i}}">{{$i}}</option>
+										@endfor
+									</select>
 								</div>
 							</div>
+							<div class="validation-div val-age"></div>
 						</div>
 					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-6">
+			<div class="sign-box align-items-start">
+				<div class="row">
+					<div class="col-12">
+						<div class="form-group">
+							<label>Relation Type</label>
+							<select class="custom-select" id="relation_type" name="relation_type">
+								<option  selected>Select</option>
+								@foreach($options['relation_type'] as $key => $value)
+									<option value="{{ $key }}" @if($data->relation_type == $key) selected @endif>{{ $value }}</option>
+								@endforeach
+							</select>
+							<div class="validation-div val-relation_type"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-6">
+			<div class="sign-box align-items-start">
+				<div class="row">
+					<div class="col-12">
+						<div class="form-group">
+							<label>Religion</label>
+							<select class="custom-select" id="partner_religion" name="partner_religion">
+								<option  selected>Select</option>
+								@foreach($options['religion'] as $key => $value)
+									<option value="{{ $key }}" @if($data->partner_religion == $key) selected @endif>{{ $value }}</option>
+								@endforeach
+							</select>
+							<div class="validation-div val-partner_religion"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-6">
+			<div class="sign-box align-items-start">
+				<div class="row">
+					<div class="col-12">
+						<div class="form-group">
+							<label>Mother Tongue</label>
+							<select class="custom-select" id="partner_mother_tongue" name="partner_mother_tongue">
+								<option  selected>Select</option>
+								@foreach($options['mother_tongue'] as $key => $value)
+									<option value="{{ $key }}" @if($data->partner_mother_tongue == $key) selected @endif>{{ $value }}</option>
+								@endforeach
+							</select>
+							<div class="validation-div val-partner_mother_tongue"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-6">
+			<div class="sign-box align-items-start">
+				<div class="row">
+					<div class="col-12">
+						<div class="form-group">
+							<label>Diet</label>
+							<select class="custom-select" id="partner_diet_preferences" name="partner_diet_preferences">
+								<option  selected>Select</option>
+								@foreach($options['diet'] as $key => $value)
+									<option value="{{ $key }}" @if($data->partner_diet_preferences == $key) selected @endif>{{ $value }}</option>
+								@endforeach
+							</select>
+							<div class="validation-div val-partner_diet_preferences"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-6">
+			<div class="sign-box align-items-start">
+				<div class="row">
+					<div class="col-12">
+						<div class="form-group">
+							<label>State</label>
+							<select class="custom-select" id="partner_state_living_in" name="partner_state_living_in">
+								<option  selected>Select</option>
+								@foreach($options['state'] as $key => $value)
+									<option value="{{ $key }}" @if($data->partner_state_living_in == $key) selected @endif>{{ $value }}</option>
+								@endforeach
+							</select>
+							<div class="validation-div val-partner_state_living_in"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-6">
+			<div class="sign-box align-items-start">
+				<div class="row">
+					<div class="col-12">
+						<div class="form-group">
+							<label>City</label>
+							<select class="custom-select" id="partner_city_living_in" name="partner_city_living_in">
+								<option  selected>Select</option>
+								@foreach($options['city'] as $key => $value)
+									<option value="{{ $key }}" @if($data->partner_city_living_in == $key) selected @endif>{{ $value }}</option>
+								@endforeach
+							</select>
+							<div class="validation-div val-partner_city_living_in"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-6">
+			<div class="sign-box align-items-start">
+				<div class="row">
+					<div class="col-12">
+						<div class="form-group">
+							<label>Highest Qualification</label>
+							<select class="custom-select" id="partner_qualifications" name="partner_qualifications">
+								<option  selected>Select</option>
+								@foreach($options['highest_qualification'] as $key => $value)
+									<option value="{{ $key }}" @if($data->partner_qualifications == $key) selected @endif>{{ $value }}</option>
+								@endforeach
+							</select>
+							<div class="validation-div val-partner_qualifications"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-6">
+			<div class="sign-box align-items-start">
+				<div class="row">
+					<div class="col-12">
+						<div class="form-group">
+							<label>Income</label>
+							<select class="custom-select" id="partner_income" name="partner_income">
+								<option  selected>Select</option>
+								@foreach($options['income'] as $key => $value)
+									<option value="{{ $key }}" @if($data->income == $key) selected @endif>{{ $value }}</option>
+								@endforeach
+							</select>
+							<div class="validation-div val-partner_income"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-12 col-sm-12 mt-5 mb-4">
+			<div class="row">
+				<div class="col-4 col-sm-4 mt-5 mb-4"></div>
+				<div class="col-4 col-sm-4 mt-5 mb-4">
+					<button type="submit" onclick="updateProfile(5);" class="btn btn-sign w-100 mb-0 verify-btn">Submit</button>
+				</div>
+				<div class="col-4 col-sm-4 mt-5 mb-4"></div>
+			</div>
+		</div>
+		
+		<div class="col-12 col-sm-12 mt-4">
+			{{-- <p class="sign-up-text">Did't receive the PIN? <a href="javascript:void(0);">Resend PIN</a></p> --}}
+		</div>
+	</div>
+</div>
+
+@section('js')
+<script src="https://cdn.jsdelivr.net/npm/@coreui/coreui@5.2.0/dist/js/coreui.bundle.min.js" integrity="sha384-JdRP5GRWP6APhoVS1OM/pOKMWe7q9q8hpl+J2nhCfVJKoS+yzGtELC5REIYKrymn" crossorigin="anonymous"></script>
+<script>
+	$("#relation_type option[value='{{ $data->relation_type }}']").attr("selected", true);
+	$("#partner_religion option[value='{{ $data->partner_religion }}']").attr("selected", true);
+	$("#partner_mother_tongue option[value='{{ $data->partner_mother_tongue }}']").attr("selected", true);
+	$("#partner_diet_preferences option[value='{{ $data->partner_diet_preferences }}']").attr("selected", true);
+	$("#partner_state_living_in option[value='{{ $data->partner_state_living_in }}']").attr("selected", true);
+	$("#partner_city_living_in option[value='{{ $data->partner_city_living_in }}']").attr("selected", true);
+	$("#partner_qualifications option[value='{{ $data->partner_qualifications }}']").attr("selected", true);
+	$("#partner_income option[value='{{ $data->partner_income }}']").attr("selected", true);
+</script>
+@endsection

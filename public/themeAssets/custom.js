@@ -49,8 +49,9 @@ var runAjax = function (i = null, ii = null, type = 'POST') {
 // Update Profile
 async function updateProfile (step = 1) {
 	console.log('update profile', step)
+	
 	var data = new FormData();
-	data.append('step', parseInt(step));
+	data.append('step', step === 'alfa'? step : parseInt(step));
 	data.append('first_name', $('#completeProfile #first_name').val());
 	data.append('last_name', $('#completeProfile #last_name').val());
 	data.append('day', $('#completeProfile #day').val());
@@ -75,19 +76,47 @@ async function updateProfile (step = 1) {
 	//data.append('manglik', $('#completeProfile #manglik').val());
 	if($('input[type="radio"][name="manglik"]:checked').is(':checked')) { data.append('manglik', $('input[type="radio"][name="manglik"]:checked').val()); }
 
+	// step 2
 	data.append('highest_qualification', $('#completeProfile #highest_qualification').val());
 	data.append('company_name', $('#completeProfile #company_name').val());
 	data.append('position', $('#completeProfile #position').val());
-	//if($('input[type="checkbox"][name="income_type"]:checked').is(':checked')) { data.append('diet', $('input[type="checkbox"][name="income_type"]:checked').val()); }
 	var incomeType = $('#income_type').is(':checked') ? 'Monthly' : 'Yearly';    data.append('income_type', incomeType);
 	data.append('income', $('#completeProfile #income').val());
 
+	// step 3
 	data.append('cast', $('#completeProfile #cast').val());
-	// data.append('sub_cast', $('#completeProfile #sub_cast').val());
 	data.append('family_type', $('#completeProfile #family_type').val());
 	data.append('father_occupation', $('#completeProfile #father_occupation').val());
 	data.append('mother_occupation', $('#completeProfile #mother_occupation').val());
 	data.append('number_of_siblings', $('#completeProfile #number_of_siblings').val());
+	// step 4
+	data.append('smoking_habits', $('#completeProfile #smoking_habits').val());
+    data.append('drinking_habits', $('#completeProfile #drinking_habits').val());
+	data.append('open_to_pets', $('#completeProfile #open_to_pets').val());
+	data.append('languages_spoken', $('#completeProfile #languages_spoken').val());
+	// step 5
+	data.append('place_of_birth', $('#completeProfile #place_of_birth').val());
+	data.append('date_of_birth', $('#completeProfile #date_of_birth').val());
+	data.append('time_of_birth', $('completeProfile #time_of_birth').val());
+	data.append('zodiac_sign', $('#completeProfile #zodiac_sign').val());
+	data.append('horoscope_match', $('#completeProfile #horoscope_match').val());
+	data.append('manglik_dosha', $('#completeProfile #manglik_dosha').val());
+	// step 6
+	data.append('hobbies', $('#completeProfile #hobbies').val());
+    data.append('favorite_music', $('#completeProfile #favorite_music').val());
+	data.append('favorite_books', $('#completeProfile #favorite_books').val());
+	data.append('favorite_movies', $('#completeProfile #favorite_movies').val());
+	data.append('favorite_sports', $('#completeProfile #favorite_sports').val());
+	// step 7
+	data.append('partner_age_range', $('#completeProfile #min_age').val()+'-'+$('#completeProfile #max_age').val());
+	data.append('relation_type', $('#completeProfile #relation_type').val());
+	data.append('partner_religion', $('#completeProfile #partner_religion').val());
+	data.append('partner_mother_tongue', $('#completeProfile #partner_mother_tongue').val());
+	data.append('partner_diet_preferences', $('#completeProfile #partner_diet_preferences').val());
+	data.append('partner_state_living_in', $('#completeProfile #partner_state_living_in').val());	
+	data.append('partner_city_living_in', $('#completeProfile #partner_city_living_in').val());	
+	data.append('partner_qualifications', $('#completeProfile #partner_qualifications').val());	
+	data.append('partner_income', $('#completeProfile #partner_income').val());	
 
 	if($('input[type="radio"][name="brother"]:checked').is(':checked')) { data.append('brother', $('input[type="radio"][name="brother"]:checked').val()); }
 	if($('input[type="radio"][name="sister"]:checked').is(':checked')) { data.append('sister', $('input[type="radio"][name="sister"]:checked').val()); }
@@ -102,11 +131,11 @@ async function updateProfile (step = 1) {
 
 	data.append('otp', $('#completeProfile #otp').val());
 
-	if(step == 6){
+	if(step == 'alfa'){
 		data.append('profile_photo', $('#filiUpload')[0].files[0]);
 		data.append('cover_photo', $('#filiUpload2')[0].files[0]);
 	}
-	if(step == 7){
+	if(step == 9){
 		var document_type = $('.document_type.active').attr('data-document-type');
 		data.append('document_type', document_type);
 		data.append('document_number', $('#document_number'+document_type).val());
@@ -118,9 +147,13 @@ async function updateProfile (step = 1) {
 	if (response) { // check if the response is defined
         response.then(function (value) { // process the response using a Promise
             if (value.status === '200') {
-				var nextStep = parseInt(step) + 1;
-				var nextUrl = SITE_URL + '/complete-profile/' + nextStep;
-				window.location.href = nextUrl; // Redirect to the next step
+				if(step == 'alfa'){
+					window.location.href = SITE_URL + '/profile';
+				}else{
+					var nextStep = parseInt(step) + 1;
+					var nextUrl = SITE_URL + '/complete-profile/' + nextStep;
+					window.location.href = nextUrl; // Redirect to the next step
+				}
             } else if (value.status === '422') {
                 // there was an error with the data
                 $('.validation-div').text('');

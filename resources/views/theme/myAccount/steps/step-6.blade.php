@@ -1,99 +1,131 @@
-					<div  id="step-6" class="photos-upload-step">
-						<div class="row">
-							<div class="col-12">
-								<div class="form-step-title">
-									<a class="back-icon" href="{{ url('/complete-profile/'. $step-1) }}"><img src="{{ asset('themeAssets/images/left-arrow.svg') }}" alt=""></a>
-									<h2>Photos Upload</h2>
-									<img src="{{ asset('themeAssets/images/title-border.svg') }}" alt="" width="550">
-									<p class="upload-text">Congratulations!!!!<br> Your Profile Has been Created.</p>
-								</div>
-							</div>
-							<div class="col-12">
-								<p class="upload-text"><b>Upload Your Photo and get<br> better matches for you</b></p>
-								<div class="cover-profile-main">
-									<a class="profile-box" data-toggle="modal" data-target="#uploadImage">
-										<div class="camera-img">
-											<img class="profile_photo-preview" src="{{ ($data->user->profile_image) ?  asset($data->user->profile_image) : asset('themeAssets/images/camera.svg') }}" alt="">
-										</div>
-										<span>Profile Photos</span>
-										<div class="validation-div val-profile_photo"></div>
-									</a>
-									<a class="cover-box" data-toggle="modal" data-target="#uploadImage2">
-										<div class="camera-img">
-											<img class="cover_photo-preview" src="{{ ($data->user->profile_image) ? asset($data->user->cover_image) : asset('themeAssets/images/camera.svg') }}" alt="">
-										</div>
-										<span>Cover Photo</span>
-										<div class="validation-div val-cover_photo"></div>
-									</a>
-								</div>
-								<div class="protected-text"><img src="{{ asset('themeAssets/images/awesome-lock.svg') }}" alt="">
-									<p>DCMA Protected Photos</p>
-								</div>
-								<ul class="upload-img-list">
-									<li>
-										<img class="upload-img" src="{{ asset('themeAssets/images/upload-img-list.jpg') }}" alt="">
-									</li>
-									<li>
-										<img class="upload-img" src="{{ asset('themeAssets/images/upload-img-list.jpg') }}" alt="">
-									</li>
-									<li>
-										<img class="upload-img" src="{{ asset('themeAssets/images/upload-img-list.jpg') }}" alt="">
-									</li>
-									<li>
-										<img class="upload-img" src="{{ asset('themeAssets/images/upload-img-list.jpg') }}" alt="">
-									</li>
-									<li>
-										<img class="upload-img" src="{{ asset('themeAssets/images/upload-img-list.jpg') }}" alt="">
-									</li>
-								</ul>
-								<a class="upload-guide" data-toggle="modal" data-target="#uploadGuide">Click Here For Photo Upload Guide</a>
-								<button class="btn btn-sign mb-1 mb-md-3" onclick="updateProfile(6);">Continue</button>
-							</div>
+@section('css')
+	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+	<style>
+		.select2-results__option, .select2-selection__choice__display{
+			color: black !important;
+		}
+	</style>
+@endsection
+<div id="step-5" class="describe-your-self-step">
+	<div class="row">
+		<div class="col-12 col-sm-12">
+			<div class="form-step-title">
+				<a class="back-icon" href="{{ url('/complete-profile/'. $step-1) }}"><img src="{{ asset('themeAssets/images/left-arrow.svg') }}" alt=""></a>
+				<h2>Likes</h2>
+				<img src="images/title-border.svg" alt="" width="550">
+			</div>
+		</div>
+		<div class="col-6">
+			<div class="sign-box align-items-start">
+				<div class="row">
+					<div class="col-12">
+						<div class="form-group">
+							<label>Favorite Music</label>
+							<select multiple="multiple" class="select2-multiple custom-select" name="favorite_music[]" id="favorite_music">
+								@foreach($options['favorite_music'] as $key => $value)
+									<option value="{{ $key }}" @if($data->favorite_music == $key) selected @endif>{{ $value }}</option>
+								@endforeach
+							</select>
+							<div class="validation-div val-favorite_music"></div>
 						</div>
 					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-6">
+			<div class="sign-box align-items-start">
+				<div class="row">
+					<div class="col-12">
+						<div class="form-group">
+							<label>Favorite Books</label>
+							<select multiple="multiple" class="select2-multiple custom-select" id="favorite_books" name="favorite_books[]">
+								@foreach($options['favorite_books'] as $key => $value)
+									<option value="{{ $key }}" @if($data->favorite_books == $key) selected @endif>{{ $value }}</option>
+								@endforeach
+							</select>
+							<div class="validation-div val-favorite_books"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-6">
+			<div class="sign-box align-items-start">
+				<div class="row">
+					<div class="col-12">
+						<div class="form-group">
+							<label>Favorite Movies</label>
+							<select multiple="multiple" class="select2-multiple custom-select" id="favorite_movies" name="favorite_movies[]">
+								@foreach($options['favorite_movies'] as $key => $value)
+									<option value="{{ $key }}" @if($data->favorite_movies == $key) selected @endif>{{ $value }}</option>
+								@endforeach
+							</select>
+							<div class="validation-div val-favorite_movies"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-6">
+			<div class="sign-box align-items-start">
+				<div class="row">
+					<div class="col-12">
+						<div class="form-group">
+							<label>Favorite Sports</label>
+							<select multiple="multiple" class="select2-multiple custom-select" id="favorite_sports" name="favorite_sports[]">
+								@foreach($options['favorite_sports'] as $key => $value)
+									<option value="{{ $key }}" @if($data->favorite_sports == $key) selected @endif>{{ $value }}</option>
+								@endforeach
+							</select>
+							<div class="validation-div val-favorite_sports"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-6">
+			<div class="sign-box align-items-start">
+				<div class="row">
+					<div class="col-12">
+						<div class="form-group">
+							<label>Hobbies</label>
+							<select multiple="multiple" class="select2-multiple custom-select" id="hobbies" name="hobbies[]">
+								@foreach($options['hobbies'] as $key => $value)
+									<option value="{{ $key }}" @if($data->hobbies == $key) selected @endif>{{ $value }}</option>
+								@endforeach
+							</select>
+							<div class="validation-div val-hobbies"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-12 col-sm-12 mt-5 mb-4">
+			<div class="row">
+				<div class="col-4 col-sm-4 mt-5 mb-4"></div>
+				<div class="col-4 col-sm-4 mt-5 mb-4">
+					<button onclick="updateProfile(6);" class="btn btn-sign w-100 mb-0 verify-btn">Submit</button>
+				</div>
+				<div class="col-4 col-sm-4 mt-5 mb-4"></div>
+			</div>
+		</div>
+	</div>
+</div>
 @section('js')
-    <script>
-        $(document).ready(function() {
-            $("#filiUpload").change(function () {
-                readURL(this, 1);
-            });
-
-            $("#filiUpload2").change(function () {
-                readURL(this, 2);
-            });
-
-            function readURL(input, type = 1) {
-                if (input.files && input.files[0]) {
-                    var reader = new FileReader();
-                    reader.onload = function (e) {
-                        if (type == 1) {
-                            $('.profile_photo-preview').attr('src', e.target.result);
-                            $("#uploadImage .close").trigger("click");
-                        } else if (type == 2) {
-                            $('.cover_photo-preview').attr('src', e.target.result);
-                            $("#uploadImage2 .close").trigger("click");
-                        }
-                    };
-                    reader.readAsDataURL(input.files[0]);
-                }
-            }
-
-            // Function to display previously uploaded photos
-            function displayPreviousPhotos() {
-                // Get the src of the previously uploaded profile photo
-                var profilePhotoSrc = $('.profile_photo-preview').attr('src');
-                // Set the src of the profile photo preview to the previously uploaded photo
-                $('.profile_photo-preview').attr('src', profilePhotoSrc);
-
-                // Get the src of the previously uploaded cover photo
-                var coverPhotoSrc = $('.cover_photo-preview').attr('src');
-                // Set the src of the cover photo preview to the previously uploaded photo
-                $('.cover_photo-preview').attr('src', coverPhotoSrc);
-            }
-
-            // Call the function to display previously uploaded photos on page load
-            displayPreviousPhotos();
-        });
-
-    </script>
+	{{-- <script src='https://foliotek.github.io/Croppie/croppie.js'></script>
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js'></script> --}}
+	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+	<script>
+		// $("#manglik_dosha option[value='{{ $data->manglik_dosha }}']").attr("selected", true);
+		// $("#horoscope_match option[value='{{ $data->horoscope_match }}']").attr("selected", true);
+		// $("#zodiac_sign option[value='{{ $data->zodiac_sign }}']").attr("selected", true);
+		$(document).ready(function() {
+			$('.select2-multiple').select2({
+				placeholder: "Select",
+				allowClear: true,
+				width: '100%',
+				theme: "classic"
+			});
+		});
+	</script>
 @endsection

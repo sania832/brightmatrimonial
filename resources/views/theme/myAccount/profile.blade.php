@@ -19,7 +19,7 @@
 							{{-- <a class="add-new" href="{{ url('/complete-profile/6') }}"><img class="share-img" src="{{ asset('themeAssets/images/ionic-ios-add.svg') }}"alt=""></a> --}}
 						</div>
 						<h2>{{ Auth::user()->name }}</h2>
-						<p>Profile ID : BG{{ Auth::user()->id }}</p>
+						<p>Profile ID : {{ Auth::user()->id }}</p>
 						{{-- <div class="share-info">
 							<button class="btn btn-custom">Copy Profile Link</button>
 							<a href="javascript:void(0);"><img class="share-img" src="{{ asset('themeAssets/images/awesome-share-alt.svg') }}" alt=""></a>
@@ -51,61 +51,7 @@
 			</div>
 		</section>
 
-        @if(!$questions_list->isEmpty())
-        <section class="find-prefect-match">
-            <div class="container">
-                <div class="row prefect-match-box">
-                    <div class="col-sm-12 col-lg-4 d-flex justify-content-center align-items-center">
-                        <img class="match-box-img" src="{{ asset('themeAssets/images/find-prefect-match-img.svg') }}" alt="">
-                    </div>
-                    <div class="col-sm-12 col-lg-8">
-                        <div class="theme-title text-center mb-0">
-                            <h2>Find the Prefect Match with Few Answers</h2>
-                            <img src="images/title-border.svg" alt="" width="450">
-                        </div>
-                        <div id="matchQue">
-                            @foreach($questions_list as $question)
-                            <div class="item">
-                                <div class="custom-form" data-question-id="{{ $question->id }}">
-                                    <form class="question-form">
-                                        @csrf
-                                        <div class="form-group">
-                                            <label>{{ $question[$user->gender] }}</label>
-                                            @if($question->options)
-                                            <div class="switch-field diet-field">
-                                                <div class="row">
-                                                    @foreach($question->options as $option)
-                                                    <div class="col-12 col-sm-6">
-                                                        <input type="radio" id="option-{{ $option->id }}" name="answer_id"
-                                                            value="{{ $option->id }}" />
-                                                        <label for="option-{{ $option->id }}">
-                                                            {{ ($user->gender === 'Male')? $option->Male : $option->Female }}</label>
-                                                    </div>
-                                                    @endforeach
-                                                </div>
-                                            </div>
-                                            @endif
-                                        </div>
-                                        <button type="button" class="btn btn-sign mb-0 mx-auto next-question">Next</button>
-                                        {{-- <button type="button" class="btn btn-back mb-0 mx-auto back-question">Back</button> --}}
-                                    </form>
-                                </div>
-                            </div>
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-
-                {{-- <div class="row prefect-match-box justify-content-center congratulations-box">
-                    <div class="col-sm-12 d-flex flex-column justify-content-center align-items-center">
-                        <img class="congratulations-box-img" src="{{ asset('themeAssets/images/congratulations-you-got-match.svg') }}" alt="">
-                        <p>Congratulations You got a Match</p>
-                        <button class="btn btn-custom mb-0 mx-auto">Explore</button>
-                    </div>
-                </div> --}}
-            </div>
-        </section>
-        @endif
+        
 
 		<section class="profile-bio">
 			<div class="container">

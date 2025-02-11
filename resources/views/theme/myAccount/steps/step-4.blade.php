@@ -13,41 +13,73 @@
 									<li class="active"></li>
 								</ul>
 							</div>
-							<div class="col-12">
+							<div class="col-6">
 								<div class="sign-box align-items-start">
 									<div class="row">
 										<div class="col-12">
 											<div class="form-group">
 												<label>Drinking</label>
-												<div class="switch-field diet-field">
-													@foreach($options['diet'] as $key => $option)
-														<input type="radio" id="diet-{{ $key }}" name="diet" value="{{ $key }}" {{ $data->diet == $key ? 'checked' : '' }}>
-														<label for="diet-{{ $key }}">{{ $option }}</label>
-													@endforeach
-												</div>
-												<div class="validation-div val-diet"></div>
+												<select class="custom-select" id="drinking_habits" name="drinking_habits">
+													<option value="0" selected>Yes</option>
+													<option value="1">No</option>
+												</select>
+												<div class="validation-div val-drinking_habits"></div>
 											</div>
 										</div>
 									</div>
 								</div>
 							</div>
-							<div class="col-12">
+							<div class="col-6">
 								<div class="sign-box align-items-start">
 									<div class="row">
 										<div class="col-12">
 											<div class="form-group">
 												<label>Smoking</label>
-												<select class="custom-select" id="smoking">
+												<select class="custom-select" id="smoking_habits" name="smoking_habits">
 													<option value="0" selected>Yes</option>
 													<option value="1">No</option>
 												</select>
-												<div class="validation-div val-smoking"></div>
-												</div>
+												<div class="validation-div val-smoking_habits"></div>
 											</div>
 										</div>
 									</div>
 								</div>
 							</div>
+							<div class="col-6">
+								<div class="sign-box align-items-start">
+									<div class="row">
+										<div class="col-12">
+											<div class="form-group">
+												<label>Open to pets</label>
+												<select class="custom-select" id="open_to_pets" name="open_to_pets">
+													<option value="0" selected>Yes</option>
+													<option value="1">No</option>
+												</select>
+												<div class="validation-div val-open_to_pets"></div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-6">
+								<div class="sign-box align-items-start">
+									<div class="row">
+										<div class="col-12">
+											<div class="form-group">
+												<label>Languages Spoken</label>
+												<select class="custom-select" id="languages_spoken" name="languages_spoken">
+													<option value="" selected>Select</option>
+													@foreach($options['language'] as $key => $value)
+														<option value="{{ $key }}" @if($data->languages_spoken == $key) selected @endif>{{ $value }}</option>
+													@endforeach
+												</select>
+												<div class="validation-div val-languages_spoken"></div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
 							<div class="col-12 col-sm-12 mt-5">
 								<button type="submit" onclick="updateProfile(4);" class="btn btn-sign mb-0">Create Profile</button>
 							</div>
@@ -55,6 +87,9 @@
 					</div>
 @section('js')
 		<script>
-			$("#smoking option[value='{{ $data->smoking }}']").attr("selected", true);
+			$("#smoking_habits option[value='{{ $data->smoking_habits }}']").attr("selected", true);
+			$("#drinking_habits option[value='{{ $data->drinking_habits }}']").attr("selected", true);
+			$("#open_to_pets option[value='{{ $data->open_to_pets }}']").attr("selected", true);
+			$("#languages_spoken option[value='{{ $data->languages_spoken }}']").attr("selected", true);
 		</script>
 @endsection

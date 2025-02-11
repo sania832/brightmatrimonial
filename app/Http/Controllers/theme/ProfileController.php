@@ -180,7 +180,7 @@ class ProfileController extends CommonController
     /**
 	* Show the application step page.
 	*/
-	public function complete_profile(Request $request,$step = 0){
+	public function complete_profile(Request $request,$step = 'alfa'){
 
 		$user = Auth()->user();
 		if(empty($user)){
@@ -221,6 +221,34 @@ class ProfileController extends CommonController
 				'family_type' => Option::where('type','=','family_type')->where('status','active')->orderBy('title', 'asc')->pluck('title','id')->toArray(),
 				'father_occupation' => Option::where('type','=','father_occupation')->where('status','active')->orderBy('title', 'asc')->pluck('title','id')->toArray(),
 			];
+		}elseif($step == 4){
+			$options = [
+				'language' => Language::where('status','active')->orderBy('title', 'asc')->pluck('title','id')->toArray(),
+			];
+		}elseif($step == 5){
+			$options = [
+				'city' =>  City::where('status', 'active')->orderBy('name', 'asc')->orderBy('name', 'asc')->pluck('name', 'id')->toArray(),
+			];
+		}elseif($step == 6){
+			$options = [
+				'favorite_music' => Option::where('type','=','favorite_music')->where('status','active')->orderBy('title', 'asc')->pluck('title','id')->toArray(),
+				'favorite_books' => Option::where('type','=','favorite_books')->where('status','active')->orderBy('title', 'asc')->pluck('title','id')->toArray(),
+				'favorite_sports' => Option::where('type','=','favorite_sports')->where('status','active')->orderBy('title', 'asc')->pluck('title','id')->toArray(),
+				'favorite_movies' => Option::where('type','=','favorite_movies')->where('status','active')->orderBy('title', 'asc')->pluck('title','id')->toArray(),
+				'hobbies' => Option::where('type','=','hobbies')->where('status','active')->orderBy('title', 'asc')->pluck('title','id')->toArray(),
+			];
+		}elseif($step == 7){
+			
+			$options = [
+				'relation_type' => Option::where('type','=','relation_type')->where('status','active')->orderBy('title', 'asc')->pluck('title','id')->toArray(),
+				'religion' => Option::where('type','=','religion')->where('status','active')->orderBy('title', 'asc')->pluck('title','id')->toArray(),
+				'mother_tongue' => Option::where('type','=','mother_tongue')->where('status','active')->orderBy('title', 'asc')->pluck('title','id')->toArray(),
+				'diet' => Option::where('type','=','diet')->where('status','active')->orderBy('title', 'asc')->pluck('title','id')->toArray(),
+				'city' =>  City::where('status', 'active')->orderBy('name', 'asc')->orderBy('name', 'asc')->pluck('name', 'id')->toArray(),
+				'state' =>  State::where('status', 'active')->orderBy('name', 'asc')->orderBy('name', 'asc')->pluck('name', 'id')->toArray(),
+				'highest_qualification' => Option::where('type','=','highest_qualification')->where('status','active')->orderBy('title', 'asc')->pluck('title','id')->toArray(),
+				'income' => Option::where('type','=','income')->where('status','active')->orderBy('title', 'asc')->pluck('title','id')->toArray(),
+			];
 		}
 
 		try {
@@ -256,6 +284,14 @@ class ProfileController extends CommonController
 		if($request->step == ''){
 			$this->ajaxError(trans('common.invalid_step'),[]);
 		}
+
+		if($request->step === 'alfa'){
+			$step = $request->step;
+			$validator = Validator::make($request->all(), [
+				'profile_photo'				=> 'sometimes|image|mimes:jpeg,png,jpg,gif|max:1024',
+				'cover_photo'				=> 'sometimes|image|mimes:jpeg,png,jpg,gif|max:1024',
+			]);
+		}else{
 
 		$step = (int)$request->step;
 
@@ -313,43 +349,65 @@ class ProfileController extends CommonController
 			}
 		}else if($step === 4){
 			$validator = Validator::make($request->all(), [
-				'about'				=> 'required',
-				'country_code'		=> 'required',
-				'mobile_no'			=> 'required',
+				'drinking_habits'		=> 'required',
+				'smoking_habits'		=> 'required',
+				'open_to_pets'			=> 'required',
+				'languages_spoken'      => 'required'
 			]);
 			if($validator->fails()){
 				return $this->ajaxValidationError(trans('common.error'), $validator->errors());
 			}
 		}else if($step === 5){
 			$validator = Validator::make($request->all(), [
-				'otp'				=> 'required',
+				// 'otp'				=> 'required',
+				'place_of_birth' => 'required',
+				'date_of_birth' => 'required',
+				'time_of_birth' => 'required',
+				'zodiac_sign'   => 'required',
+				'horoscope_match' => 'required',
+				'manglik_dosha' => 'required',
 			]);
 			if($validator->fails()){
 				return $this->ajaxValidationError(trans('common.error'), $validator->errors());
 			}
 
-			if($request->otp != '1111'){
-				$this->ajaxError('Invalid OTP',[]);
-			}
+			// if($request->otp != '1111'){
+			// 	$this->ajaxError('Invalid OTP',[]);
+			// }
 		}else if($step === 6){
+			
 			$validator = Validator::make($request->all(), [
-				'profile_photo'				=> 'sometimes|image|mimes:jpeg,png,jpg,gif|max:1024',
-				'cover_photo'				=> 'sometimes|image|mimes:jpeg,png,jpg,gif|max:1024',
+				'hobbies' => 'required',
+				'favorite_music' => 'required',
+				'favorite_books' => 'required',
+				'favorite_movies'   => 'required',
+				'favorite_sports' => 'required',
 			]);
 			if($validator->fails()){
 				$this->ajaxError($validator->errors()->first(),[]);
 			}
 		}else if($step === 7){
+			// $validator = Validator::make($request->all(), [
+			// 	'document_type'		=> 'required|max:3',
+			// 	'document_number'	=> 'required|max:32',
+			// 	'document'			=> 'sometimes|image|mimes:jpeg,png,jpg,gif|max:1024',
+			// ]);
 			$validator = Validator::make($request->all(), [
-				'document_type'		=> 'required|max:3',
-				'document_number'	=> 'required|max:32',
-				'document'			=> 'sometimes|image|mimes:jpeg,png,jpg,gif|max:1024',
+				'partner_age_range' => 'required',
+				'relation_type' => 'required',
+				'partner_religion' => 'required',
+				'partner_mother_tongue'   => 'required',
+				'partner_diet_preferences'=> 'required',
+				'partner_state_living_in'=> 'required',
+				'partner_city_living_in' => 'required',
+				'partner_qualifications' => 'required',
+				'partner_income'         => 'required'
 			]);
 			if($validator->fails()){
 				return $this->ajaxValidationError(trans('common.error'), $validator->errors());
 			}
 		}
-
+		}
 		$user = Auth()->user();
 		if(empty($user)){
 			$this->ajaxError(trans('common.invalid_user'),[]);
@@ -365,7 +423,6 @@ class ProfileController extends CommonController
 
 			$profileData  =  UserBio::where('user_id',$user->id)->first();
 			if($profileData){
-
 				if($step === 0){
 					$user_data = [
 						'first_name'		=>$request->first_name,
@@ -416,50 +473,58 @@ class ProfileController extends CommonController
 					];
 				}else if($step === 4){
 					$data = [
-						'step'			=> $step,
-						'about'			=> $request->about,
-						'country_code'	=> $request->country_code,
-						'mobile_no'		=> $request->mobile_no,
+						'step'			        => $step,
+						'drinking_habits'       => $request->drinking_habits,
+						'smoking_habits'		=> $request->smoking_habits,
+						'open_to_pets'			=> $request->open_to_pets,
+						'languages_spoken'      => $request->languages_spoken
 					];
 				}else if($step === 5){
 					$data = [
 						'step'			=> $step,
+						'place_of_birth' => $request->place_of_birth,
+						'date_of_birth' => $request->date_of_birth,
+						'time_of_birth' => $request->time_of_birth,
+						'zodiac_sign'   => $request->zodiac_sign,
+						'horoscope_match' => $request->horoscope_match,
+						'manglik_dosha' => $request->manglik_dosha,
 					];
 				}else if($step === 6){
+					$data = [
+						'step'    => $step,
+						'hobbies' => $request->hobbies,
+						'favorite_music' => $request->favorite_music,
+						'favorite_books' => $request->favorite_books,
+						'favorite_movies'   => $request->favorite_movies,
+						'favorite_sports' => $request->favorite_sports,
+					]; 
+				}else if($step === 7){
+					$data = [
+						'step'				=> $step,
+						'partner_age_range' => $request->partner_age_range ?? 0,
+						'relation_type'     => $request->relation_type,
+						'partner_religion'  => $request->partner_religion,
+						'partner_mother_tongue'   => $request->partner_mother_tongue,
+						'partner_diet_preferences'=> $request->partner_diet_preferences,
+						'partner_state_living_in' => $request->partner_state_living_in,
+						'partner_city_living_in'  => $request->partner_city_living_in,
+						'partner_qualifications'  => $request->partner_qualifications,
+						'partner_income'          => $request->partner_income
+					];
+				}else if($step === 'alfa'){
 					if(!empty($request->profile_photo)){
 						$profile_image = $this->saveMedia($request->file('profile_photo'));
 						User::where('id',$user->id)->update(['profile_image' => $profile_image]);
 					}else{
                         Log::info('existing profile photo');
                     }
-                    // elseif(!empty($user->profile_image)){
-                    //     Log::info('existing profile photo');
-                    //     $profile_image = $this->saveMedia($user->profile_image);
-					// 	User::where('id',$user->id)->update(['profile_image' => $profile_image]);
-                    // }
 					if(!empty($request->cover_photo)){
 						$cover_image = $this->saveMedia($request->file('cover_photo'));
 						User::where('id',$user->id)->update(['cover_image' => $cover_image]);
 					}else{
                         Log::info('existing cover photo');
                     }
-                    // elseif(!empty($user->cover_image)){
-                    //     Log::info('existing cover photo');
-                    //     $cover_image = $this->saveMedia($user->cover_image);
-					// 	User::where('id',$user->id)->update(['cover_image' => $cover_image]);
-                    // }
 					$data['step'] =  $step;
-				}else if($step === 7){
-					$data = [
-						'step'				=> $step,
-						'document_type'		=> $request->document_type,
-						'document_number'	=> $request->document_number,
-					];
-					if(!empty($request->document)){
-						$data['document'] = $this->saveMedia($request->file('document'));
-					}
-
-					User::where('id',$user->id)->update(['step_complete' => $step]);
 				}
 
 				$profileData->fill($data);
