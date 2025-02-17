@@ -94,7 +94,7 @@
 								</div>
 							</div>
 							<div class="col-12 col-sm-12 mt-5">
-								<button type="submit" onclick="updateProfile(0);" class="btn btn-sign">Submit</button>
+								<button type="submit" onclick="updateProfile(0);" class="btn btn-sign">Let's Start</button>
 								<p class="sign-up-text">By Submit ,you agree to our <a href="{{ url('terms') }}">Terms</a></p>
 							</div>
 						</div>

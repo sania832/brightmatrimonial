@@ -26,7 +26,14 @@ class UserResource extends JsonResource
 		
 		$is_step_complete 		= 'No';
 		if($this->step_complete >= 7){ $is_step_complete = 'Yes'; }
-        
+        $bio = (object)[];
+        if($this->bio){
+            $bio = $this->bio;
+        }elseif($this->bio_data){
+            $bio = $this->bio_data;
+        }else{
+            $bio = (object)[];
+        }
         // return parent::toArray($request);
         return [
             'id'            		=> (string)$this->id,
@@ -49,7 +56,7 @@ class UserResource extends JsonResource
 			'profile_steps'			=> $this->step_complete ? (string)$this->step_complete : '0',
             'is_step_complete'		=> $is_step_complete,
             'status'        		=> $this->status,
-            'bio_data'        		=> $this->bio_data ? $this->bio_data : (object)[],
+            'bio_data'        		=> $bio,
         ];
     } 
 }

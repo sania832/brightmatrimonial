@@ -18,7 +18,7 @@ class QuestionMatchesListResource extends JsonResource
     {
         return [
             'id'            => (string) $this->id,
-            'image'       	=> $this->profile_image ? (string) asset('data/public/'. $this->profile_image) : asset('public/'. config('constants.DEFAULT_THUMBNAIL')),
+            'image'       	=> $this->profile_image ? (string) asset('bright-metromonial/public/'. $this->profile_image) : asset('public/'. config('constants.DEFAULT_THUMBNAIL')),
             'name'       	=> $this->name ? (string) $this->name : '',
             'question_match' => $this->question_match ? (string) $this->question_match : '0',
             'bio'   		=> $this->bio ? new BioDataResource($this->bio) : null,

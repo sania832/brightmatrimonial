@@ -51,7 +51,8 @@ async function updateProfile (step = 1) {
 	console.log('update profile', step)
 	
 	var data = new FormData();
-	data.append('step', step === 'alfa'? step : parseInt(step));
+	// step === 'alfa'? step :
+	data.append('step', parseInt(step));
 	data.append('first_name', $('#completeProfile #first_name').val());
 	data.append('last_name', $('#completeProfile #last_name').val());
 	data.append('day', $('#completeProfile #day').val());

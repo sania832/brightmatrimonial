@@ -180,7 +180,7 @@ class ProfileController extends CommonController
     /**
 	* Show the application step page.
 	*/
-	public function complete_profile(Request $request,$step = 'alfa'){
+	public function complete_profile(Request $request,$step = 0){
 
 		$user = Auth()->user();
 		if(empty($user)){

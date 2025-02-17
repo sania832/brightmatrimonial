@@ -247,7 +247,6 @@ trait CommonHelper
 	public static function verifyOTP($otp , $user = [])
 	{
 		try {
-
 			$to = $user->country_code. $user->phone_number;
 			$curl = curl_init();
 			curl_setopt_array($curl, array(
@@ -271,6 +270,63 @@ trait CommonHelper
 		} catch (Exception $e) {
 			return false;
 		}
+	}
+
+	// SENT Whatsapp OTP
+	public static function sentWOTP($otp, $user = [], $message = ""){
+		try {
+			$to = $user->country_code . $user->phone_number;
+			$api_url = "https://live-mt-server.wati.io/399656/api/v1/sendTemplateMessage?whatsappNumber=$to";
+			$authorization = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJjODI0N2E1OS1iNjMzLTQyYzQtYTFlNi04ZTZkOGQzYmRhN2EiLCJ1bmlxdWVfbmFtZSI6InRvbm55QHRyaW9lbmN5LmNvbSIsIm5hbWVpZCI6InRvbm55QHRyaW9lbmN5LmNvbSIsImVtYWlsIjoidG9ubnlAdHJpb2VuY3kuY29tIiwiYXV0aF90aW1lIjoiMDIvMDYvMjAyNSAwODo1NjozMiIsInRlbmFudF9pZCI6IjM5OTY1NiIsImRiX25hbWUiOiJtdC1wcm9kLVRlbmFudHMiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBRE1JTklTVFJBVE9SIiwiZXhwIjoyNTM0MDIzMDA4MDAsImlzcyI6IkNsYXJlX0FJIiwiYXVkIjoiQ2xhcmVfQUkifQ.EOz_OcLuDeAOlg29MhqFC3N7tH9zYrY7pnKajT3X7zQ";
+
+			// JSON data
+			$data = json_encode([
+				"template_name" => "otp",
+				"broadcast_name" => "otp",
+				"parameters" => [
+					[
+						"name" => "1",
+						"value" => $otp
+					]
+				]
+			]);
+
+			$curl = curl_init();
+			curl_setopt_array($curl, [
+				CURLOPT_URL => $api_url,
+				CURLOPT_RETURNTRANSFER => true,
+				CURLOPT_ENCODING => "",
+				CURLOPT_MAXREDIRS => 10,
+				CURLOPT_TIMEOUT => 30,
+				CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+				CURLOPT_CUSTOMREQUEST => "POST",
+				CURLOPT_POSTFIELDS => $data,
+				CURLOPT_HTTPHEADER => [
+					"accept: */*",
+					"Authorization: $authorization",
+					"Content-Type: application/json"
+				],
+			]);
+
+			$response = curl_exec($curl);
+			$err = curl_error($curl);
+			curl_close($curl);
+
+			if ($err) {
+				return false;
+			} else {
+				// Store OTP in SmsVerificationNew
+
+				return 1;
+			};
+		} catch (Exception $e) {
+			return false;
+		}
+	}
+
+	// Verify OTP
+	public static function verifyWOTP($otp, $user = []){
+
 	}
 
 	//SEND MESSAGE

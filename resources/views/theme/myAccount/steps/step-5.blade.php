@@ -6,6 +6,16 @@
 									<h2>Horoscope</h2>
 									<img src="images/title-border.svg" alt="" width="550">
 								</div>
+								<ul class="step-list">
+									<li class="active"></li>
+									<li class="active"></li>
+									<li class="active"></li>
+									<li class="active"></li>
+									<li class="active"></li>
+									<li></li>
+									<li></li>
+									{{-- <li></li> --}}
+								</ul>
 							</div>
 							<div class="col-6">
 								<div class="sign-box align-items-start">
@@ -114,10 +124,11 @@
 								<div class="row">
 									<div class="col-4 col-sm-4 mt-5 mb-4"></div>
 									<div class="col-4 col-sm-4 mt-5 mb-4">
-										<button type="submit" onclick="updateProfile(5);" class="btn btn-sign w-100 mb-0 verify-btn">Submit</button>
+										<button type="submit" onclick="updateProfile(5);" class="btn btn-sign w-100 mb-0 verify-btn">Continue</button>
 									</div>
 									<div class="col-4 col-sm-4 mt-5 mb-4"></div>
 								</div>
+								<p class="sign-up-text">By Submit ,you agree to our <a href="{{ url('terms') }}">Terms</a></p>
 							</div>
 							
 							<div class="col-12 col-sm-12 mt-4">

@@ -11,6 +11,9 @@
 									<li></li>
 									<li></li>
 									<li></li>
+									<li></li>
+									<li></li>
+									<li></li>
 								</ul>
 							</div>
 							<div class="col-12 col-lg-6">
@@ -103,6 +106,7 @@
 							</div>
 							<div class="col-12 col-sm-12 mt-5">
 								<button type="submit" onclick="updateProfile(1);" class="btn btn-sign mb-0">Continue</button>
+								<p class="sign-up-text">By Submit ,you agree to our <a href="{{ url('terms') }}">Terms</a></p>
 							</div>
 						</div>
 					</div>

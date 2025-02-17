@@ -686,21 +686,49 @@ class UserController extends BaseController
             $data['profile_completion']     = $this->calculate_profile() ?? "0";
             
 			// GET Daily Matches
-            $data['daily_matches'] 			= MatchesListResource::collection(User::where(['user_type'=>'Customer'])->where("id", "!=", $user->id)->whereIn('gender', $gender)->offset($offset)->limit(10)->inRandomOrder()->get());
+            $data['daily_matches'] 			= MatchesListResource::collection(
+				User::where(['user_type'=>'Customer'])
+				->where("id", "!=", $user->id)
+				->whereIn('gender', $gender)
+				->where('is_approved', '=', 1)
+				->offset($offset)
+				->limit(10)
+				->inRandomOrder()
+				->get()
+			);
 			
-			// GET Just Joined
-            $data['question_matches']		= QuestionMatchesListResource::collection(Matches::select('t2.*')->join('users as t2', 't2.id', '=', 'matches.match_id')
+			$temp = Matches::select('t2.*')->join('users as t2', 't2.id', '=', 'matches.match_id')
 			->whereIn('t2.gender' , $gender )
 			->where('user_id', '=', $user->id)
-			->groupBy('matches.match_id')
 			->orderBy('matches.id', 'ASC')
 			->offset($offset)
 			->limit($count)
-			->get());
+			->get();
+			dd($temp, $gender, $user->id, $offset, $count);
 
 			// GET Just Joined
-            $data['just_joined'] 			= MatchesListResource::collection(User::where(['user_type'=>'Customer'])->where("id", "!=", $user->id)->whereIn('gender', $gender)->where('created_at', '>=', Carbon::now()->subDays(15))->offset($offset)->limit(10)->inRandomOrder()->get());
+            $data['question_matches']		= QuestionMatchesListResource::collection(
+				Matches::select('t2.*')->join('users as t2', 't2.id', '=', 'matches.match_id')
+				->whereIn('t2.gender' , $gender )
+				->where('user_id', '=', $user->id)
+				->orderBy('matches.id', 'ASC')
+				->offset($offset)
+				->limit($count)
+				->get()
+			);
+			$this->refreshMatches();
 
+			// GET Just Joined
+            $data['just_joined'] 			= MatchesListResource::collection(
+				User::where(['user_type'=>'Customer'])
+				->where("id", "!=", $user->id)
+				->whereIn('gender', $gender)
+				->where('is_approved', '=', 1)
+				->where('created_at', '>=', Carbon::now()->subDays(15))
+				->offset($offset)
+				->limit(10)
+				->inRandomOrder()->get()
+			);
 
 			return $this->sendResponse($data, trans('customer_api.data_found_success'));
 
@@ -710,6 +738,43 @@ class UserController extends BaseController
             return $this->sendError('',trans('customer_api.data_found_empty'));
         }
     }
+
+	/**
+	*
+	* Saved List
+	*
+	*/
+	public function refreshMatches()
+	{
+		//Get User Data
+		$user = Auth::user();
+		if(empty($user)){
+			return $this->sendError('',trans('customer_api.invalid_user'));
+		}
+
+		try{
+			$result = [];
+			// GET USER DATA
+			$gender 	= ['Male'=>'Female','Female'=>'Male'];
+			$anser_list = QuestionAnswer::where(['user_id'=>$user->id])->pluck('answer_id');
+
+			$users 		= User::select('users.*')->join('question_answers as t2', 't2.user_id', '=', 'users.id')->whereIn('t2.answer_id', $anser_list)->where('users.gender', '=', $gender[$user->gender])->where('users.id', '!=', $user->id)->offset(0)->limit(1000)->get();
+            if(count($users)>0){
+				foreach($users as $list){
+					$matches  = Matches::where(['user_id'=>$user->id, 'match_id'=>$list->id])->first();
+					if(empty($matches)){
+
+						// CREATE
+						$result[] = Matches::create(['user_id'=>$user->id, 'match_id'=>$list->id, 'question_match'=>rand(1, 15)]);
+					}
+				}
+				return $this->sendArrayResponse($result, trans('customer_api.data_found_success'));
+			}
+			return $this->sendArrayResponse([], trans('customer_api.data_found_empty'));
+		}catch (\Exception $e) {
+			return $this->sendError('', $e->getMessage());
+		}
+	}
 
 	/**
      * GET PROFILE
@@ -772,54 +837,85 @@ class UserController extends BaseController
 		if ( ! $bio) {
 			return "0";
 		} else {
+			$bio->offsetUnset("gender");
+			$bio->offsetUnset("community");
+			$bio->offsetUnset("mobile_no");
+			$bio->offsetUnset("sexual_orientation");
+			$bio->offsetUnset("vacation_destination");
+			$bio->offsetUnset("residentail_status");
+			$bio->offsetUnset("sun_sign");
+			$bio->offsetUnset("country_code");
+			$bio->offsetUnset("ug_digree");
+			$bio->offsetUnset("document");
+			$bio->offsetUnset("rashi");
+			$bio->offsetUnset("nakshtra");
+			$bio->offsetUnset("document_type");
+			$bio->offsetUnset("document_number");
 
-		$bio->offsetUnset("gender");
-		$bio->offsetUnset("community");
-		// $bio->offsetUnset("state");
-		$bio->offsetUnset("income_type");
-		// $bio->offsetUnset("about");
-		$bio->offsetUnset("mobile_no");
-		$bio->offsetUnset("sexual_orientation");
-		$bio->offsetUnset("vacation_destination");
-		$bio->offsetUnset("residentail_status");
+			$bio->offsetUnset("horoscope_require");
+			$bio->offsetUnset("manglik");
+			$bio->offsetUnset("sub_cast");
+			$bio->offsetUnset("family_bio");
+			$bio->offsetUnset("family_address");
+			$bio->offsetUnset("family_contact_no");
+			$bio->offsetUnset("pg_digree");
 
-		$bio->offsetUnset("sun_sign");
-		$bio->offsetUnset("position");
-		$bio->offsetUnset("country_code");
-		$bio->offsetUnset("ug_digree");
-		$bio->offsetUnset("document");
-		$bio->offsetUnset("rashi");
-		$bio->offsetUnset("nakshtra");
-		$bio->offsetUnset("document_type");
-		$bio->offsetUnset("document_number");
+			$bio->offsetUnset("highest_qualificatin");
+			$bio->offsetUnset("working_professional");
+			$bio->offsetUnset("gotra");
+			$bio->offsetUnset("sub_gotra");
+			$bio->offsetUnset("family_values");
+			$bio->offsetUnset("pg_collage");
+			$bio->offsetUnset("own_house");
+			$bio->offsetUnset("own_car");
+			$bio->offsetUnset("interest");
 
-		$bio->offsetUnset("horoscope_require");
-		$bio->offsetUnset("manglik");
-		$bio->offsetUnset("sub_cast");
-		$bio->offsetUnset("family_bio");
-		$bio->offsetUnset("family_address");
-		$bio->offsetUnset("family_contact_no");
-		$bio->offsetUnset("pg_digree");
+			$bio->offsetUnset("hiv");
+			$bio->offsetUnset("thallassemia");
+			$bio->offsetUnset("challenged");
+			$bio->offsetUnset("tv_shows");
+			$bio->offsetUnset("food_i_cook");
+			$bio->offsetUnset("horoscope_privacy");
 
-		$bio->offsetUnset("highest_qualificatin");
-		$bio->offsetUnset("working_professional");
-		$bio->offsetUnset("gotra");
-		$bio->offsetUnset("sub_gotra");
-		$bio->offsetUnset("family_values");
-		$bio->offsetUnset("pg_collage");
-		$bio->offsetUnset("own_house");
-		$bio->offsetUnset("own_car");
-		$bio->offsetUnset("interest");
-
-		$bio->offsetUnset("hiv");
-		$bio->offsetUnset("thallassemia");
-		$bio->offsetUnset("challenged");
-		$bio->offsetUnset("tv_shows");
-		$bio->offsetUnset("food_i_cook");
-		$bio->offsetUnset("horoscope_privacy");
+			$bio->offsetUnset("step");
+			$bio->offsetUnset("blood_group");
+			$bio->offsetUnset("sexual_preferences");
+			$bio->offsetUnset("gallery");
+			$bio->offsetUnset("selfie_verified");
+			$bio->offsetUnset("qualification");
+			$bio->offsetUnset("institution");
+			$bio->offsetUnset("year_of_graduation");
+			$bio->offsetUnset("languages_known");
+			$bio->offsetUnset("profile_handler");
+			$bio->offsetUnset("caste");
+			$bio->offsetUnset("brother");
+			$bio->offsetUnset("sister");
+			$bio->offsetUnset("family_living_in");
+			$bio->offsetUnset("music_preferences");
+			$bio->offsetUnset("family_caste");
+			$bio->offsetUnset("fitness_level");
+			$bio->offsetUnset("lifestyle_preferences");
+			$bio->offsetUnset("music_entertainment_preferences");
+			$bio->offsetUnset("partner_height");
+			$bio->offsetUnset("partner_marital_status");
+			$bio->offsetUnset("partner_family_values");
+			$bio->offsetUnset("partner_smoking_habits");
+			$bio->offsetUnset("partner_children_preferences");
+			$bio->offsetUnset("partner_preferred_location");
+			$bio->offsetUnset("partner_preferred_profession");
+			$bio->offsetUnset("music_entertainment");
+			$bio->offsetUnset("hobbies_interests");
+			$bio->offsetUnset("desired_family_values");
+			$bio->offsetUnset("institution_university");
+			$bio->offsetUnset("occupation");
+			$bio->offsetUnset("designation");
+			$bio->offsetUnset("languages");
+			$bio->offsetUnset("dress_style");
+			$bio->offsetUnset("cuisine");
 
 
 			$columns    = preg_grep('/(.+ed_at)|(.*id)/', array_keys($bio->toArray()), PREG_GREP_INVERT);
+			// dd(count($columns));
 			//  dd($columns, preg_grep('/(.+ed_at)|(.*id)/',  ($bio->toArray()), PREG_GREP_INVERT));
 			$per_column = 100 / count($columns);
 			$total      = 0;
@@ -832,9 +928,8 @@ class UserController extends BaseController
 
 			return (string)round($total);
 		}
-
-
 	}
+
 	public function questions(Request $request)
     {
         try{

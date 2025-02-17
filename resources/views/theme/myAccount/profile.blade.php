@@ -50,9 +50,6 @@
 				</div>
 			</div>
 		</section>
-
-        
-
 		<section class="profile-bio">
 			<div class="container">
 				<div class="row">
